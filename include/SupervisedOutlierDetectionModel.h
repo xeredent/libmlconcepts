@@ -33,7 +33,7 @@ protected:
     /// It is supposed to be used during prediction computations.
     /// @param data The dataset.
     /// @return A matrix of outlier degrees containing a value for each context and each object in the dataset.
-    Eigen::MatrixXd ComputeOutlierDegrees(const Dataset& data) const {
+    Eigen::MatrixXd ComputeOutlierDegrees(const Dataset& data) {
         Eigen::MatrixXd outdegsVector(contexts.size(), data.Size());
         for (size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
             auto intensions = conceptifier.template ProcessData<AttSet>(data, ctxID);
@@ -127,14 +127,12 @@ public:
     Eigen::VectorXd Predict(const Dataset& X) override {
         if (realFeatureCount != X.RealFeatureCount() || categoricalFeatureCount != X.CategoricalFeatureCount())
             throw std::runtime_error("Prediction data column types do not match those of the training set");
-        Eigen::VectorXd predictions = Eigen::VectorXd::Zero(X.Size());
-        for (size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
-            auto intensions = conceptifier.template ProcessData<AttSet>(X, ctxID);
-            for (size_t obj = 0; obj < X.Size(); ++obj) {
-                predictions(obj) += std::exp(-std::pow(contexts[ctxID].ComputeFilteredClosureSize(intensions[obj], inliers), 2));
-            }
+        Eigen::VectorXd predictions(X.Size());
+        auto outdegs = ComputeOutlierDegrees(X);
+        double Wp = gradientDescent.SumOfPositiveWeights(), Wm = gradientDescent.SumOfNegativeWeights();
+        for (size_t obj = 0; obj < X.Size(); ++obj) {
+            predictions(obj) = (gradientDescent.GetWeights().dot(outdegs(Eigen::all, obj)) - Wm) / (Wp + Wm);
         }
-        predictions /= contexts.size();
         return predictions;
     }
 
