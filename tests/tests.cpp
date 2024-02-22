@@ -3,7 +3,7 @@
 #include <functional>
 #include "PartialContext.h"
 #include "EigenDataset.h"
-#include "OutlierDetectionModel.h"
+#include "UnsupervisedOutlierDetectionModel.h"
 
 using namespace mlconcepts;
 

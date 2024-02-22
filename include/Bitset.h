@@ -48,7 +48,7 @@ protected:
 public:
     /// @brief Constructs an incidence entry, i.e. a bitset of a given size.
     /// @param n The size of the entry.
-    Bitset(int n, T initWord = 0) {
+    Bitset(int n = 0, T initWord = 0) {
         static_assert(std::is_integral<T>::value, "The word type should be an integer type.");
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
         dataSize = n / bits + 1;
