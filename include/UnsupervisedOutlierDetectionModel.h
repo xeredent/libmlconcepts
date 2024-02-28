@@ -23,6 +23,7 @@ template <class Context,
          >
 class UnsupervisedODModel : public SupervisedModel {
 protected:
+    static constexpr const uint32_t encodingMagicNumber = 0x756e6f64;
     typedef typename Context::AttributeSet AttSet;
     std::vector<Context> contexts;
     Conceptifier conceptifier;
@@ -58,6 +59,25 @@ public:
     }
 
     const std::vector<Context>& GetContexts() { return contexts; }
+
+    void Serialize(std::ostream& stream) const {
+        io::LittleEndianWrite(stream, encodingMagicNumber);
+        io::LittleEndianWrite(stream, (uint32_t)realFeatureCount);
+        io::LittleEndianWrite(stream, (uint32_t)categoricalFeatureCount);
+        conceptifier.Serialize(stream);
+        for (const auto& ctx : contexts) ctx.Serialize(stream);
+    }
+
+    void Deserialize(std::istream& stream) {
+        if (io::LittleEndianRead<uint32_t>(stream) != encodingMagicNumber)
+            throw std::runtime_error("Parsing error. Invalid format for unsupervised outlier detection model.");
+        realFeatureCount = io::LittleEndianRead<uint32_t>(stream);
+        categoricalFeatureCount = io::LittleEndianRead<uint32_t>(stream);
+        conceptifier.Deserialize(stream);
+        contexts.clear();
+        for (size_t i = 0; i < conceptifier.GetFeatureSetsCount(); ++i)
+            contexts.push_back(Context(stream));
+    }
 };
 
 }

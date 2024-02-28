@@ -49,6 +49,12 @@ public:
         incidence.shrink_to_fit();
     }
 
+    /// @brief Decodes a partial context from a given binary stream.
+    /// @param stream The stream the context is decoded from.
+    PartialContext(std::istream& stream) {
+        Deserialize(stream);
+    }
+
     /// @brief Computes the extension of an attribute set. This coincides with the closure of
     /// an object when the attribute set is its intention.
     /// @param attrs The attribute set.
@@ -117,14 +123,14 @@ public:
     /// @brief Returns the intension of an object.
     /// @param obj The ID of the object.
     /// @return The intension of the input object.
-    Bitset<T>& GetIntension(size_t obj) { 
+    const Bitset<T>& GetIntension(size_t obj) const { 
         return incidence[obj]; 
     }
 
     /// @brief Returns the extension of an attribute.
     /// @param obj The ID of the attribute.
     /// @return The extension of the input attribute.
-    Bitset<T>& GetExtension(size_t attr) { 
+    const Bitset<T>& GetExtension(size_t attr) const { 
         return incidenceConv[attr]; 
     }
 
@@ -155,8 +161,58 @@ public:
         s << std::endl;
     }
 
+    /// @brief Returns the cardinality of the set of objects of the context.
+    /// @return The cardinality of the set of objects.
+    size_t GetObjectsCount() const noexcept { return nobjs; }
+
+    /// @brief Returns the cardinality of the set of attributes of the context.
+    /// @return The cardinality of the set of objects.
+    size_t GetAttributesCount() const noexcept{ return nattrs; }
+
+    /// @brief Serializes the concept into a byte stream.
+    /// Writes two 64 bit integers that represent the size of the objects and of the features, respectively. Then,
+    /// encodes the incidence relation using run length encoding.
+    /// @param stream The stream where to write the serialized context.
+    void Serialize(std::ostream& stream) const {
+        io::LittleEndianWrite(stream, (uint64_t)nobjs); io::LittleEndianWrite(stream, (uint64_t)nattrs);
+        for (const auto& x : incidence) { x.Serialize(stream); }
+    }
+
+    /// @brief Decodes the concept from a byte stream.
+    /// @param stream The stream where to decode the context from.
+    void Deserialize(std::istream& stream) {
+        nobjs = io::LittleEndianRead<uint64_t>(stream); nattrs = io::LittleEndianRead<uint64_t>(stream);
+        incidence.clear(); incidenceConv.clear();
+        for (size_t i = 0; i < nobjs; ++i) incidence.push_back(Bitset<T>(nattrs));
+        for (size_t i = 0; i < nattrs; ++i) incidenceConv.push_back(Bitset<T>(nobjs));
+        incidenceConv.shrink_to_fit(); incidence.shrink_to_fit();
+        size_t obj = 0;
+        for (auto& x : incidence    ) { 
+            x.Deserialize(stream);
+            for (auto attr : x) {
+                incidenceConv[attr].Add(obj);
+            }
+            ++obj;
+        }
+        
+    }
+
     typedef Bitset<T> ObjectSet;
     typedef Bitset<T> AttributeSet;
 };
+
+template <class T>
+bool operator==(const PartialContext<T>& c1, const PartialContext<T>& c2) {
+    if (c1.GetObjectsCount() != c2.GetObjectsCount() || c1.GetAttributesCount() != c2.GetAttributesCount()) return false;
+    for (size_t i = 0; i < c1.GetObjectsCount(); ++i) if (c1.GetIntension(i) != c2.GetIntension(i)) return false;
+    for (size_t i = 0; i < c1.GetAttributesCount(); ++i) if (c1.GetExtension(i) != c2.GetExtension(i)) return false;
+    return true;
+}
+
+
+template <class T>
+bool operator!=(const PartialContext<T>& c1, const PartialContext<T>& c2) {
+    return !(c1 == c2);
+}
 
 }

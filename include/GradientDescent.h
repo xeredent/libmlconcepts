@@ -40,9 +40,15 @@ public:
         weights += prevStep;
     }
 
+
+    double GetLearningRate() const { return learningRate; }
+    double GetMomentum() const { return momentum; }
+    double GetStopThreshold() const { return improvementStopThreshold; }
+    void SetWeight(size_t id, double v) { weights(id) = v; }
     void SetWeights(const Eigen::Ref<const Vector>& v) { weights = v; }
     double GetLoss() { return loss(weights); } 
-    const Vector& GetWeights() { return weights; }
+    double GetWeight(size_t id) const { return weights(id); }
+    const Vector& GetWeights() const { return weights; }
     
     size_t Train(size_t maxEpochs, bool writeLog = false, double writeLogMinInterval = 100.0, std::ostream& stream = std::cout) {
         double prevLoss = GetLoss();

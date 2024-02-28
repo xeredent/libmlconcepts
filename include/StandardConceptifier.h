@@ -179,6 +179,61 @@ class Conceptifier {
         for (const auto& v : contextOffsets) sz += sizeof(v) + v.capacity() * sizeof(std::pair<size_t, size_t>);
         return sz;
     }
+
+    /// @brief Retrieves the number of feature sets stored in the conceptifier.
+    /// @return The number of feature sets used to generate formal contexts.
+    size_t GetFeatureSetsCount() {
+        return featureSets.size();
+    }
+
+protected:
+    /// @brief Generates context offset data. To be used after both the feature sets and the quantizers
+    /// are initialized (for instance, in deserialization).
+    void GenerateContextOffsetsFromQuantizers() {
+        contextAttributeCount.clear();
+        contextOffsets.clear(); size_t realFeatures = realQuantizer.GetAssignersCount();
+        for (size_t featureSetID = 0; featureSetID < featureSets.size(); ++featureSetID) {
+            size_t offset = 0;
+            contextOffsets.push_back(std::vector<std::pair<size_t,size_t>>());
+            for (auto f : featureSets[featureSetID]) {
+                contextOffsets[featureSetID].push_back(std::make_pair(f, offset));
+                offset += f < realFeatures ? realQuantizer.GetAssigner(f).BinsCount() :
+                              (realFeatures + categoricalQuantizer.GetAssigner(f - realFeatures).BinsCount());
+            }
+            contextAttributeCount.push_back(offset);
+        }
+    }
+
+    static constexpr const uint32_t encodingMagicNumber = 0x73746463;
+
+public:
+    /// @brief Encodes the conceptifier into a stream as binary data.
+    /// @param stream The stream where to write the conceptifier.
+    void Serialize(std::ostream& stream) const {
+        io::LittleEndianWrite(stream, encodingMagicNumber);
+        realQuantizer.Serialize(stream);
+        categoricalQuantizer.Serialize(stream);
+        io::LittleEndianWrite(stream, (uint32_t)featureSets.size());
+        for (const auto& x : featureSets) x.Serialize(stream);
+    }
+
+    /// @brief Decodes the conceptifier from a binary stream.
+    /// @param stream The stream where to read the conceptifier from.
+    void Deserialize(std::istream& stream) {
+        if (io::LittleEndianRead<uint32_t>(stream) != encodingMagicNumber)
+            throw std::runtime_error("Parsing error. Invalid format: wrong magic number for standard conceptifier.");
+        realQuantizer.Deserialize(stream);
+        categoricalQuantizer.Deserialize(stream);
+        uint32_t count = io::LittleEndianRead<uint32_t>(stream);
+        size_t featureCount = realQuantizer.GetAssignersCount() + categoricalQuantizer.GetAssignersCount();
+        featureSets.clear();
+        for (size_t i = 0; i < count; ++i) {
+            typename CtxSelector::FeatureSet newSet(featureCount);
+            newSet.Deserialize(stream);
+            featureSets.push_back(std::move(newSet));
+        }
+        GenerateContextOffsetsFromQuantizers();
+    }
     
 };
 

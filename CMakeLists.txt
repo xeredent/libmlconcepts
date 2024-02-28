@@ -27,7 +27,11 @@ target_link_libraries(tests_partial_context Eigen3::Eigen)
 target_link_libraries(tests Eigen3::Eigen)
 
 # CTest tests
+add_test(NAME bitset64_serialization COMMAND tests_partial_context bitset64_serialization)
+add_test(NAME bitset64_serialization_longsequences COMMAND tests_partial_context bitset64_serialization_longsequences)
+add_test(NAME context64_serialization COMMAND tests_partial_context context64_serialization)
 add_test(NAME small_context COMMAND tests_partial_context small_context)
+add_test(NAME bitstreams1 COMMAND tests_partial_context bitstreams1)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

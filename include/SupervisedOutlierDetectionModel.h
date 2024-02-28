@@ -20,6 +20,7 @@ template <class Context,
          >
 class SupervisedODModel : public SupervisedModel {
 protected:
+    static constexpr const uint32_t encodingMagicNumber = 0x756e6f64;
     typedef typename Context::AttributeSet AttSet;
     std::vector<Context> contexts;
     Context::ObjectSet inliers;
@@ -28,6 +29,7 @@ protected:
     size_t categoricalFeatureCount;
     Eigen::MatrixXd outlierDegrees;
     GradientDescent<Eigen::VectorXd> gradientDescent;
+    double gradientDescentBalance;
 
     /// @brief Computes the outlier degrees vector according to each context for a given dataset.
     /// It is supposed to be used during prediction computations.
@@ -66,16 +68,13 @@ protected:
     }
 
     /// @brief Initializes the gradient descent object to train on the current contexts.
-    void InitializeGradientDescent(const Dataset& Xy) {
-        double learningRate = this->settings.Get("LearningRate", 0.01);
-        double momentum = this->settings.Get("Momentum", 0.01);
-        double stopThreshold = this->settings.Get("StopThreshold", 0.01);
-        double balance = (double)Xy.Size() / (double)(Xy.Size() - inliers.Size());
+    void InitializeGradientDescent(double learningRate, double momentum, double stopThreshold, double balance, size_t nobjs) {
         //Constructs the gradient descent object by passing its parameters, and
         //two lambdas for the loss and the gradient.
+        gradientDescentBalance = balance;
         gradientDescent = GradientDescent<Eigen::VectorXd>(
             contexts.size(), //weightsCount
-            [balance, inliers = std::as_const(inliers), outdegs = std::as_const(outlierDegrees), nobjs = Xy.Size()]
+            [balance, inliers = std::as_const(inliers), outdegs = std::as_const(outlierDegrees), nobjs]
             (const Eigen::VectorXd& w) -> double { //loss
                 double Wp = std::accumulate(w.begin(), w.end(), 0.0, [](double a, double b){ return b > 0 ? a + b : a; });
                 double Wm = std::accumulate(w.begin(), w.end(), 0.0, [](double a, double b){ return b < 0 ? a + b : a; });
@@ -86,7 +85,7 @@ protected:
                 }
                 return sum;
             },
-            [balance, inliers = std::as_const(inliers), outdegs = std::as_const(outlierDegrees), nobjs = Xy.Size()]
+            [balance, inliers = std::as_const(inliers), outdegs = std::as_const(outlierDegrees), nobjs]
             (const Eigen::VectorXd& w) -> Eigen::VectorXd { //gradient
                 double Wp = std::accumulate(w.begin(), w.end(), 0.0, [](double a, double b){ return b > 0 ? a + b : a; });
                 double Wm = std::accumulate(w.begin(), w.end(), 0.0, [](double a, double b){ return b < 0 ? a + b : a; });
@@ -106,6 +105,15 @@ protected:
             momentum,
             stopThreshold
         );
+    }
+
+    /// @brief Initializes a gradient descent object based on the current settings and the given dataset.
+    void InitializeGradientDescent(const Dataset& Xy) {
+        double learningRate = this->settings.Get("LearningRate", 0.01);
+        double momentum = this->settings.Get("Momentum", 0.01);
+        double stopThreshold = this->settings.Get("StopThreshold", 0.01);
+        double balance = (double)Xy.Size() / (double)(Xy.Size() - inliers.Size());
+        InitializeGradientDescent(learningRate, momentum, stopThreshold, balance, Xy.Size());
     }
 
 public:
@@ -146,6 +154,52 @@ public:
     }
 
     const std::vector<Context>& GetContexts() { return contexts; }
+
+    void Serialize(std::ostream& stream) const {
+        io::LittleEndianWrite(stream, encodingMagicNumber);
+        io::LittleEndianWrite(stream, (uint32_t)realFeatureCount);
+        io::LittleEndianWrite(stream, (uint32_t)categoricalFeatureCount);
+        io::LittleEndianWrite(stream, (uint64_t)outlierDegrees.cols());
+        conceptifier.Serialize(stream);
+        for (const auto& ctx : contexts) ctx.Serialize(stream);
+        inliers.Serialize(stream);
+        for (size_t obj = 0; obj < (size_t)outlierDegrees.cols(); ++obj) {
+            for (size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
+                io::LittleEndianWrite(stream, (double) outlierDegrees(ctxID, obj));
+            }
+        }
+        io::LittleEndianWrite(stream, gradientDescent.GetLearningRate());
+        io::LittleEndianWrite(stream, gradientDescent.GetMomentum());
+        io::LittleEndianWrite(stream, gradientDescent.GetStopThreshold());
+        io::LittleEndianWrite(stream, gradientDescentBalance);
+        for (size_t i = 0; i < contexts.size(); ++i) io::LittleEndianWrite(stream, gradientDescent.GetWeight(i));
+    }
+
+    void Deserialize(std::istream& stream) {
+        if (io::LittleEndianRead<uint32_t>(stream) != encodingMagicNumber)
+            throw std::runtime_error("Parsing error. Invalid format for unsupervised outlier detection model.");
+        realFeatureCount = io::LittleEndianRead<uint32_t>(stream);
+        categoricalFeatureCount = io::LittleEndianRead<uint32_t>(stream);
+        uint64_t objectCount = io::LittleEndianRead<uint64_t>(stream);
+        conceptifier.Deserialize(stream);
+        contexts.clear();
+        for (size_t i = 0; i < conceptifier.GetFeatureSetsCount(); ++i)
+            contexts.push_back(Context(stream));
+        inliers = typename Context::ObjectSet(objectCount);
+        inliers.Deserialize(stream);
+        outlierDegrees = Eigen::MatrixXd(contexts.size(), objectCount);
+        for (size_t obj = 0; obj < objectCount; ++obj) {
+            for (size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
+                outlierDegrees(ctxID, obj) = io::LittleEndianRead<double>(stream);
+            }
+        }
+        double learningRate = io::LittleEndianRead<double>(stream);
+        double momentum = io::LittleEndianRead<double>(stream);
+        double stopThreshold = io::LittleEndianRead<double>(stream);
+        double balance = io::LittleEndianRead<double>(stream);
+        InitializeGradientDescent(learningRate, momentum, stopThreshold, balance, objectCount);
+        for (size_t i = 0; i < contexts.size(); ++i) gradientDescent.SetWeight(i, io::LittleEndianRead<double>(stream));
+    }
 };
 
 }

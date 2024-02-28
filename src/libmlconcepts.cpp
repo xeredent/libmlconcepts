@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/eigen.h>
+#include <fstream>
 #include "PartialContext.h"
 #include "EigenDataset.h"
 #include "UnsupervisedOutlierDetectionModel.h"
@@ -41,7 +42,17 @@ PYBIND11_MODULE(mlconcepts, m) {
             return model.Predict(dataset);
         }, pybind11::arg("X"), pybind11::arg_v("Xc", mlconcepts::DefaultNullMatrixXi, "null matrix"),
            pybind11::return_value_policy::move, "Predicts")
-        .def("estimate_size", &UODUniform::EstimateSize, "Estimates the size in bytes occupied by the object");
+        .def("estimate_size", &UODUniform::EstimateSize, "Estimates the size in bytes occupied by the object")
+        .def("save", [](const UODUniform& m, const std::string& filename) {
+            std::ofstream f(filename, std::ios::out | std::ios::binary);
+            m.Serialize(f);
+            f.close();
+        })
+        .def("load", [](UODUniform& m, const std::string& filename) {
+            std::ifstream f(filename, std::ios::in | std::ios::binary);
+            m.Deserialize(f);
+            f.close();
+        });
 
     pybind11::class_<SODUniform>(m, "SODUniform")
         .def(pybind11::init([](size_t n, bool singletons, bool doubletons, bool full,
@@ -73,6 +84,16 @@ PYBIND11_MODULE(mlconcepts, m) {
             return model.Predict(dataset);
         }, pybind11::arg("X"), pybind11::arg_v("Xc", mlconcepts::DefaultNullMatrixXi, "null matrix"),
            pybind11::return_value_policy::move, "Predicts")
-        .def("estimate_size", &SODUniform::EstimateSize, "Estimates the size in bytes occupied by the object");
+        .def("estimate_size", &SODUniform::EstimateSize, "Estimates the size in bytes occupied by the object")
+        .def("save", [](const SODUniform& m, const std::string& filename) {
+            std::ofstream f(filename, std::ios::out | std::ios::binary);
+            m.Serialize(f);
+            f.close();
+        })
+        .def("load", [](SODUniform& m, const std::string& filename) {
+            std::ifstream f(filename, std::ios::in | std::ios::binary);
+            m.Deserialize(f);
+            f.close();
+        });
 
 }

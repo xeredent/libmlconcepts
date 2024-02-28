@@ -46,6 +46,7 @@ class UniformAssigner : public FeatureAssigner<T> {
     T max;
     int nbins;
 public:
+    UniformAssigner(T _min, T _max, int _nbins) : min(_min), max(_max), nbins(_nbins) {}
     UniformAssigner(const Dataset& dataset, size_t feature, int nbins) {
         min = dataset.MinReal(feature);
         max = dataset.MaxReal(feature);
@@ -66,6 +67,8 @@ public:
         return this->offset + id;
     }
 
+    T GetMin() const { return min; }
+    T GetMax() const { return max; }
 };
 
 /// @brief Quantizes by creating a bin for each value that a feature can take.
@@ -74,6 +77,7 @@ template <class T>
 class ValueAssigner : public FeatureAssigner<T> {
     size_t attrCount;
 public:
+    ValueAssigner(size_t _attrCount) : attrCount(_attrCount) {}
     ValueAssigner(const Dataset& dataset, size_t feature) { 
         attrCount = dataset.CountCategorical(feature);
     }
@@ -97,7 +101,12 @@ protected:
 
 public:
 
+    /// @brief Initializes the quantizer so as to translate a train set into formal contexts.
+    /// @param dataset The trainset.
+    /// @param settings The settings used to generate the quantizer.
     virtual void Initialize(const Dataset& dataset, const ModelSettings& settings) = 0;
+    virtual void Serialize(std::ostream& stream) const = 0;
+    virtual void Deserialize(std::istream& stream) = 0;
 
     FeatureAssigner<T>& GetAssigner(size_t id) {
         return *assigners[id].get();
@@ -110,11 +119,18 @@ public:
         }
         return sz;
     }
+
+    size_t GetAssignersCount() { return assigners.size(); }
 };
 
 template<class T>
 class AllUniformQuantizer : public Quantizer<T> {
+    static constexpr const uint64_t encodingMagicNumber = 0x71616c6c756e6966;
 public:
+    
+    /// @brief Initializes the quantizer so as to translate a train set into formal contexts.
+    /// @param dataset The trainset.
+    /// @param settings The settings used to generate the quantizer.
     void Initialize(const Dataset& dataset, const ModelSettings& settings) override {
         size_t generalBins = settings.Get<size_t>("UniformBins", 32);
         for(size_t i = 0; i < dataset.RealFeatureCount(); ++i) {
@@ -122,14 +138,57 @@ public:
             this->assigners.push_back(std::make_unique<UniformAssigner<T>>(dataset, i, bins));
         }
     }
+    
+    virtual void Serialize(std::ostream& stream) const override {
+        io::LittleEndianWrite(stream, encodingMagicNumber);
+        io::LittleEndianWrite(stream, (uint32_t)this->assigners.size());
+        for (const auto& a : this->assigners) {
+            auto assigner = static_cast<UniformAssigner<T>*>(a.get());
+            io::LittleEndianWrite(stream, assigner->GetMin());
+            io::LittleEndianWrite(stream, assigner->GetMax());
+            io::LittleEndianWrite(stream, (uint32_t)assigner->BinsCount());
+        }
+    }
+
+    virtual void Deserialize(std::istream& stream) override {
+        if (io::LittleEndianRead<uint64_t>(stream) != encodingMagicNumber) 
+            throw std::runtime_error("Parsing error. Invalid format: invalid magic number for all uniform quantizer.");
+        uint32_t count = io::LittleEndianRead<uint32_t>(stream);
+        for (size_t i = 0; i < count; ++i) {
+            T min = io::LittleEndianRead<T>(stream); T max = io::LittleEndianRead<T>(stream); 
+            uint32_t nbins = io::LittleEndianRead<uint32_t>(stream);
+            this->assigners.push_back(std::make_unique<UniformAssigner<T>>(min, max, nbins));
+        }
+    }
 };
 
 template<class T>
 class AllValuesQuantizer : public Quantizer<T> {
+    static constexpr const uint64_t encodingMagicNumber = 0x71616c6c76616c75;
 public:
+
+    /// @brief Initializes the quantizer so as to translate a train set into formal contexts.
+    /// @param dataset The trainset.
+    /// @param settings The settings used to generate the quantizer.
     void Initialize(const Dataset& dataset, const ModelSettings& settings) override {
         for(size_t i = 0; i < dataset.CategoricalFeatureCount(); ++i) {
             this->assigners.push_back(std::make_unique<ValueAssigner<T>>(dataset, i + dataset.RealFeatureCount()));
+        }
+    }
+
+    virtual void Serialize(std::ostream& stream) const override {
+        io::LittleEndianWrite(stream, encodingMagicNumber);
+        io::LittleEndianWrite(stream, (uint32_t)this->assigners.size());
+        for (const auto& a : this->assigners) io::LittleEndianWrite(stream, (uint32_t)a->BinsCount());
+    }
+
+    virtual void Deserialize(std::istream& stream) override {
+        if (io::LittleEndianRead<uint64_t>(stream) != encodingMagicNumber) 
+            throw std::runtime_error("Parsing error. Invalid format: invalid magic number for all uniform quantizer.");
+        uint32_t count = io::LittleEndianRead<uint32_t>(stream);
+        for (size_t i = 0; i < count; ++i) {
+            uint32_t nbins = io::LittleEndianRead<uint32_t>(stream);
+            this->assigners.push_back(std::make_unique<ValueAssigner<T>>(nbins));
         }
     }
 };
