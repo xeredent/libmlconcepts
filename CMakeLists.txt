@@ -18,7 +18,7 @@ include_directories( ${EIGEN3_INCLUDE_DIRS} )
 
 
 # Python module
-pybind11_add_module(mlconcepts src/libmlconcepts.cpp)
+pybind11_add_module(mlconcepts src/python_mlconcepts.cpp)
 
 # Test executables
 add_executable(tests_partial_context tests/tests_partial_context.cpp)

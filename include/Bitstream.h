@@ -75,6 +75,10 @@ public:
 
 namespace io {
 
+/// @brief Writes an integer or a 64bit double to a stream in little endian byte order.
+/// @tparam T The type of the integer (or double).
+/// @param s The stream where to write the value.
+/// @param x The value to write in the stream.
 template<class T> requires (sizeof(T) <= 8)
 void LittleEndianWrite(std::ostream& s, T x) {
     unsigned char buffer[8] = {0};
@@ -101,6 +105,9 @@ void LittleEndianWrite(std::ostream& s, T x) {
     s.write((char*)buffer, sizeof(T));
 }
 
+/// @brief Reads an integer or a 64bit double from a stream in little endian byte order.
+/// @tparam T The type of the integer (or double).
+/// @param s The stream where to read the value from.
 template<class T> requires (sizeof(T) <= 8)
 T LittleEndianRead(std::istream& s) {
     unsigned char buffer[sizeof(T)];

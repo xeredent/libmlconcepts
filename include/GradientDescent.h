@@ -19,7 +19,9 @@ class GradientDescent
     double improvementStopThreshold;
     
 public:
-    GradientDescent(size_t weightCount = 0, 
+    GradientDescent() {}
+
+    GradientDescent(size_t weightCount, 
                     std::function<double(const Vector&)> _loss = [](const Vector&){ return 0.0; }, 
                     std::function<Vector(const Vector&)> _gradient = [](const Vector&) { return Vector::Zero(0); }, 
                     double _learningRate = 0.01,
@@ -30,8 +32,22 @@ public:
         
     }
 
+    GradientDescent(size_t weightRows, size_t weightCols, 
+                    std::function<double(const Vector&)> _loss = [](const Vector&){ return 0.0; }, 
+                    std::function<Vector(const Vector&)> _gradient = [](const Vector&) { return Vector::Zero(0); }, 
+                    double _learningRate = 0.01,
+                    double _momentum = 0.01, double _improvementStopThreshold = 0.0) : 
+                    loss(_loss), gradient(_gradient), weights(Vector::Random(weightRows, weightCols)),
+                    prevStep(Vector::Zero(weightRows, weightCols)), learningRate(_learningRate),
+                    momentum(_momentum), improvementStopThreshold(_improvementStopThreshold) {
+        
+    }
+
     void Reinitialize() {
-        weights = Vector::Random(weights.rows());
+        if (Vector::NumDimensions == 1)
+            weights = Vector::Random(weights.rows());
+        else 
+            weights = Vector::Random(weights.rows(), weights.cols());
     }
     
     void ComputeIteration() {
@@ -48,6 +64,7 @@ public:
     void SetWeights(const Eigen::Ref<const Vector>& v) { weights = v; }
     double GetLoss() { return loss(weights); } 
     double GetWeight(size_t id) const { return weights(id); }
+    double GetWeight(size_t rowID, size_t colID) const { return weights(rowID, colID); }
     const Vector& GetWeights() const { return weights; }
     
     size_t Train(size_t maxEpochs, bool writeLog = false, double writeLogMinInterval = 100.0, std::ostream& stream = std::cout) {

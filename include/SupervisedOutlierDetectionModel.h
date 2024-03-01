@@ -162,7 +162,7 @@ public:
         io::LittleEndianWrite(stream, (uint64_t)outlierDegrees.cols());
         conceptifier.Serialize(stream);
         for (const auto& ctx : contexts) ctx.Serialize(stream);
-        inliers.Serialize(stream);
+        inliers.template SerializeRLE<2,5>(stream);
         for (size_t obj = 0; obj < (size_t)outlierDegrees.cols(); ++obj) {
             for (size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
                 io::LittleEndianWrite(stream, (double) outlierDegrees(ctxID, obj));
@@ -186,7 +186,7 @@ public:
         for (size_t i = 0; i < conceptifier.GetFeatureSetsCount(); ++i)
             contexts.push_back(Context(stream));
         inliers = typename Context::ObjectSet(objectCount);
-        inliers.Deserialize(stream);
+        inliers.template DeserializeRLE<2,5>(stream);
         outlierDegrees = Eigen::MatrixXd(contexts.size(), objectCount);
         for (size_t obj = 0; obj < objectCount; ++obj) {
             for (size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {

@@ -65,13 +65,20 @@ public:
         return closure;
     }
 
+    /// @brief Computes the closure of an object in the context.
+    /// @param objID The ID of the object.
+    /// @return The closure of the object.
+    Bitset<T> ComputeClosure(size_t objID) const {
+        return ComputeClosure(incidence[objID]);
+    }
+
     /// @brief Computes the extension of an attribute set and intersects it with a filter. 
     /// This coincides with the closure of an object when the attribute set is its intension.
     /// @param attrs The attribute set.
     /// @param filter A set which is intersected with the computed extension.
     /// @return The filtered extension of the input attributes.
     Bitset<T> ComputeFilteredClosure(const Bitset<T>& attrs,
-                                                           const Bitset<T>& filter) const {
+                                    const Bitset<T>& filter) const {
         Bitset<T> closure = std::copy(filter);
         MeetExtensions(closure.Data(), attrs);
         return closure;

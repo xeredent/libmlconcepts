@@ -125,6 +125,12 @@ public:
         return *std::max_element(slice.begin(), slice.end()) + 1;
     }
 
+    /// @brief Retrieves the number of values that labels can have. 
+    /// @return The number of labels in the dataset.
+    virtual size_t CountLabels() const {
+        return *std::max_element(labelData.begin(), labelData.end()) + 1;
+    }
+
     /// @brief Retrieves the size of the dataset, i.e., the number of entries it contains.
     /// @return The size of the dataset.
     virtual size_t Size() const override {

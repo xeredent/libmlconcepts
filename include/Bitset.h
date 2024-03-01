@@ -201,7 +201,7 @@ public:
 
     /// @brief Returns a pointer to the underlying data.
     /// @return A pointer to the data in the entry.
-    const T* Data() const {
+    T* Data() {
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
         return data.get();
         #else
@@ -395,9 +395,13 @@ public:
         do {
             if (phaseOne) {
                 sequenceLength = ReadRLESequence<onebitunit>(bstream);
+                if (readBits + sequenceLength > bits * size())
+                    throw std::runtime_error("RLE decoding error: the decoded sequence is bigger than expected");
                 ApplyRLESequenceToDataOne(&wordID, &bitID, sequenceLength);
             } else {
                 sequenceLength = ReadRLESequence<zerobitunit>(bstream);
+                if (readBits + sequenceLength > bits * size())
+                    throw std::runtime_error("RLE decoding error: the decoded sequence is bigger than expected");
                 ApplyRLESequenceToDataZero(&wordID, &bitID, sequenceLength);
             }
             phaseOne = !phaseOne;

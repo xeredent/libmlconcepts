@@ -60,6 +60,10 @@ public:
     /// @return The cardinality of the range of the feature.
     virtual size_t CountCategorical(size_t feature) const = 0;
 
+    /// @brief Retrieves the number of values that labels can have. 
+    /// @return The number of labels in the dataset.
+    virtual size_t CountLabels() const = 0;
+
     /// @brief Retrieves the size of the dataset, i.e., the number of entries it contains.
     /// @return The size of the dataset.
     virtual size_t Size() const = 0;
