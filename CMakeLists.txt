@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.26.0)
 project(mlconcepts VERSION 0.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -18,7 +18,17 @@ include_directories( ${EIGEN3_INCLUDE_DIRS} )
 
 
 # Python module
-pybind11_add_module(mlconcepts src/python_mlconcepts.cpp)
+pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
+add_custom_target(mlconcepts
+                  DEPENDS mlconcepts
+                  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts
+                  COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
+                          ${CMAKE_CURRENT_SOURCE_DIR}/src/python/mlconcepts
+                          ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts
+                  COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+                          $<TARGET_FILE:mlconceptscore>
+                          ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts/)
+add_dependencies(mlconcepts mlconceptscore)
 
 # Test executables
 add_executable(tests_partial_context tests/tests_partial_context.cpp)

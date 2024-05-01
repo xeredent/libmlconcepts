@@ -33,20 +33,4 @@ double SoftmaxCrossEntropy(const Eigen::MatrixBase<Derived>& X, LabelVector labe
     return (-(SoftmaxColumnwise(X)(labels, Eigen::all)).array().log()).sum() / (double) X.cols();
 }
 
-/// @brief Computes the gradient off CrossEntropy(Softmax(WX)) with respect to each w_{i, j}.
-/// @tparam Derived 
-/// @tparam LabelVector 
-/// @param W 
-/// @param X 
-/// @param labels 
-/// @return 
-template<typename Derived, class LabelVector = Eigen::Ref<Eigen::VectorXi> >
-Eigen::MatrixBase<Derived> SoftmaxCrossEntropyGradient(const Eigen::MatrixBase<Derived>& W,
-                                                       const Eigen::MatrixBase<Derived>& X,
-                                                       LabelVector labels) {
-    auto gradient = SoftmaxColumnwise(W * X);
-    gradient(labels, Eigen::all).array() -= 1;
-    return gradient * X.transpose();
-}
-
 }}

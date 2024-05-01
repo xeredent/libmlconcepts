@@ -25,7 +25,7 @@ namespace mlconcepts {
     auto DefaultNullMatrixXi = Eigen::MatrixXi::Zero(0, 0);
 }
 
-PYBIND11_MODULE(mlconcepts, m) {
+PYBIND11_MODULE(mlconceptscore, m) {
     m.doc() = "A module which implements outlier detection and classification algorithms based on formal concepts analysis.";
     pybind11::class_<UODUniform>(m, "UODUniform")
         .def(pybind11::init([](size_t n, bool singletons, bool doubletons, bool full){
