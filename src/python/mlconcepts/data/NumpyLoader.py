@@ -15,4 +15,6 @@ def numpy_load(dataset, categorical = [], labels = None, Xc = None, y = None, se
     :param settings: Ignored.
     :rtype: mlconcepts.data.Dataset
     """
-    return Dataset(dataset, Xc, y)
+    return Dataset(np.asfortranarray(dataset.astype(np.float64)) if dataset is not None else None, 
+                   np.asfortranarray(Xc.astype(np.int32)) if Xc is not None else None, 
+                   y.astype(np.int32) if y is not None else None)
