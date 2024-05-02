@@ -11,13 +11,18 @@ def path_load(dataset, categorical = [], labels = None, Xc = None, y = None, set
     :param Xc: Optional path to a file containing the categorical part of the dataset.
     :param y: Optional path to a file containing the labels part of the dataset.
     :param settings: Depends on what file format is read.
-    For .xlsx, .csv, .json, and .sql files it supports all the optional parameters of the 
-    corresponding pandas reading functions. These parameters should be inserted in a 
-    dictionary called 'parse'.
-    For .mat files, the parameters 'Xname', 'Xcname', 'yname', which default to 'X', 'Xc', and 'y', 
-    respectively, indicate the names of the matlab matrices from which the corresponding parts
-    of the dataset are extracted.
-    :rtype: mlconcepts.data.Dataset
+
+        * For ``.xlsx``, ``.csv``, ``.json``, and ``.sql`` files it supports all the optional parameters of the 
+          corresponding pandas reading functions. These parameters should be inserted in a 
+          dictionary called ``parse``.
+        
+        * For ``.mat`` files, the parameters ``Xname``, ``Xcname``, ``yname``, which default to ``X``, ``Xc``, and ``y``, 
+          respectively, indicate the names of the matlab matrices from which the corresponding parts
+          of the dataset are extracted.
+    
+    :returns: A dataset in the right format for mlconcepts algorithms.
+    :rtype: :class:`mlconcepts.data.Dataset`
+
     :raises OSError: If the file does not exist.
     """
     dataset_path = Path(dataset)

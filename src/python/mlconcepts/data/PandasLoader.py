@@ -7,16 +7,23 @@ def pandas_load(dataset, categorical = [], labels = None, Xc = None, y = None, s
     Loads a pandas dataset to use within the mlconcepts library.
     
     :param dataset: A pandas DataFrame.
+    :type dataset: pandas.core.frame.DataFrame
     :param categorical: A list of features suggested to be categorical. Numerical features in the list will
-    be treated as categorical. It is not necessary to pass also non-numerical features in this parameter.
+        be treated as categorical. It is not necessary to pass also non-numerical features in this parameter.
+    :type categorical: list-like[str]
     :param labels: The name of the column containing the labels.
-    :param Xc: Should be None (ignored).
-    :param y: Optional numpy array containing the labels column. Overrides any column dataset[labels].
+    :type labels: str
+    :param Xc: Ignored.
+    :param y: Optional numpy array containing the labels column. Overrides any column dataset[labels]. 
+        Must be one-dimensional and its elements must be convertible to int32.
+    :type y: numpy.ndarray
     :param settings: Ignored.
-    :rtype: mlconcepts.data.Dataset
+
+    :returns: A dataset in the right format for mlconcepts algorithms.
+    :rtype: :class:`mlconcepts.data.Dataset`
     """
     #Check optional parameters
-    if labels is not None and type(labels) != str:
+    if labels is not None and type(labels) is str:
         raise TypeError("labels should be the name of the column containing the labels")
         if labels not in dataset.columns:
             raise ValueError("Column " + labels + " not found in dataset")
@@ -45,5 +52,5 @@ def pandas_load(dataset, categorical = [], labels = None, Xc = None, y = None, s
              np.asfortranarray(data_labels.astype(np.int32)) if data_labels is not None else None )
     data.set_real_names(data_num.columns)
     data.set_categorical_names(cat_features)
-    data.set_label_name(labels)
+    data.set_labels_name(labels)
     return data

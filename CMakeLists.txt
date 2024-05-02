@@ -19,16 +19,17 @@ include_directories( ${EIGEN3_INCLUDE_DIRS} )
 
 # Python module
 pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
-add_custom_target(mlconcepts
-                  DEPENDS mlconcepts
+add_custom_target(python_mlconcepts ALL
                   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts
                   COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
                           ${CMAKE_CURRENT_SOURCE_DIR}/src/python/mlconcepts
                           ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts
+                  COMMAND ${CMAKE_COMMAND} -E rm -R 
+                          ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts/mlconceptscore
                   COMMAND ${CMAKE_COMMAND} -E copy_if_different 
                           $<TARGET_FILE:mlconceptscore>
                           ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts/)
-add_dependencies(mlconcepts mlconceptscore)
+add_dependencies(python_mlconcepts mlconceptscore)
 
 # Test executables
 add_executable(tests_partial_context tests/tests_partial_context.cpp)
