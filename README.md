@@ -49,7 +49,7 @@ Assuming that a dataset containing a column `outlier` is stored in the file
 ```python
 import mlconcepts
 
-model = SODModel() #creates the model
+model = mlconcepts.SODModel() #creates the model
 model.fit("dataset.csv", labels = "outlier") #trains the model on the dataset
 model.save("model.bin") #compresses and serializes the model to file
 ```
@@ -65,6 +65,7 @@ import sklearn.model_selection
 #Loads the dataset.
 data = mlconcepts.data.load("dataset.csv", labels = "outlier")
 
+#data.split takes as an input any splits generator, such as the ones of sklearn
 for train, test in data.split(sklearn.model_selection.StratifiedKFold(n_splits = 4, shuffle = True)):
 	model = mlconcepts.SODModel(n = 32, #number of bins for quantization
                                 epochs = 1000, #number of training iterations
