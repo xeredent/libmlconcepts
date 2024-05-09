@@ -193,7 +193,7 @@ class Dataset(object):
                           "integers, found " + str(type(names[k]))
                     )
                 if names[k] < self.X.shape[1]:
-                    self.Xnamedict[k] = names[v]
+                    self.Xnamedict[k] = names[k]
                     self.Xnames[names[k]] = k
                 else:
                     raise RuntimeError(
@@ -239,7 +239,7 @@ class Dataset(object):
                           "integers, found " + str(type(names[k]))
                     )
                 if names[k] < self.Xc.shape[1]:
-                    self.Xcnamedict[k] = names[v]
+                    self.Xcnamedict[k] = names[k]
                     self.Xcnames[names[k]] = k
                 else:
                     raise RuntimeError(
@@ -269,7 +269,7 @@ class Dataset(object):
         Raises:
             TypeError: If name is not a string.
         """
-        if type(name) is not str and name is not None:
+        if not isinstance(name, str) and name is not None:
             raise TypeError("The label name must be a string.")
         self.yname = name if name is not None else ""
 

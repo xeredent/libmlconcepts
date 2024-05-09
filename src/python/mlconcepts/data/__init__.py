@@ -12,8 +12,11 @@ Todo:
     Once the c++ algorithms start supporting streaming dataset, 
     mlconcepts.data will support it, too.
 """
-
+import pathlib
+import numpy
 from .Dataset import Dataset, basic_load
+from .PathLoader import path_load
+from .NumpyLoader import numpy_load
 
 data_loaders = {}
 """
@@ -62,10 +65,6 @@ def load(dataset, categorical=[], labels=None, Xc=None, y=None, settings={}):
                                            settings=settings)
     raise ValueError("No available data loader for type " + str(type(dataset)))
 
-import pathlib
-import numpy
-from .PathLoader import path_load
-from .NumpyLoader import numpy_load
 data_loaders[Dataset] = basic_load
 data_loaders[str] = path_load
 data_loaders[pathlib.Path] = path_load
@@ -73,6 +72,6 @@ data_loaders[numpy.ndarray] = numpy_load
 try:
     import pandas
     from .PandasLoader import pandas_load
-    data_loaders[pandas.core.frame.DataFrame] = pandas_load
+    data_loaders[pandas.DataFrame] = pandas_load
 except ImportError:
     pass
