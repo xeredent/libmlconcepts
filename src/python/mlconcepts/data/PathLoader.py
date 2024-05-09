@@ -1,3 +1,5 @@
+"""Implements a data loader for arbitrary files."""
+
 from pathlib import Path
 import numpy as np
 from .Dataset import Dataset
@@ -5,6 +7,7 @@ from .Dataset import Dataset
 def path_load(dataset, categorical = [], labels = None, Xc = None, y = None,
               settings = {}):
     """Loads a dataset to use within the mlconcepts library from a file.
+
     This function should not be called directly, but rather indirectly via
     :func:`mlconcepts.data.load`.
     
@@ -12,6 +15,8 @@ def path_load(dataset, categorical = [], labels = None, Xc = None, y = None,
         dataset: A path to the file.
         categorical (list[str], optional): A list of features suggested to be
             categorical.
+        labels (str, optional): The name of the labels column of the dataset.
+            Used by some data-loaders.
         Xc (str, optional): Optional path to a file containing the categorical
             part of the dataset.
         y (str, optional): Optional path to a file containing the labels part

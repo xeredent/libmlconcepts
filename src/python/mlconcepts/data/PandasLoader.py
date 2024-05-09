@@ -1,10 +1,12 @@
+"""Implements a data loader for pandas dataframes."""
+
 import pandas as pd
 import numpy as np
 from .Dataset import Dataset
 
 def pandas_load(dataset, categorical=[], labels=None, Xc=None, y=None, settings={}):
-    """
-    Loads a pandas dataset to use within the mlconcepts library.
+    """Loads a pandas dataset to use within the mlconcepts library.
+
     This function should not be called directly, but rather indirectly via
     :func:`mlconcepts.data.load`.
     

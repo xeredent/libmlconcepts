@@ -1,10 +1,12 @@
+"""Implements a data loader for numpy matrices."""
+
 import numpy as np
 from .Dataset import Dataset
 
 def numpy_load(dataset, categorical=[], labels=None, Xc=None, y=None,
                settings={}):
-    """
-    Loads a numpy array to use within the mlconcepts library.
+    """Loads a numpy array to use within the mlconcepts library.
+
     This function should not be called directly, but rather indirectly via
     :func:`mlconcepts.data.load`.
     

@@ -1,4 +1,6 @@
-"""This module implements supervised outlier detection models based on
+"""Unsupervised outlier detection model.
+
+This module implements supervised outlier detection models based on
 `this paper <https://www.sciencedirect.com/science/article/pii/S0167923624000290>`_.
 
 Examples:
@@ -47,8 +49,10 @@ import mlconcepts.data
 import numpy as np
 
 class UODModel:
-    """Represents a supervised model that uses formal concept analysis and 
-    interrogative agendas to achieve explainable outlier detection.
+    """Represents an unsupervised model using FCA for outlier detection.
+
+    This interface is a facade for `mlconceptscore`. Its usage is similar to
+    the standard usage of `sklearn` models.
     """
 
     def __init__(self, n = 32, quantizer = "uniform", explorer = "none", 
@@ -159,8 +163,7 @@ class UODModel:
         )
     
     def estimate_size(self):
-        """
-        Estimates the size of the model in bytes.
+        """Estimates the size of the model in bytes.
 
         Returns:
             int: A (slightly lower) estimate of the size of the model.
@@ -168,8 +171,7 @@ class UODModel:
         return self.model.estimate_size()
 
     def save(self, filename):
-        """
-        Compresses the model and writes it into a file.
+        """Compresses the model and writes it into a file.
 
         Args:
             filename: Path to the file which will be written.
@@ -177,8 +179,7 @@ class UODModel:
         self.model.save(filename)
 
     def load(self, filename):
-        """
-        Loads and decompresses the model from a file.
+        """Loads and decompresses the model from a file.
 
         Args:
             filename: Path to the file which will be loaded.

@@ -1,4 +1,6 @@
-"""This package takes care of importing data from common python data 
+"""Data module of the mlconcepts library.
+
+This package takes care of importing data from common python data 
 representation libraries and formats. This is achieved by using
 data loaders, namely the type of each dataframe representation is
 mapped to a function that handles its loading/conversion to the 

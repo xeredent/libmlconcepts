@@ -1,4 +1,6 @@
-"""This module implements supervised outlier detection models based on
+"""Supervised outlier detection model.
+
+This module implements supervised outlier detection models based on
 `this paper <https://www.sciencedirect.com/science/article/pii/S0167923624000290>`_.
 
 Examples:
@@ -48,7 +50,11 @@ import mlconcepts.data
 import numpy as np
 
 class SODModel:
-    """Represents a supervised model using FCA for outlier detection."""
+    """Represents a supervised model using FCA for outlier detection.
+    
+    This interface is a facade for `mlconceptscore`. Its usage is similar to
+    the standard usage of `sklearn` models.
+    """
 
     def __init__(self, n=32, quantizer="uniform", explorer="none",
                  singletons=True, doubletons=True, full=True,

@@ -70,7 +70,9 @@ Todo:
 import numpy as np
 
 class Dataset(object):
-    """Dataset consisting of possibly three parts, namely a numerical part,
+    """Representation of dataset used by the mlconcepts library.
+    
+    Dataset consist of possibly three parts, namely a numerical part,
     a categorical part, and labels for each entry. This class ensures that
     the format required by the core library is used by ``mlconcepts``
     objects. You should not initialize Dataset objects on your own, unless
@@ -87,8 +89,7 @@ class Dataset(object):
     """
 
     def __init__(self, X=None, Xc=None, y=None):
-        """
-        Initializes a Dataset object.
+        """Initializes a Dataset object.
 
         Args:
             X (:obj:`numpy.ndarray`, optional): Numerical part of the dataset.
@@ -166,8 +167,7 @@ class Dataset(object):
         self.yname = ""
 
     def set_real_names(self, names):
-        """
-        Sets the names of the real features.
+        """Sets the names of the real features.
 
         Args:
             names (list[str] or dict[str, int]): A dictionary mapping a feature
@@ -213,8 +213,7 @@ class Dataset(object):
                 self.Xnamedict[names[i]] = i
 
     def set_categorical_names(self, names):
-        """
-        Sets the names of the categorical features.
+        """Sets the names of the categorical features.
 
         Args:
             names (list[str] or dict[str, int]): A dictionary mapping a feature
@@ -259,8 +258,7 @@ class Dataset(object):
                 self.Xcnamedict[names[i]] = i
 
     def set_labels_name(self, name):
-        """
-        Sets the name of the label.
+        """Sets the name of the label.
 
         Args:
             name (:obj:`str`, optional): Name of the label. 
@@ -274,8 +272,7 @@ class Dataset(object):
         self.yname = name if name is not None else ""
 
     def size(self):
-        """
-        Retrieves the size of the dataset.
+        """Retrieves the size of the dataset.
 
         Returns:
             int: The size of the dataset.
@@ -283,8 +280,7 @@ class Dataset(object):
         return self.X.shape[0] if self.X is not None else self.Xc.shape[0]
 
     def split(self, splitter):
-        """
-        Generates train-test splits.
+        """Generates train-test splits.
 
         Args:
             splitter: Object implementing  a method ``split(X, y)`` or 
@@ -339,8 +335,8 @@ class Dataset(object):
 
 def basic_load(dataset, categorical=[], labels=None, Xc=None, y=None,
                settings={}):
-    """
-    Dummy dataset loader.
+    """Dummy dataset loader.
+    
     This function should not be called directly, but rather indirectly via
     :func:`mlconcepts.data.load`.
 
