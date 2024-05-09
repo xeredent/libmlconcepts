@@ -122,7 +122,7 @@ class Dataset(object):
             if X.dtype != "float64":
                 raise ValueError("The numerical part of a dataset must be of "
                                  "dtype float64.")
-            if X.flags.f_contiguous == False:
+            if not X.flags.f_contiguous:
                 raise ValueError("The numerical part of a dataset must be such"
                                  " that flags.f_contiguous is True.")
         if Xc is not None:
@@ -132,7 +132,7 @@ class Dataset(object):
             if Xc.dtype != "int32":
                 raise ValueError("The categorical part of a dataset must be "
                                  "of dtype int32.")
-            if Xc.flags.f_contiguous == False:
+            if not Xc.flags.f_contiguous:
                 raise ValueError("The categorical part of a dataset must be "
                                  "such that flags.f_contiguous is True.")
         if y is not None:
@@ -142,7 +142,7 @@ class Dataset(object):
             if y.dtype != "int32":
                 raise ValueError("The labels part of a dataset must be of "
                                  "dtype int32.")
-            if y.flags.f_contiguous == False:
+            if not y.flags.f_contiguous:
                 raise ValueError("The labels part of a dataset must be such "
                                  "that flags.f_contiguous is True.")
         if X is not None and Xc is not None and X.shape[0] != Xc.shape[0]:
@@ -183,27 +183,28 @@ class Dataset(object):
         """
         if self.X is None:
             return
-        if type(names) is dict:
+        if isinstance(names, dict):
             self.Xnamedict = {}
             self.Xnames = ["" for x in range(self.X.shape[1])]
             for k in names:
-                if type(names[k]) is not int:
+                if not isinstance(names[k], int):
                     raise RuntimeError(
                           "the range of names must contain only "
                           "integers, found " + str(type(names[k]))
                     )
                 if names[k] < self.X.shape[1]:
-                    self.Xnames[k] = v
+                    self.Xnamedict[k] = names[v]
+                    self.Xnames[names[k]] = k
                 else:
                     raise RuntimeError(
                           "index %d is larger than the number of "
-                          "features of X (%d)" % (v, self.X.shape[1])
+                          "features of X (%d)" % (names[k], self.X.shape[1])
                     )
         else:
             self.Xnamedict = {}
             self.Xnames = ["" for x in range(self.X.shape[1])]
             for i in range(len(names)):
-                if type(names[i]) is not str:
+                if not isinstance(names[i], str):
                     raise RuntimeError(
                           "the list of names must contain "
                           "only strings, found " + str(type(names[i]))
@@ -228,22 +229,34 @@ class Dataset(object):
         """
         if self.Xc is None:
             return
-        if type(names) is dict:
+        if isinstance(names, dict):
             self.Xcnamedict = {}
             self.Xcnames = ["" for x in range(self.Xc.shape[1])]
             for k in names:
-                if type(names[k]) is not int:
+                if not isinstance(names[k], int):
                     raise RuntimeError(
                           "the range of names must contain only "
                           "integers, found " + str(type(names[k]))
                     )
                 if names[k] < self.Xc.shape[1]:
-                    self.Xcnames[k] = v
+                    self.Xcnamedict[k] = names[v]
+                    self.Xcnames[names[k]] = k
                 else:
                     raise RuntimeError(
-                          "index %d is larger than the number "
-                          "of features of Xc (%d)" % (v, self.X.shape[1])
+                          "index %d is larger than the number of "
+                          "features of X (%d)" % (names[k], self.Xc.shape[1])
                     )
+        else:
+            self.Xcnamedict = {}
+            self.Xcnames = ["" for x in range(self.Xc.shape[1])]
+            for i in range(len(names)):
+                if not isinstance(names[i], str):
+                    raise RuntimeError(
+                          "the list of names must contain "
+                          "only strings, found " + str(type(names[i]))
+                    )
+                self.Xcnames[i] = names[i]
+                self.Xcnamedict[names[i]] = i
 
     def set_labels_name(self, name):
         """
