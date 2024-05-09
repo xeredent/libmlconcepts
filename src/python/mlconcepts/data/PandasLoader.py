@@ -1,55 +1,65 @@
-import pandas
+import pandas as pd
 import numpy as np
 from .Dataset import Dataset
 
-def pandas_load(dataset, categorical = [], labels = None, Xc = None, y = None, settings = {}):
+def pandas_load(dataset, categorical=[], labels=None, Xc=None, y=None, settings={}):
     """
     Loads a pandas dataset to use within the mlconcepts library.
+    This function should not be called directly, but rather indirectly via
+    :func:`mlconcepts.data.load`.
     
-    :param dataset: A pandas DataFrame.
-    :type dataset: pandas.core.frame.DataFrame
-    :param categorical: A list of features suggested to be categorical. Numerical features in the list will
-        be treated as categorical. It is not necessary to pass also non-numerical features in this parameter.
-    :type categorical: list-like[str]
-    :param labels: The name of the column containing the labels.
-    :type labels: str
-    :param Xc: Ignored.
-    :param y: Optional numpy array containing the labels column. Overrides any column dataset[labels]. 
-        Must be one-dimensional and its elements must be convertible to int32.
-    :type y: numpy.ndarray
-    :param settings: Ignored.
+    Args:
+        dataset (pandas.core.frame.DataFrame): A pandas DataFrame.
+        categorical (list-like[str]): A list of features suggested to be
+            categorical. Numerical features in the list will be treated as
+            categorical. It is not necessary to pass also non-numerical
+            features in this parameter.
+        labels (str): The name of the column containing the labels.
+        Xc: Ignored.
+        y (numpy.ndarray): Optional numpy array containing the labels column.
+            Overrides any column dataset[labels]. Must be one-dimensional and
+            its elements must be convertible to int32.
+        settings: Ignored.
 
-    :returns: A dataset in the right format for mlconcepts algorithms.
-    :rtype: :class:`mlconcepts.data.Dataset`
+    Returns:
+        :class:`mlconcepts.data.Dataset`: A dataset in the right format for
+        mlconcepts algorithms.
     """
     #Check optional parameters
-    if labels is not None and type(labels) is str:
-        raise TypeError("labels should be the name of the column containing the labels")
-        if labels not in dataset.columns:
-            raise ValueError("Column " + labels + " not found in dataset")
+    if labels is not None and not isinstance(labels, str):
+        raise TypeError("labels should be the name of the column containing "
+                        "the labels, found type " + str(type(labels)))
+    if labels is not None and labels not in dataset.columns:
+        raise ValueError("Column " + labels + " not found in dataset")
     
-    #Filter out numerical data, and possibly exclude the labels column
+    # Filter out numerical data, and possibly exclude the labels column
     data_num = dataset.select_dtypes(include="number")
     data_labels = None
-    if y is not None: #y gets priority over the labels column
+    if y is not None:  # y gets priority over the labels column
         data_labels = np.asfortranarray(y).astype(np.int32)
     elif labels is not None and labels in dataset:
         if labels in data_num:
             data_labels = dataset[labels]
+            data_num = data_num.drop(labels, axis=1)
         else:
-            data_labels = pandas.factorize(dataset[labels])[0]
-        data_num = data_num.drop([labels], axis = 1)
+            data_labels = pd.factorize(dataset[labels])[0]
 
-    #Filter out categorical data and factorize it
-    cat_features = list(filter(lambda c: (c in categorical or dataset[c].dtype == "O") and c != labels, dataset.columns))
-    data_cat = pandas.DataFrame({f : pandas.factorize(dataset[f])[0] for f in cat_features})
+    # Filter out categorical data and factorize it
+    cat_features = list(filter(
+                 lambda c: ((c in categorical or dataset[c].dtype == "O")
+                            and 
+                            c != labels), 
+                 dataset.columns
+    ))
+    data_cat = pd.DataFrame(
+             {f: pd.factorize(dataset[f])[0] for f in cat_features}
+    )
     
-    
-
-    #Create dataset object and set feature names
-    data = Dataset( np.asfortranarray(data_num.to_numpy().astype(np.float64)),
-             np.asfortranarray(data_cat.to_numpy().astype(np.int32)),
-             np.asfortranarray(data_labels.astype(np.int32)) if data_labels is not None else None )
+    # Create dataset object and set feature names
+    data = Dataset(np.asfortranarray(data_num.to_numpy().astype(np.float64)),
+                   np.asfortranarray(data_cat.to_numpy().astype(np.int32)),
+                   None if data_labels is None else
+                       np.asfortranarray(data_labels.astype(np.int32)))
     data.set_real_names(data_num.columns)
     data.set_categorical_names(cat_features)
     data.set_labels_name(labels)
