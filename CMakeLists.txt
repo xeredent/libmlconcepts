@@ -37,6 +37,11 @@ add_custom_target(python_mlconcepts ALL
                           ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts/)
 add_dependencies(python_mlconcepts mlconceptscore)
 
+# Linting
+add_custom_target(python_linting
+                  COMMAND ruff check ${CMAKE_CURRENT_SOURCE_DIR}/src/python/mlconcepts)
+
+
 # Test executables
 add_executable(tests_partial_context tests/tests_partial_context.cpp)
 add_executable(tests tests/tests.cpp)
