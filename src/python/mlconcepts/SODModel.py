@@ -2,7 +2,7 @@
 `this paper <https://www.sciencedirect.com/science/article/pii/S0167923624000290>`_.
 
 Examples:
-    Fitting the model on a dataset:::
+    Fitting the model on a dataset::
 
         import mlconcepts
 
