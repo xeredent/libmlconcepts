@@ -1,1 +1,1 @@
-"""Removed in the final package. Placeholder for the c++ module."""
+"""This module is implemented in c++ using `pybind11`."""
