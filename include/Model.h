@@ -9,6 +9,7 @@ class UnsupervisedModel {
 protected:
     ModelSettings settings;
 public:
+    virtual ~UnsupervisedModel() { }
     virtual void Fit(const Dataset& X) = 0;
     virtual Eigen::VectorXd Predict(const Dataset& X) = 0;
     virtual size_t EstimateSize() const = 0;
@@ -21,6 +22,7 @@ class SupervisedModel {
 protected:
     ModelSettings settings;
 public:
+    virtual ~SupervisedModel() { }
     virtual void Fit(const Dataset& Xy) = 0;
     virtual Eigen::VectorXd Predict(const Dataset& X) = 0;
     virtual size_t EstimateSize() const = 0;
@@ -33,6 +35,7 @@ class ClassificationModel {
 protected:
     ModelSettings settings;
 public:
+    virtual ~ClassificationModel() { }
     virtual void Fit(const Dataset& Xy) = 0;
     virtual Eigen::VectorXi Predict(const Dataset& X) = 0;
     virtual Eigen::MatrixXd PredictProba(const Dataset& X) = 0;

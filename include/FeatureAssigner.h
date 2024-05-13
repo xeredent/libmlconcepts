@@ -13,6 +13,8 @@ class FeatureAssigner {
 protected:
     size_t offset;
 public:
+    virtual ~FeatureAssigner() { }
+
     /// @brief Sets an offset applied to each bin produced by the quantizer.
     /// @param off The offset to set.
     void SetOffset(size_t off) { offset = off; }

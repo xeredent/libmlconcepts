@@ -287,7 +287,7 @@ protected:
     /// @param sequence The size of the sequence.
     template<uint8_t bitcount>
     void WriteRLESequence(OutputBitstream& stream, size_t sequence) const {
-        constexpr const int maxvalue = std::pow(2, bitcount) - 1;
+        const int maxvalue = std::pow(2, bitcount) - 1;
         while (sequence > maxvalue) {
             sequence -= std::min(sequence, (size_t)maxvalue);
             stream.WriteBits<bitcount>(0);
@@ -301,7 +301,7 @@ protected:
     /// @return The length of the sequence.
     template<uint8_t bitcount>
     size_t ReadRLESequence(InputBitstream& stream) {
-        constexpr const int maxvalue = std::pow(2, bitcount) - 1;
+        const int maxvalue = std::pow(2, bitcount) - 1;
         size_t count = 0;
         auto data = stream.ReadBits<bitcount>();
         while (data == 0) {

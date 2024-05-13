@@ -127,7 +127,7 @@ public:
 
     /// @brief Retrieves the number of values that labels can have. 
     /// @return The number of labels in the dataset.
-    virtual size_t CountLabels() const {
+    virtual size_t CountLabels() const override {
         return *std::max_element(labelData.begin(), labelData.end()) + 1;
     }
 
@@ -151,7 +151,7 @@ public:
 
     /// @brief Retrieves the number of categorical features of the dataset. 
     /// @return The size of the dataset.
-    virtual size_t CategoricalFeatureCount() const {
+    virtual size_t CategoricalFeatureCount() const override {
         return categoricalData.cols();
     }
 
