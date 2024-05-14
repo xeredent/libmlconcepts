@@ -1,7 +1,8 @@
 # libmlconcepts
 
 This library collects a series of (interpretable) machine learning algorithms
-which are based on FCA. It is composed of three parts:
+which are based on FCA, e.g. [[3]](https://www.sciencedirect.com/science/article/pii/S0167923624000290). 
+It is composed of three parts:
 
 - A c++ header only library that makes heavy use of templates to aim for flexibility, while squeezing as much performance as possible from the machine.
 - The python module `mlconceptscore`, i.e., pybind bindings that expose the implementation of some classes of the c++ library.
@@ -9,28 +10,23 @@ which are based on FCA. It is composed of three parts:
 
 ## Installation
 
+The python package `mlconcepts` can be installed by running
+
+```bash
+pip install --user mlconcepts
+```
+
 ### Dependencies
 
 The three components of this project have different dependencies, and `mlconcepts`
 depends on `mlconceptscore`, which depends on `libmlconcepts`. The external dependecies are as follows:
 
 - `libmlconcepts` depends on `eigen 3.4` and a `c++23` standard library.
-- `mlconceptscore` requires `pybind11`.
+- `mlconceptscore` requires `pybind11` and `numpy`.
 - `mlconcepts` requires the following python libraries:
-	- `numpy`
 	- [Optional] `pandas` to enable pandas' DataFrame loaders, and to read excel, json, sql, and csv files.
 	- [Optional] `h5py` to parse matlab files.
 	- [Optional] `scipy`to parse matlab files up to version 7.3.
-
-### Compile
-To compile `mlconceptscore`, you need `cmake>=3.26`, and a c++23-enabled compiler. To compile all the components of the project run:
-
-```bash
-mkdir build
-cd build
-cmake ..
-make all
-```
 
 ## Basic Usage (mlconcepts)
 
@@ -59,25 +55,39 @@ model.save("model.bin") #compresses and serializes the model to file
 ```python
 import mlconcepts
 import mlconcepts.data
-from sklearn.metrics import roc_auc_score
+import sklearn.metrics
 import sklearn.model_selection
 
 #Loads the dataset.
 data = mlconcepts.data.load("dataset.csv", labels = "outlier")
 
 #data.split takes as an input any splits generator, such as the ones of sklearn
-for train, test in data.split(sklearn.model_selection.StratifiedKFold(n_splits = 4, shuffle = True)):
-	model = mlconcepts.SODModel(n = 32, #number of bins for quantization
-                                epochs = 1000, #number of training iterations
-                                show_training = False) #whether to show training info
+skf = sklearn.model_selection.StratifiedKFold(n_splits = 4, shuffle = True)
+for train, test in data.split(skf):
+	model = mlconcepts.SODModel(
+		    n = 32, #number of bins for quantization
+            epochs = 1000, #number of training iterations
+            show_training = False #whether to show training info
+	)
 	model.fit(train)
 	predictions = model.predict(test)
-	print("AUC: ", roc_auc_score(test.y, predictions))
+	print("AUC: ", sklearn.metrics.roc_auc_score(test.y, predictions))
+```
+
+## Compile mlconceptscore on your own
+To compile `mlconceptscore`, you need `cmake>=3.26`, and a c++23-enabled compiler. To compile all the components of the project run:
+
+```bash
+mkdir build
+cd build
+cmake ..
+make all
 ```
 
 ## Contributing
 
-TODO: write something
+The python code in the repository uses [Google's style guidelines](https://google.github.io/styleguide/).
+Feel free to create any pull requests.
 
 ## License
 All the parts of `libmlconcepts` are licensed under the BSD3 license.
