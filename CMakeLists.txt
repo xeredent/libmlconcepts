@@ -14,13 +14,29 @@ set(CMAKE_CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
 
-find_package (Eigen3 3.4 REQUIRED NO_MODULE)
+# Find Dependencies
+find_package (Eigen3 3.4 NO_MODULE)
+if (NOT TARGET Eigen3::Eigen) #If eigen is not found, download it
+        if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/eigen-3.4.0)
+                if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/eigen3.4.0.zip)
+                        file(DOWNLOAD 
+                             https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.zip 
+                             ${CMAKE_CURRENT_SOURCE_DIR}/eigen3.4.0.zip)
+                endif()
+                execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf 
+                                ${CMAKE_CURRENT_SOURCE_DIR}/eigen3.4.0.zip
+                                WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+        endif()
+        include_directories("eigen-3.4.0")
+else()
+    include_directories( ${EIGEN3_INCLUDE_DIRS} )
+endif ()
+
 find_package(Python COMPONENTS Interpreter Development)
 find_package(pybind11 CONFIG REQUIRED)
 
 include(CTest)
 include_directories("include")
-include_directories( ${EIGEN3_INCLUDE_DIRS} )
 
 
 # Python module
@@ -45,8 +61,6 @@ add_custom_target(python_linting
 # Test executables
 add_executable(tests_partial_context tests/tests_partial_context.cpp)
 add_executable(tests tests/tests.cpp)
-target_link_libraries(tests_partial_context Eigen3::Eigen)
-target_link_libraries(tests Eigen3::Eigen)
 
 # CTest tests
 add_test(NAME bitset64_serialization COMMAND tests_partial_context bitset64_serialization)
