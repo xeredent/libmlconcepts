@@ -14,7 +14,7 @@ on:
 
 defaults:
  run:
-  working-directory: ./app
+  working-directory: ./scripts/pip
 
 permissions:
   contents: read
