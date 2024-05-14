@@ -32,7 +32,6 @@ jobs:
         pip install build
         pip install setuptools
         pip install setuptools_scm
-        pip install pybind
         pip install cmake-build-extension
     - name: Build package
       working-directory: ./scripts/pip
