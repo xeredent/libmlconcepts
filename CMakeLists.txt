@@ -58,3 +58,6 @@ add_test(NAME bitstreams1 COMMAND tests_partial_context bitstreams1)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
+
+# Install
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts/ DESTINATION ${CMAKE_INSTALL_PREFIX})

@@ -1,0 +1,17 @@
+[build-system]
+requires = [
+    "wheel",
+    "setuptools>=45",
+    "setuptools_scm[toml]>=6.0",
+    "cmake>=3.26",
+    "cmake-build-extension",
+    "pybind11",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+root = "../.."
+local_scheme = "dirty-tag"
+
+[tool.cibuildwheel]
+build-frontend = "build"
