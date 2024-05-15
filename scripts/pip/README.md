@@ -4,6 +4,14 @@ This library is a wrapper around [libmlconcepts](https://github/xeredent/libmlco
 a `c++` library which implements a series of (interpretable) machine learning algorithms
 based on FCA, e.g. [[3]](https://www.sciencedirect.com/science/article/pii/S0167923624000290).
 
+Installing `mlconcepts` from a source distribution only requires a `c++23` compiler, all the
+other dependencies are automatically fetched. If `cmake` is not able to find the compiler
+during the installation process, please set the environment variable `CXX` as follows
+
+```bash
+CXX = /path/to/c++/compiler
+```
+
 
 ### Basic example
 Assuming that a dataset containing a column `outlier` is stored in the file 
