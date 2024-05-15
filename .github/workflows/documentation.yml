@@ -18,8 +18,8 @@ jobs:
         run: |
           sphinx-apidoc -o docs/mlconcepts/source/ src/python/mlconcepts/
       - name: Sphinx build
+        working-directory: docs/mlconcepts
         run: |
-          working-directory: docs/mlconcepts
           sphinx-build source build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
