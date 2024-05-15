@@ -82,6 +82,12 @@ for train, test in data.split(skf):
 	print("AUC: ", sklearn.metrics.roc_auc_score(test.y, predictions))
 ```
 
+## Limitations
+
+The current version of `libmlconcepts` cannot work with streamed/batched datasets due to how FCA algorithms work. I have an idea on how to make batching work efficiently for outlier detection, which would also erase any memory requirement for the algorithm, and probably also speed it up a bit. The c++ library is designed in such a way that such a different internal representation of formal contexts and data would become transparent.
+
+I do not know yet how to efficiently batch the classifiers that the `c++` library exposes (and currently are under development).
+
 ## Compile mlconceptscore on your own
 To compile `mlconceptscore`, you need `cmake>=3.26`, and a c++23-enabled compiler. To compile all the components of the project run:
 
