@@ -79,7 +79,7 @@ else:
     source_dir = str(Path(".").absolute().parent.parent)
 
 #Prioritize the cmake bin from cmake's installation
-if os.isdir(cmake.CMAKE_BIN_DIR):
+if os.path.isdir(cmake.CMAKE_BIN_DIR):
     os.environ["PATH"] = cmake.CMAKE_BIN_DIR + ";" + os.environ["PATH"]
 
 setuptools.setup(
