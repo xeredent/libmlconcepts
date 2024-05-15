@@ -7,6 +7,7 @@ from pathlib import Path
 from shutil import copy2
 from typing import Generator, List
 
+import cmake
 import cmake_build_extension
 import setuptools
 import setuptools.command.sdist
@@ -76,6 +77,10 @@ if (Path(".") / "CMakeLists.txt").exists():
 else:
     # Install from sources or build wheel
     source_dir = str(Path(".").absolute().parent.parent)
+
+#Prioritize the cmake bin from cmake's installation
+if os.isdir(cmake.CMAKE_BIN_DIR):
+    os.environ["PATH"] = cmake.CMAKE_BIN_DIR + ";" + os.environ["PATH"]
 
 setuptools.setup(
     ext_modules=[
