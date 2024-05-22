@@ -56,12 +56,23 @@ def pandas_load(dataset, categorical=[], labels=None, Xc=None, y=None, settings=
     data_cat = pd.DataFrame(
              {f: pd.factorize(dataset[f])[0] for f in cat_features}
     )
+
+    # Drop forced categorical features from the numerical part of the dataset
+    data_num.drop(
+        [f for f in categorical if f in data_num.columns], 
+        axis = 1,
+        inplace = True
+    )
     
     # Create dataset object and set feature names
-    data = Dataset(np.asfortranarray(data_num.to_numpy().astype(np.float64)),
-                   np.asfortranarray(data_cat.to_numpy().astype(np.int32)),
-                   None if data_labels is None else
-                       np.asfortranarray(data_labels.astype(np.int32)))
+    data = Dataset(
+        None if data_num.empty else
+            np.asfortranarray(data_num.to_numpy().astype(np.float64)),
+        None if data_cat.empty else
+            np.asfortranarray(data_cat.to_numpy().astype(np.int32)),
+        None if data_labels is None else
+            np.asfortranarray(data_labels.astype(np.int32))
+    )
     data.set_real_names(data_num.columns)
     data.set_categorical_names(cat_features)
     data.set_labels_name(labels)

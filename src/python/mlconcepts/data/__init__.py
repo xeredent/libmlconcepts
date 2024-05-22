@@ -58,6 +58,8 @@ def load(dataset, categorical=[], labels=None, Xc=None, y=None, settings={}):
         mlconcepts.data.Dataset: The dataset in the format required by the 
         mlconcepts library.
     """
+    if isinstance(categorical, str):
+        categorical = [ categorical ]
     if categorical is None:
         categorical = []
     settings["load"] = load
