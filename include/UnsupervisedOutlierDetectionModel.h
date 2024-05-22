@@ -54,8 +54,7 @@ public:
         }
         Eigen::VectorXd predictions = Eigen::VectorXd::Zero(X.Size());
         for (std::size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
-            auto intensions = conceptifier.template ProcessData<AttSet>(X,
-                                                                        ctxID);
+            auto intensions = conceptifier.template ProcessData<AttSet>(X, ctxID);
             for (std::size_t obj = 0; obj < X.Size(); ++obj) {
                 predictions(obj) += std::exp(
                     -std::pow(
@@ -69,6 +68,23 @@ public:
         return predictions;
     }
 
+    /// @brief Computes prediction scores for a given dataset, and outputs
+    ///        raw outlier degree scores.
+    /// @param X The dataset for which to compute predictions.
+    /// @return A pair containing a vector of predictions and a matrix
+    ///         containing for each context (row-wise) and each object
+    ///         in the dataset (column-wise) its outlier degree score.
+    std::pair<Eigen::VectorXd, Eigen::MatrixXd> 
+    PredictExplain(const Dataset& X) {
+        if (realFeatureCount != X.RealFeatureCount() || 
+            categoricalFeatureCount != X.CategoricalFeatureCount()) {
+            throw std::runtime_error("Prediction data column types do not " 
+                                     " match those of the training set");
+        }
+        auto outdegs = ComputeOutlierDegrees(X);
+        auto predictions = outdegs.colwise().sum() / contexts.size();
+        return std::pair(predictions, outdegs);
+    }
 
     /// @brief Estimates the size of the model.
     /// @return Lower bound of the size of the model in bytes.
@@ -82,6 +98,12 @@ public:
     /// @brief Returns the formal contexts generated during training.
     /// @return The formal contexts generated during training.
     const std::vector<Context>& GetContexts() { return contexts; }
+
+    /// @brief Returns a copy of the feature sets vector.
+    /// @return A copy of the feature sets vector.
+    std::vector<typename Conceptifier::FeatureSet> GetFeatureSets() const {
+        return conceptifier.GetFeatureSets();
+    }
 
     /// @brief Writes the model state to a stream.
     /// @param stream The stream the model state is written to.
@@ -106,6 +128,30 @@ public:
         contexts.clear();
         for (std::size_t i = 0; i < conceptifier.GetFeatureSetsCount(); ++i)
             contexts.push_back(Context(stream));
+    }
+
+private:
+
+    /// @brief Computes the outlier degrees vector according to each context
+    ///        for a given dataset. It is supposed to be used during prediction
+    ///        computations.
+    /// @param data The dataset.
+    /// @return A matrix of outlier degrees containing a value for each context
+    ///         and each object in the dataset.
+    Eigen::MatrixXd ComputeOutlierDegrees(const Dataset& data) {
+        Eigen::MatrixXd outdegsVector(contexts.size(), data.Size());
+        for (std::size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
+            auto intensions = conceptifier.template ProcessData<AttSet>(data, ctxID);
+            for (std::size_t obj = 0; obj < data.Size(); ++obj) {
+                outdegsVector(ctxID, obj) = std::exp(
+                    -std::pow(
+                        contexts[ctxID].ComputeClosureSize(intensions[obj]), 
+                        2
+                    )
+                );
+            }
+        }
+        return outdegsVector;
     }
 };
 

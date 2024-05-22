@@ -49,6 +49,8 @@ import mlconcepts.mlconceptscore
 import mlconcepts.data
 import numpy as np
 
+from .ExplanationData import ExplanationData
+
 class SODModel:
     """Represents a supervised model using FCA for outlier detection.
     
@@ -144,6 +146,39 @@ class SODModel:
                    np.empty(shape=(0, 0), dtype=np.float64, order="F"),
                data.Xc if data.Xc is not None else
                    np.empty(shape=(0, 0), dtype=np.int32, order="F")
+        )
+
+    def predict_explain(self, dataset, categorical=[], labels=None, Xc=None,
+                        y=None, settings={}):
+        """Predicts labels for a dataset and returns explanation data.
+
+        Args:
+            dataset: A dataset in some format.
+            categorical: A list of features suggested to be categorical.
+            labels: The name of the labels column in the dataset.
+            Xc: A dataframe containing categorical data.
+            y: A dataframe containing labels data.
+            settings: A dictionary containing custom parameters.
+
+        Returns:
+            :class:`mlconcepts.ExplanationData`:
+            An object containing explanation data and predictions for the whole
+            dataset.
+        """
+        data = mlconcepts.data.load(dataset, categorical=categorical,
+                                    labels=labels, Xc=Xc, y=y,
+                                    settings=settings)
+        pred, outdegs =  self.model.predict_explain(
+               data.X if data.X is not None else
+                   np.empty(shape=(0, 0), dtype=np.float64, order="F"),
+               data.Xc if data.Xc is not None else
+                   np.empty(shape=(0, 0), dtype=np.int32, order="F")
+        )
+        return ExplanationData(
+            predictions = pred,
+            outdegs = outdegs,
+            dataset = data,
+            feature_sets = self.model.get_feature_sets()
         )
 
     def estimate_size(self):

@@ -279,6 +279,40 @@ class Dataset(object):
         """
         return self.X.shape[0] if self.X is not None else self.Xc.shape[0]
 
+    def get_feature_count(self):
+        real_count = self.X.shape[1] if self.X is not None else 0
+        cat_count = self.Xc.shape[1] if self.Xc is not None else 0
+        return real_count + cat_count
+
+    def get_feature_name(self, i):
+        """Converts a feature id to its name.
+
+        Args:
+            i (int): The index of the feature.
+        
+        Returns:
+            str: The name of the feature.
+        """
+        if self.X is not None and i < self.X.shape[1]:
+            return "att" + str(i) if self.Xnames[i] == "" else self.Xnames[i]
+        else:
+            return "att" + str(i) if self.Xcnames[i] == "" else self.Xcnames[i]
+
+    def feature_set_to_str(self, fs):
+        """Converts a feature set to string.
+
+        Args:
+            fs(list[int]): A feature set represented as a list of ids.
+        
+        Returns:
+            str: A string representation of the input feature set.
+        """
+        if len(fs) >= self.get_feature_count():
+            return "full"
+        if len(fs) == 0:
+            return "{}"
+        return "{ " + ", ".join([self.get_feature_name(i) for i in fs]) + " }"
+
     def split(self, splitter):
         """Generates train-test splits.
 

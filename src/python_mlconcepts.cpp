@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include <pybind11/eigen.h>
 #include <fstream>
 #include "PartialContext.h"
@@ -47,6 +48,17 @@ PYBIND11_MODULE(mlconceptscore, m) {
             return model.Predict(dataset);
         }, pybind11::arg("X"), pybind11::arg_v("Xc", mlconcepts::DefaultNullMatrixXi, "null matrix"),
            pybind11::return_value_policy::move, "Predicts")
+        .def("predict_explain", [](UODUniform& model, Eigen::Ref<Eigen::MatrixXd> X, Eigen::Ref<Eigen::MatrixXi> Xc) {
+            EigenDataset<Eigen::MatrixXd, Eigen::MatrixXi> dataset(X, Xc);
+            return model.PredictExplain(dataset);
+        }, pybind11::arg("X"), pybind11::arg_v("Xc", mlconcepts::DefaultNullMatrixXi, "null matrix"),
+           pybind11::return_value_policy::move, "Predicts and returns explanation data.")
+        .def("get_feature_sets", [](UODUniform& model){
+            std::vector<std::vector<std::size_t>> ret;
+            for (const auto& bitset : model.GetFeatureSets())
+                ret.push_back(bitset.ToIndexVector());
+            return ret;
+        }, pybind11::return_value_policy::move, "Returns the attribute sets.")
         .def("estimate_size", &UODUniform::EstimateSize, "Estimates the size in bytes occupied by the object")
         .def("save", [](const UODUniform& m, const std::string& filename) {
             std::ofstream f(filename, std::ios::out | std::ios::binary);
@@ -89,6 +101,18 @@ PYBIND11_MODULE(mlconceptscore, m) {
             return model.Predict(dataset);
         }, pybind11::arg("X"), pybind11::arg_v("Xc", mlconcepts::DefaultNullMatrixXi, "null matrix"),
            pybind11::return_value_policy::move, "Predicts")
+        .def("predict_explain", [](SODUniform& model, Eigen::Ref<Eigen::MatrixXd> X, Eigen::Ref<Eigen::MatrixXi> Xc) {
+            EigenDataset<Eigen::MatrixXd, Eigen::MatrixXi> dataset(X, Xc);
+            return model.PredictExplain(dataset);
+        }, pybind11::arg("X"), pybind11::arg_v("Xc", mlconcepts::DefaultNullMatrixXi, "null matrix"),
+           pybind11::return_value_policy::move, "Predicts and return explanation data.")
+        .def("get_feature_sets", [](SODUniform& model){
+            std::vector<std::vector<std::size_t>> ret;
+            for (const auto& bitset : model.GetFeatureSets())
+                ret.push_back(bitset.ToIndexVector());
+            return ret;
+        }, pybind11::return_value_policy::move, "Returns the attribute sets.")
+        .def("get_weights", &SODUniform::GetWeights, pybind11::return_value_policy::move, "Returns the attribute sets.")
         .def("estimate_size", &SODUniform::EstimateSize, "Estimates the size in bytes occupied by the object")
         .def("save", [](const SODUniform& m, const std::string& filename) {
             std::ofstream f(filename, std::ios::out | std::ios::binary);

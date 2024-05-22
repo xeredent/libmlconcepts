@@ -256,6 +256,14 @@ public:
     Iterator begin() const { return Iterator(*this, 0); }
     Iterator end() const { return Iterator(*this, size() * bits); }
 
+    /// @brief Converts the bitset to a vector of indices.
+    /// @return A vector containing the indices of all the elements in the set.
+    std::vector<std::size_t> ToIndexVector() const {
+        std::vector<std::size_t> ret;
+        for (auto x : *this) ret.push_back(x);
+        return ret;
+    }
+
 protected:
 
     /// @brief Counts the number of zero bits from a given bit in a given word.

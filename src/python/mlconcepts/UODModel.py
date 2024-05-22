@@ -48,6 +48,8 @@ import mlconcepts.mlconceptscore
 import mlconcepts.data
 import numpy as np
 
+from .ExplanationData import ExplanationData
+
 class UODModel:
     """Represents an unsupervised model using FCA for outlier detection.
 
@@ -160,6 +162,50 @@ class UODModel:
                 np.empty(shape=(0, 0), dtype=np.float64, order="F"),
             data.Xc if data.Xc is not None else 
                 np.empty(shape=(0, 0), dtype=np.int32, order="F")
+        )
+    
+    def predict_explain(self, dataset, categorical=[], labels=None, Xc=None, 
+                        y=None, settings={}):
+        """Predicts labels for the given dataset and returns explanation data.
+
+        Args:
+            dataset: A dataset represented in some format. The type/format of the
+                dataset is automatically detected and a data-loader is used
+                accordingly.
+            categorical: A list of features suggested to be categorical. Data
+                loaders should automatically detect categorical features. This
+                parameter is used for those categorical features which are hard to
+                distinguish from numerical ones, e.g., columns containing only 0 or
+                1.
+            labels: The name of the labels column in the dataset.
+            Xc: A dataframe containing categorical data. Some data-loaders may
+                require categorical data to be separated from the numerical one.
+                Specify categorical data here according to the specifications in
+                the data loader.
+            y: A dataframe containing labels data. Some data-loaders may require
+                labels data to be separated from the rest. Specify labels data
+                here according to the specifications in the data loader.
+            settings: A dictionary containing custom parameters that can change
+                between different data loaders.
+
+        Returns:
+            :class:`mlconcepts.ExplanationData`:
+            An object containing explanation data and predictions for the whole
+            dataset.
+        """
+        data = mlconcepts.data.load(dataset, categorical=categorical,
+                                    labels=labels, Xc=Xc, y=y, settings=settings)
+        pred, outdegs = self.model.predict_explain(
+            data.X if data.X is not None else 
+                np.empty(shape=(0, 0), dtype=np.float64, order="F"),
+            data.Xc if data.Xc is not None else 
+                np.empty(shape=(0, 0), dtype=np.int32, order="F")
+        )
+        return ExplanationData(
+            predictions = pred,
+            outdegs = outdegs,
+            dataset = data,
+            feature_sets = self.model.get_feature_sets()
         )
     
     def estimate_size(self):

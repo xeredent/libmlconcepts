@@ -16,12 +16,17 @@ namespace mlconcepts
 ///                              quantization on categorical data.
 template <class CtxSelector, class RealQuantizer, class CategoricalQuantizer>
 class Conceptifier {
+public:
+    typedef typename CtxSelector::FeatureSet FeatureSet;
+
+private:
+
     /// @brief An object which provides methods to generate feature sets used
     ///        to create contexts.
     CtxSelector selector;
 
     /// @brief For each context, its associated feature set is stored here.
-    std::vector<typename CtxSelector::FeatureSet> featureSets;
+    std::vector<FeatureSet> featureSets;
 
     /// @brief For each context, the number of attributes in the context is
     ///        stored here.
@@ -66,14 +71,14 @@ class Conceptifier {
     /// @param ctx The context which is filled.
     /// @param ctxID The ID of the context.
     template<class Context>
-    void FillContext(const CtxSelector::FeatureSet& set,
+    void FillContext(const FeatureSet& set,
                      const Dataset& dataset,
                      Context& ctx,
                      std::size_t ctxID) {
         // This loops over the pairs (f, offset) for each feature in the
         // context. Hence, by extracting the first projection, the loop
         // iterates over all the features. This little dirty trick saves
-        // time with respect to the iterator of CtxSelector::FeatureSet,
+        // time with respect to the iterator of FeatureSet,
         // which will likely be Bitset<T>.
         for (const auto& p : contextOffsets[ctxID]) { 
             auto f = p.first; 
@@ -110,7 +115,7 @@ class Conceptifier {
     /// @param dataset The dataset used to generate the context.
     /// @param contexts The vector where the context is pushed.
     template<class Context>
-    void AddContext(const CtxSelector::FeatureSet& set, 
+    void AddContext(const FeatureSet& set, 
                     const Dataset& dataset, 
                     std::vector<Context>& contexts) {
         // The offsets for the context are computed
@@ -228,7 +233,7 @@ class Conceptifier {
     std::size_t EstimateSize() const {
         std::size_t sz = sizeof(this);
         for (const auto& b : featureSets) sz += b.EstimateSize();
-        sz += sizeof(typename CtxSelector::FeatureSet) * 
+        sz += sizeof(FeatureSet) * 
               (featureSets.capacity() - featureSets.size());
         sz += contextAttributeCount.capacity() * sizeof(std::size_t);
         for (const auto& v : contextOffsets) 
@@ -239,8 +244,14 @@ class Conceptifier {
 
     /// @brief Retrieves the number of feature sets stored in the conceptifier.
     /// @return The number of feature sets used to generate formal contexts.
-    std::size_t GetFeatureSetsCount() {
+    std::size_t GetFeatureSetsCount() const {
         return featureSets.size();
+    }
+
+    /// @brief Returns a copy of the feature sets vector.
+    /// @return A copy of the feature sets vector.
+    std::vector<FeatureSet> GetFeatureSets() const {
+        return featureSets;
     }
 
 protected:
@@ -300,7 +311,7 @@ public:
                                    categoricalQuantizer.GetAssignersCount();
         featureSets.clear();
         for (std::size_t i = 0; i < count; ++i) {
-            typename CtxSelector::FeatureSet newSet(featureCount);
+            FeatureSet newSet(featureCount);
             newSet.Deserialize(stream);
             featureSets.push_back(std::move(newSet));
         }
