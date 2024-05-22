@@ -1,4 +1,4 @@
-"""This module exposes classes that represent explanation data"""
+"""This module exposes classes that represent explanation data."""
 
 import numpy
 
@@ -60,7 +60,7 @@ class ExplanationData(object):
 
     def __init__(self, predictions = numpy.array([]), 
                  outdegs = numpy.array([]), feature_sets = [], dataset = None):
-        """Constructs an ExplanationData object. 
+        """Constructs an ExplanationData object.
 
         Args:
             predictions (numpy.array): An array containing the predictions
@@ -72,7 +72,8 @@ class ExplanationData(object):
             feature_sets (list[list[int]]): A list of feature sets. Each
                 feature set is a list of integers, each representing a feature
                 in the set.
-            Dataset (:class:`mlconcepts.data.Dataset`):
+            dataset (:class:`mlconcepts.data.Dataset`): A dataset object which
+                holds the data for which the predictions have been made.
         """
         self.predictions = predictions
         self.outdegs = outdegs

@@ -280,6 +280,11 @@ class Dataset(object):
         return self.X.shape[0] if self.X is not None else self.Xc.shape[0]
 
     def get_feature_count(self):
+        """Returns the number of features.
+
+        Returns:
+            int: The number of features the data has.
+        """
         real_count = self.X.shape[1] if self.X is not None else 0
         cat_count = self.Xc.shape[1] if self.Xc is not None else 0
         return real_count + cat_count
