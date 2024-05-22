@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26.0)
-project(mlconcepts VERSION 0.1.0 LANGUAGES C CXX)
+project(mlconcepts VERSION 0.1.0 LANGUAGES CXX)
 
 if (NOT EXISTS ${CMAKE_BINARY_DIR}/CMakeCache.txt)
   if (NOT CMAKE_BUILD_TYPE)
