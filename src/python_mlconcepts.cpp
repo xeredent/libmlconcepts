@@ -9,16 +9,16 @@
 
 using namespace mlconcepts;
 
-typedef UnsupervisedODModel<PartialContext<uint64_t>, Conceptifier<ConfigurableContextSelector<uint32_t>, 
-        AllUniformQuantizer<double>, AllValuesQuantizer<size_t>>>
+typedef UnsupervisedODModel<PartialContext<std::uint64_t>, Conceptifier<ConfigurableContextSelector<std::uint32_t>, 
+        AllUniformQuantizer<double>, AllValuesQuantizer<std::size_t>>>
         UODUniform; 
 
-typedef SupervisedODModel<PartialContext<uint64_t>, Conceptifier<ConfigurableContextSelector<uint32_t>, 
-        AllUniformQuantizer<double>, AllValuesQuantizer<size_t>>>
+typedef SupervisedODModel<PartialContext<std::uint64_t>, Conceptifier<ConfigurableContextSelector<std::uint32_t>, 
+        AllUniformQuantizer<double>, AllValuesQuantizer<std::size_t>>>
         SODUniform; 
 
-typedef CNClassifier<uint16_t, PartialContext<uint64_t>, Conceptifier<ConfigurableContextSelector<uint32_t>, 
-        AllUniformQuantizer<double>, AllValuesQuantizer<size_t>>>
+typedef CNClassifier<std::uint16_t, PartialContext<std::uint64_t>, Conceptifier<ConfigurableContextSelector<std::uint32_t>, 
+        AllUniformQuantizer<double>, AllValuesQuantizer<std::size_t>>>
         CNCModel; 
 
 namespace mlconcepts {
@@ -28,7 +28,7 @@ namespace mlconcepts {
 PYBIND11_MODULE(mlconceptscore, m) {
     m.doc() = "A module which implements outlier detection and classification algorithms based on formal concepts analysis.";
     pybind11::class_<UODUniform>(m, "UODUniform")
-        .def(pybind11::init([](size_t n, bool singletons, bool doubletons, bool full){
+        .def(pybind11::init([](std::size_t n, bool singletons, bool doubletons, bool full){
             auto model = UODUniform();
             model.Set("UniformBins", n);
             model.Set("GenerateSingletons", singletons);
@@ -60,9 +60,9 @@ PYBIND11_MODULE(mlconceptscore, m) {
         });
 
     pybind11::class_<SODUniform>(m, "SODUniform")
-        .def(pybind11::init([](size_t n, bool singletons, bool doubletons, bool full,
+        .def(pybind11::init([](std::size_t n, bool singletons, bool doubletons, bool full,
                               double learningRate, double momentum, double stopThreshold,
-                              size_t trainEpochs, bool showTraining, double showTrainingDelay){
+                              std::size_t trainEpochs, bool showTraining, double showTrainingDelay){
             auto model = SODUniform();
             model.Set("UniformBins", n);
             model.Set("GenerateSingletons", singletons);
@@ -102,9 +102,9 @@ PYBIND11_MODULE(mlconceptscore, m) {
         });
 
     pybind11::class_<CNCModel>(m, "CNClassifier")
-        .def(pybind11::init([](size_t n, bool singletons, bool doubletons, bool full,
+        .def(pybind11::init([](std::size_t n, bool singletons, bool doubletons, bool full,
                               double learningRate, double momentum, double stopThreshold,
-                              size_t trainEpochs, bool showTraining, double showTrainingDelay){
+                              std::size_t trainEpochs, bool showTraining, double showTrainingDelay){
             auto model = CNCModel();
             model.Set("UniformBins", n);
             model.Set("GenerateSingletons", singletons);

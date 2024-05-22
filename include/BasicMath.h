@@ -16,21 +16,27 @@ Eigen::MatrixBase<Derived> Softmax(const Eigen::VectorXd& x) {
 
 /// @brief Computes the softmax function columnwise for a given matrix.
 /// @param X The matrix for which the softmax function is applied.
-/// @return A matrix containing the output of the columnwise softmax function application.
+/// @return A matrix containing the output of the columnwise softmax function
+///         application.
 template<typename Derived>
 Eigen::MatrixXd SoftmaxColumnwise(const Eigen::MatrixBase<Derived>& X) {
     auto expX = (X.rowwise() - X.colwise().maxCoeff()).array().exp();
     return expX.array().rowwise() / expX.array().colwise().sum();
 }
 
-/// @brief Given a matrix (classes x samples), applies softmax columnwise and computes cross-entropy.
-/// @tparam LabelVector The type of the vector of labels. Can be Eigen::VectorXi, or any std::vector with integer type.
+/// @brief Given a matrix (classes x samples), applies softmax columnwise and
+///        computes cross-entropy.
+/// @tparam LabelVector The type of the vector of labels. Can be Eigen::VectorXi,
+///         or any std::vector with integer type.
 /// @param X The input matrix.
-/// @param labels The labels representing to which class each object in the sample belongs.
+/// @param labels The labels representing to which class each object in the
+///               sample belongs.
 /// @return The cross entropy loss.
 template<typename Derived, class LabelVector = Eigen::Ref<Eigen::VectorXi> >
 double SoftmaxCrossEntropy(const Eigen::MatrixBase<Derived>& X, LabelVector labels) {
-    return (-(SoftmaxColumnwise(X)(labels, Eigen::all)).array().log()).sum() / (double) X.cols();
+    return (-(SoftmaxColumnwise(X)(labels, Eigen::all)).array().log()).sum() / 
+           (double)X.cols();
 }
 
-}}
+}
+}

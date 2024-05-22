@@ -13,21 +13,22 @@
 
 namespace mlconcepts {
 
-template <class ClassLabel = uint16_t,
-          class Context = PartialContext<uint64_t>,
-          class Conceptifier = Conceptifier<SimpleDoubletonContextSelector<uint32_t>,
-                                            AllUniformQuantizer<double>, AllValuesQuantizer<size_t>>
+template <class ClassLabel = std::uint16_t,
+          class Context = PartialContext<std::uint64_t>,
+          class Conceptifier = Conceptifier<SimpleDoubletonContextSelector<std::uint32_t>,
+                                            AllUniformQuantizer<double>, AllValuesQuantizer<std::size_t>>
          >
 class CNClassifier : public ClassificationModel {
-    static constexpr const uint32_t encodingMagicNumber = 0x73636e63;
+    static constexpr const std::uint32_t encodingMagicNumber = 0x73636e63;
     typedef typename Context::AttributeSet AttSet;
     std::vector<Context> contexts;
     std::vector<ClassLabel> trainSetLabels;
-    size_t classLabelsCount;
+    std::size_t classLabelsCount;
     Conceptifier conceptifier;
-    size_t realFeatureCount; 
-    size_t categoricalFeatureCount;
+    std::size_t realFeatureCount; 
+    std::size_t categoricalFeatureCount;
     GradientDescent<Eigen::MatrixXd> gradientDescent;
+    
     /// @brief A matrix (nclasses * ncontexts) \times nobjects, which contains for each object
     /// and each context a vector containing for each class the percentage of the elements
     /// in the closure of the object (according to the context) which lies in the class.
@@ -40,18 +41,18 @@ class CNClassifier : public ClassificationModel {
         classLabelsCount = Xy.CountLabels();
         assert(classLabelsCount < std::numeric_limits<ClassLabel>::max()); //Consider using bigger class labels
         trainSetLabels.resize(Xy.Size()); trainSetLabels.shrink_to_fit();
-        Xy.ForEachLabel([this](size_t obj, size_t value) { trainSetLabels[obj] = value; });
+        Xy.ForEachLabel([this](std::size_t obj, std::size_t value) { trainSetLabels[obj] = value; });
     }
 
     /// @brief Computes class scores for a dataset (usually a set you want to compute predictions for).
     /// @param Xy The dataset used to compute the class scores.
     Eigen::MatrixXd ComputeClassScores(const Dataset& Xy) {
         Eigen::MatrixXd scores(classLabelsCount * contexts.size(), Xy.Size()); 
-        for (size_t obj = 0; obj < Xy.Size(); ++obj) {
+        for (std::size_t obj = 0; obj < Xy.Size(); ++obj) {
             auto rowID = 0;
-            for (size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
+            for (std::size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
                 auto closure = contexts[ctxID].ComputeClosure(obj);
-                for (size_t cl = 0; cl < classLabelsCount; ++cl) scores(rowID + cl, obj) = 0;
+                for (std::size_t cl = 0; cl < classLabelsCount; ++cl) scores(rowID + cl, obj) = 0;
                 for (auto o : closure) {
                     ++scores(rowID + trainSetLabels[o], obj);
                 }
@@ -68,13 +69,13 @@ class CNClassifier : public ClassificationModel {
     /// It is supposed to be used between training rounds.
     /// @param Xy The dataset used to compute the class scores
     /// @param firstMissingContextID The ID of the first missing context from the class scores matrix
-    void ComputeMissingClassScores(const Dataset& Xy, size_t firstMissingContextID = 0) {
+    void ComputeMissingClassScores(const Dataset& Xy, std::size_t firstMissingContextID = 0) {
         classScores.conservativeResize(classLabelsCount * contexts.size(), Xy.Size()); 
-        for (size_t obj = 0; obj < Xy.Size(); ++obj) {
+        for (std::size_t obj = 0; obj < Xy.Size(); ++obj) {
             auto rowID = firstMissingContextID * classLabelsCount;
-            for (size_t ctxID = firstMissingContextID; ctxID < contexts.size(); ++ctxID) {
+            for (std::size_t ctxID = firstMissingContextID; ctxID < contexts.size(); ++ctxID) {
                 auto closure = contexts[ctxID].ComputeClosure(obj);
-                for (size_t cl = 0; cl < classLabelsCount; ++cl) classScores(rowID + cl, obj) = 0;
+                for (std::size_t cl = 0; cl < classLabelsCount; ++cl) classScores(rowID + cl, obj) = 0;
                 for (auto o : closure) {
                     ++classScores(rowID + trainSetLabels[o], obj);
                 }
@@ -118,10 +119,10 @@ public:
         InitializeLabels(Xy);
         ComputeMissingClassScores(Xy);
         InitializeGradientDescent(Xy);
-        Train(settings.Get("TrainEpochs", (size_t)1000));
+        Train(settings.Get("TrainEpochs", (std::size_t)1000));
     }
 
-    void Train(size_t epochsCount, std::ostream& outputStream = std::cout) {
+    void Train(std::size_t epochsCount, std::ostream& outputStream = std::cout) {
         gradientDescent.Train(epochsCount, settings.Get("ShowTraining", true), 
                               settings.Get("ShowTrainingDelay", 100.0), outputStream);
     }
@@ -131,8 +132,8 @@ public:
             throw std::runtime_error("Prediction data column types do not match those of the training set");
         auto probabilities = PredictProba(X);
         Eigen::VectorXi ret = Eigen::VectorXi::Zero(X.Size());
-        for (size_t obj = 0; obj < X.Size(); ++obj) {
-            for (size_t label = 1; label < classLabelsCount; ++label) {
+        for (std::size_t obj = 0; obj < X.Size(); ++obj) {
+            for (std::size_t label = 1; label < classLabelsCount; ++label) {
                 if (probabilities(label, obj) > probabilities(ret(obj), obj))
                     ret(obj) = label;
             }
@@ -147,8 +148,8 @@ public:
         return math::SoftmaxColumnwise(gradientDescent.GetWeights() * scores);
     }
 
-    size_t EstimateSize() const override {
-        size_t sz = sizeof(*this) + conceptifier.EstimateSize() - sizeof(Conceptifier);
+    std::size_t EstimateSize() const override {
+        std::size_t sz = sizeof(*this) + conceptifier.EstimateSize() - sizeof(Conceptifier);
         for (const auto& c : contexts) sz += c.EstimateSize();
         // This is a very much lower approximation for Eigen objects
         sz += classScores.size() * sizeof(double);

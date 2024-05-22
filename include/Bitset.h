@@ -19,28 +19,28 @@ namespace mlconcepts
 
 /// @brief A bit vector representing a set of objects or features.
 /// @tparam T The type of words forming the bit vector.
-template <class T = uint64_t>
+template <class T = std::uint64_t>
 class Bitset {
-    static constexpr size_t bits = 8 * sizeof(T);
-    static constexpr size_t mask = bits - 1;
+    static constexpr std::size_t bits = 8 * sizeof(T);
+    static constexpr std::size_t mask = bits - 1;
     #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
     std::unique_ptr<T[]> data;
-    size_t dataSize;
+    std::size_t dataSize;
     #else
     std::vector<T> data;
     #endif
 
 protected:
 
-    int GetWordIndex(int i) const noexcept { 
+    inline int GetWordIndex(int i) const noexcept { 
         return (i / bits); 
     }
 
-    int GetBitIndex(int i) const noexcept { 
+    inline int GetBitIndex(int i) const noexcept { 
         return i & mask; 
     }
 
-    inline size_t size() const noexcept {
+    inline std::size_t size() const noexcept {
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
         return dataSize;
         #else
@@ -52,35 +52,37 @@ public:
     /// @brief Constructs an incidence entry, i.e. a bitset of a given size.
     /// @param n The size of the entry.
     Bitset(int n = 0, T initWord = 0) {
-        static_assert(std::is_integral<T>::value, "The word type should be an integer type.");
+        static_assert(std::is_integral<T>::value, 
+                      "The word type should be an integer type.");
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
         dataSize = n / bits + 1;
         data = std::make_unique<T[]>(dataSize);
         #else
-        size_t size = n / bits + (n % bits != 0 ? 1 : 0);
+        std::size_t size = n / bits + (n % bits != 0 ? 1 : 0);
         data.reserve(size);
         data.resize(size);
         data.shrink_to_fit();
         #endif
-        for (size_t i = 0; i < size; ++i)
+        for (std::size_t i = 0; i < size; ++i)
             data[i] = initWord;
     }
 
     /// @brief Constructs an incidence entry and initializes it with some values.
     /// @param n The size of the entry.
     /// @param l The initialization list
-    Bitset(int n, std::initializer_list<size_t> l) {
-        static_assert(std::is_integral<T>::value, "The word type should be an integer type.");
+    Bitset(int n, std::initializer_list<std::size_t> l) {
+        static_assert(std::is_integral<T>::value, 
+                      "The word type should be an integer type.");
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
         dataSize = n / bits + 1;
         data = std::make_unique<T[]>(dataSize);
         #else
-        size_t size = n / bits + (n % bits != 0 ? 1 : 0);
+        std::size_t size = n / bits + (n % bits != 0 ? 1 : 0);
         data.reserve(size);
         data.resize(size);
         data.shrink_to_fit();
         #endif
-        for (size_t i = 0; i < size; ++i)
+        for (std::size_t i = 0; i < size; ++i)
             data[i] = 0;
         for (auto x : l) Add(x);
     }
@@ -89,7 +91,8 @@ public:
     /// @param l The list of words.
     Bitset(std::initializer_list<T> l) {
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
-        throw std::error("initializer list initialization is not allowed in unique_ptr mode")
+        throw std::error("initializer list initialization is not "
+                         " allowed in unique_ptr mode")
         #else
         for (auto x : l) data.push_back(x);
         data.shrink_to_fit();
@@ -98,27 +101,27 @@ public:
     
     /// @brief Returns the size of the entry in words.
     /// @return The size of the entry.
-    size_t WordSize() const noexcept { 
+    std::size_t WordSize() const noexcept { 
         return size();
     }
 
     /// @brief Inserts an element in the entry.
     /// @param i The id of the element.
-    void Add(size_t i) { 
+    void Add(std::size_t i) { 
         data[i / bits] |= ((T)1 << (i & mask));  
     }
 
     /// @brief Gets whether an element is in the entry.
     /// @param i The id of the element.
     /// @return Whether the element is in the entry.
-    bool Contains(size_t i) const { 
+    bool Contains(std::size_t i) const { 
         return data[i / bits] & ((T)1 << (i & mask)); 
     }
 
     /// @brief Retrieves a word in the bit vector.
     /// @param i The id of the word.
     /// @return The word at the specified id.
-    T GetWord(size_t i) const { 
+    T GetWord(std::size_t i) const { 
         return data[i]; 
     }
     
@@ -126,22 +129,25 @@ public:
     /// @param b The entry to test against.
     /// @return Whether the entry is a subset of b.
     bool SubsetOf(Bitset& b) const {
-        for (size_t i = 0; i < size(); ++i) {
+        for (std::size_t i = 0; i < size(); ++i) {
             if (data[i] != (data[i] & b.data[i]))
                 return false;
         }
         return true;
     }
     
-    /// @brief Intersects with another entry and stores the result in the argument.
-    /// @param p The entry to intersect with as a T-array of size at least Size().
+    /// @brief Intersects with another entry and stores the result in the
+    ///        argument.
+    /// @param p The entry to intersect with as a T-array of size at least
+    ///          Size().
     void Intersect(T* p) const {
-        for (size_t i = 0; i < size(); ++i) {
+        for (std::size_t i = 0; i < size(); ++i) {
             p[i] &= data[i];
         }
     }
 
-    /// @brief Intersects in place with another entry. Stores the result in the argument.
+    /// @brief Intersects in place with another entry.
+    ///        Stores the result in the argument.
     /// @param p The entry to intersect with.
     void Intersect(Bitset& e) const {
         Intersect(e.data.data());
@@ -149,15 +155,18 @@ public:
     
     /// @brief Returns the number of elements in the entry.
     /// @return The number of elements in the entry.
-    size_t Size() const {
+    std::size_t Size() const {
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
-        size_t v = 0;
-        for (size_t i = 0; i < data.size(); ++i) {
+        std::size_t v = 0;
+        for (std::size_t i = 0; i < data.size(); ++i) {
             v += std::popcount(data[i]);
         }
         return v;
         #else
-        return std::accumulate(data.begin(), data.end(), 0, [](T a, T b){ return a + std::popcount(b); }); 
+        return std::accumulate(
+            data.begin(), data.end(), 0, 
+            [](T a, T b) { return a + std::popcount(b); }
+        );
         #endif
     }
     
@@ -173,7 +182,8 @@ public:
     /// @brief Writes the entry to a stream as text.
     /// @param f The stream where to write the entry.
     /// @param endline Adds a trailing newline if true.
-    void WriteToStream(std::ostream& f = std::cout, bool endline = false) const { 
+    void WriteToStream(std::ostream& f = std::cout,
+                       bool endline = false) const { 
         for (auto x : std::ranges::views::reverse(data)) 
             f << std::format("{:016X}", x); 
         if (endline) f << std::endl;
@@ -189,8 +199,8 @@ public:
 
     /// @brief Estimates the size of the entry in bytes.
     /// @return The estimated size of the entry in bytes.
-    size_t EstimateSize() const {
-        size_t sz = sizeof(*this);
+    std::size_t EstimateSize() const {
+        std::size_t sz = sizeof(*this);
         #ifdef PARTIAL_CONTEXT_INCIDENCE_ENTRY_USE_UNIQUE_PTR
         sz += dataSize * sizeof(T);
         #else
@@ -212,22 +222,32 @@ public:
     /// @brief Returns a word in the underlying bit vector representation.
     /// @param i The index of the word.
     /// @return The word at index i.
-    T WordAt(size_t i) const { return data[i]; }
+    T WordAt(std::size_t i) const { return data[i]; }
 
-
+    /// @brief Iterator that goes through the elements of a bitset.
     class Iterator
     {
-        size_t index; size_t size; const Bitset<T>& set;
-        void next() { ++index; for (; index < size; ++index) if (set.Contains(index)) break; }
+        std::size_t index; std::size_t size; const Bitset<T>& set;
+        void next() { 
+            ++index; 
+            for (; index < size; ++index) {
+                if (set.Contains(index)) break; 
+            }
+        }
     public:
-        using difference_type = size_t;
-        using element_type = size_t;
-        using pointer = const size_t *;
-        using reference = const size_t &;
-        explicit Iterator(const Bitset<T>& bset, size_t start = 0) : index(start - 1), set(bset) 
-                                                        { size = set.size() * bits; next(); }
+        using difference_type = std::size_t;
+        using element_type = std::size_t;
+        using pointer = const std::size_t *;
+        using reference = const std::size_t &;
+        explicit Iterator(const Bitset<T>& bset, std::size_t start = 0) : 
+                         index(start - 1), set(bset) { 
+            size = set.size() * bits; next(); 
+        }
         Iterator& operator++() { next(); return *this; }
-        Iterator operator++(int) { Iterator retval = *this; ++(*this); return retval; }
+        Iterator operator++(int) { 
+            Iterator retval = *this; ++(*this); 
+            return retval; 
+        }
         bool operator==(Iterator other) const { return index == other.index; }
         bool operator!=(Iterator other) const { return !(*this == other); }
         reference operator*() const { return index; }   
@@ -239,70 +259,102 @@ public:
 protected:
 
     /// @brief Counts the number of zero bits from a given bit in a given word.
-    /// The input parameters are changed to reflect the position of the first bit containing one after the sequence.
+    ///        The input parameters are changed to reflect the position of the
+    ///        first bit containing one after the sequence.
     /// @param wordID The word where to start counting.
     /// @param startingBitID The bit where to start counting.
     /// @return The size of the sequence of bits 0.
-    size_t CountRLEBitsZero(size_t* wordID, size_t* startingBitID) const {
+    std::size_t CountRLEBitsZero(std::size_t* wordID,
+                                 std::size_t* startingBitID) const {
         //Count the 0 bits in the current word
-        size_t sequence = std::min((int)bits - (int)*startingBitID, std::countr_zero(static_cast<typename std::make_unsigned<T>::type>(data[*wordID]) >> *startingBitID));
-        if (sequence + *startingBitID == bits) { //if zeroes continue up to the end of the word
-            for (++*wordID; *wordID < size() && data[*wordID] == 0; ++*wordID) { //count all the zero words
+        std::size_t sequence = std::min(
+            (int)bits - (int)*startingBitID, 
+            std::countr_zero(
+                static_cast<typename std::make_unsigned<T>::type>(data[*wordID]) >>
+                *startingBitID
+            )
+        );
+        //if zeroes continue up to the end of the word
+        if (sequence + *startingBitID == bits) {
+            //count all the zero words
+            for (++*wordID; *wordID < size() && data[*wordID] == 0; ++*wordID) {
                 sequence += bits;
             }
-            if (*wordID < size()) { //count bits in the last word if it contains also ones
-                *startingBitID = std::countr_zero(data[*wordID]); //updates the starting bit to the first one
-                sequence += *startingBitID; //and add it to the sequence
+            //count bits in the last word if it contains also ones
+            if (*wordID < size()) {
+                // updates the starting bit to the first one and add
+                // it to the sequence
+                *startingBitID = std::countr_zero(data[*wordID]);
+                sequence += *startingBitID;
             }
         } else *startingBitID += sequence;
         return sequence;
     }
 
     /// @brief Counts the number of one bits from a given bit in a given word.
-    /// The input parameters are changed to reflect the position of the first bit containing zero after the sequence.
+    ///        The input parameters are changed to reflect the position of the
+    ///        first bit containing zero after the sequence.
     /// @param wordID The word where to start counting.
     /// @param startingBitID The bit where to start counting.
     /// @return The size of the sequence of bits 1.
-    size_t CountRLEBitsOne(size_t* wordID, size_t* startingBitID) const {
+    std::size_t CountRLEBitsOne(std::size_t* wordID,
+                                std::size_t* startingBitID) const {
         //Count the 1 bits in the current word
-        size_t sequence = std::min((int)bits - (int)*startingBitID, std::countr_one(static_cast<typename std::make_unsigned<T>::type>(data[*wordID]) >> *startingBitID));
-        if (sequence + *startingBitID == bits) { //if ones continue up to the end of the word
-            for (++*wordID; *wordID < size() && data[*wordID] == ~(T)0; ++*wordID) { //count all the ~0 words
+        std::size_t sequence = std::min(
+            (int)bits - (int)*startingBitID, 
+            std::countr_one(
+                static_cast<typename std::make_unsigned<T>::type>(data[*wordID]) >> 
+                *startingBitID
+            )
+        );
+        //if ones continue up to the end of the word
+        if (sequence + *startingBitID == bits) {
+            // count all the ~0 words
+            for (++*wordID; *wordID < size() && data[*wordID] == ~(T)0; ++*wordID) {
                 sequence += bits;
             }
-            if (*wordID < size()) { //count bits in the last word if it contains also zeroes
-                *startingBitID = std::countr_one(data[*wordID]); //updates the starting bit to the first one
-                sequence += *startingBitID; //and add it to the sequence
+            // count bits in the last word if it contains also zeroes
+            if (*wordID < size()) {
+                // updates the starting bit to the first one and add
+                // it to the sequence
+                *startingBitID = std::countr_one(data[*wordID]);
+                sequence += *startingBitID;
             }
         } else *startingBitID += sequence;
         return sequence;
     }
 
-    /// @brief Encodes a sequence of bits using RLE. It essentially writes the length of the sequence (as the
-    /// only possible values are zero and one). Given a bitcount for the smallest sequence encoded, every 
-    /// bitcount-integer between [1,2^bitcount - 1] encodes its value as length, and 0 encodes the length
-    /// 2^bitcount - 1 plus the value encoded by the following bitcount-integer in the stream.
-    /// @tparam bitcount The number of bits of the smallest integer encoding length.
+    /// @brief Encodes a sequence of bits using RLE. It essentially writes the
+    ///        length of the sequence (as the only possible values are zero
+    ///        and one). Given a bitcount for the smallest sequence encoded,
+    ///        every bitcount-integer between [1,2^bitcount - 1] encodes its
+    ///        value as length, and 0 encodes the length 2^bitcount - 1 plus
+    ///        the value encoded by the following bitcount-integer in the
+    ///        stream.
+    /// @tparam bitcount The number of bits of the smallest integer encoding
+    ///                  length.
     /// @param stream The stream where to write the sequence.
     /// @param sequence The size of the sequence.
-    template<uint8_t bitcount>
-    void WriteRLESequence(OutputBitstream& stream, size_t sequence) const {
+    template<std::uint8_t bitcount>
+    void WriteRLESequence(OutputBitstream& stream, 
+                          std::size_t sequence) const {
         const int maxvalue = std::pow(2, bitcount) - 1;
         while (sequence > maxvalue) {
-            sequence -= std::min(sequence, (size_t)maxvalue);
+            sequence -= std::min(sequence, (std::size_t)maxvalue);
             stream.WriteBits<bitcount>(0);
         } 
         stream.WriteBits<bitcount>(sequence);
     }
 
     /// @brief Decodes a sequence of bits encoded via RLE.
-    /// @tparam bitcount The number of bits of the smallest integer encoding length.
+    /// @tparam bitcount The number of bits of the smallest integer encoding
+    ///                  length.
     /// @param stream The stream the sequence is read from.
     /// @return The length of the sequence.
-    template<uint8_t bitcount>
-    size_t ReadRLESequence(InputBitstream& stream) {
+    template<std::uint8_t bitcount>
+    std::size_t ReadRLESequence(InputBitstream& stream) {
         const int maxvalue = std::pow(2, bitcount) - 1;
-        size_t count = 0;
+        std::size_t count = 0;
         auto data = stream.ReadBits<bitcount>();
         while (data == 0) {
             data = stream.ReadBits<bitcount>();
@@ -312,12 +364,14 @@ protected:
     }
 
     /// @brief Sets a sequence of bit in the set to zero.
-    /// @param wordID The word where the starting bit is found. Changes the input parameter
-    /// to the word where the sequence ends.
-    /// @param bitID The bit where the sequence starts. Changes the input parameter to the 
-    /// bit id where the sequence ends.
+    /// @param wordID The word where the starting bit is found. Changes the
+    ///               input parameter to the word where the sequence ends.
+    /// @param bitID The bit where the sequence starts. Changes the input
+    ///              parameter to the bit id where the sequence ends.
     /// @param sequence The sequence length.
-    void ApplyRLESequenceToDataZero(size_t* wordID, size_t* bitID, size_t sequence) {
+    void ApplyRLESequenceToDataZero(std::size_t* wordID,
+                                    std::size_t* bitID,
+                                    std::size_t sequence) {
         if (sequence >= bits - *bitID) {
             data[*wordID] &= ((T)1 << *bitID) - 1;
             sequence -= bits - *bitID;
@@ -336,12 +390,14 @@ protected:
     }
 
     /// @brief Sets a sequence of bit in the set to one.
-    /// @param wordID A pointer word where the starting bit is found. Changes the input parameter
-    /// to the word where the sequence ends.
-    /// @param bitID A pointer to the bit where the sequence starts. Changes the input parameter to the 
-    /// bit id where the sequence ends.
+    /// @param wordID A pointer word where the starting bit is found. Changes
+    ///               the input parameter to the word where the sequence ends.
+    /// @param bitID A pointer to the bit where the sequence starts. Changes
+    ///              the input parameter to the bit id where the sequence ends.
     /// @param sequence The sequence length.
-    void ApplyRLESequenceToDataOne(size_t* wordID, size_t* bitID, size_t sequence) {
+    void ApplyRLESequenceToDataOne(std::size_t* wordID,
+                                   std::size_t* bitID,
+                                   std::size_t sequence) {
         if (sequence >= bits - *bitID) {
             data[*wordID] |= ~(((T)1 << *bitID) - 1);
             sequence -= bits - *bitID;
@@ -354,7 +410,8 @@ protected:
             *bitID = sequence;
             if (sequence > 0) data[*wordID] = ((T)1 << *bitID) - 1;
         } else {
-            data[*wordID] = (~data[*wordID] & (((T)1 << *bitID) - 1)) ^ (((T)1 << (*bitID + sequence)) - 1);
+            data[*wordID] = (~data[*wordID] & (((T)1 << *bitID) - 1)) ^ 
+                            (((T)1 << (*bitID + sequence)) - 1);
             *bitID += sequence;
         }
     }
@@ -365,43 +422,64 @@ public:
 
     /// @brief Serializes the bitset using run length encoding.
     /// @param stream The stream where to write the bitset.
-    /// @tparam zerobitunit The word size (in bits) that describes the smallest zero-sequence.
-    /// @tparam onebitunit The word size (in bits) that describes the smallest one-sequence.
+    /// @tparam zerobitunit The word size (in bits) that describes the smallest
+    ///                     zero-sequence.
+    /// @tparam onebitunit The word size (in bits) that describes the smallest
+    ///                    one-sequence.
     template<int zerobitunit, int onebitunit>
     void SerializeRLE(std::ostream& stream) const {
-        size_t wordID = 0, bitID = 0;
+        std::size_t wordID = 0, bitID = 0;
         OutputBitstream bstream(stream);
-        bool phaseOne = data[0] & 1; //Checks whether to start with a sequence of ones
-        bstream.WriteBits<1>((phaseOne) ? 1 : 0); //writes down whether the sequence starts with 0 or 1
-        while (wordID < size() && bitID < bits) { //until there are bits available
-            if (phaseOne)  WriteRLESequence<onebitunit>(bstream, CountRLEBitsOne(&wordID, &bitID));
-            else WriteRLESequence<zerobitunit>(bstream, CountRLEBitsZero(&wordID, &bitID));
+        //Checks whether to start with a sequence of ones
+        bool phaseOne = data[0] & 1;
+        //writes down whether the sequence starts with 0 or 1
+        bstream.WriteBits<1>((phaseOne) ? 1 : 0);
+        while (wordID < size() && bitID < bits) {
+            if (phaseOne) {
+                WriteRLESequence<onebitunit>(bstream, 
+                                             CountRLEBitsOne(&wordID, &bitID));
+            }
+            else {
+                WriteRLESequence<zerobitunit>(bstream,
+                                              CountRLEBitsZero(&wordID, &bitID));
+            }
             phaseOne = !phaseOne;
         }
         bstream.Close();
     }
 
-    /// @brief Parses a run length encoded bitset from a stream. Assumes that the size
-    /// of the bitset is already known in advance and was correctly passed to the constructor
-    /// of this object.
+    /// @brief Parses a run length encoded bitset from a stream. Assumes that
+    ///        the size of the bitset is already known in advance and was 
+    ///        correctly passed to the constructor of this object.
     /// @param stream The stream the bitset is decoded from.
-    /// @tparam zerobitunit The word size (in bits) that describes the smallest zero-sequence.
-    /// @tparam onebitunit The word size (in bits) that describes the smallest one-sequence.
+    /// @tparam zerobitunit The word size (in bits) that describes the smallest
+    ///                     zero-sequence.
+    /// @tparam onebitunit The word size (in bits) that describes the smallest
+    ///                    one-sequence.
     template<int zerobitunit, int onebitunit>
     void DeserializeRLE(std::istream& stream) {
         InputBitstream bstream(stream);
-        bool phaseOne = bstream.ReadBits<1>() == 1; //Gets whether to start with a sequence of RLE-encoded ones or zeroes
-        size_t readBits = 0, sequenceLength = 0, wordID = 0, bitID = 0;
+        //Gets whether to start with a sequence of RLE-encoded ones or zeroes
+        bool phaseOne = bstream.ReadBits<1>() == 1;
+        std::size_t readBits = 0, sequenceLength = 0, wordID = 0, bitID = 0;
         do {
             if (phaseOne) {
                 sequenceLength = ReadRLESequence<onebitunit>(bstream);
-                if (readBits + sequenceLength > bits * size())
-                    throw std::runtime_error("RLE decoding error: the decoded sequence is bigger than expected");
+                if (readBits + sequenceLength > bits * size()) {
+                    throw std::runtime_error(
+                        "RLE decoding error: the decoded sequence " 
+                        " is bigger than expected"
+                    );
+                }
                 ApplyRLESequenceToDataOne(&wordID, &bitID, sequenceLength);
             } else {
                 sequenceLength = ReadRLESequence<zerobitunit>(bstream);
-                if (readBits + sequenceLength > bits * size())
-                    throw std::runtime_error("RLE decoding error: the decoded sequence is bigger than expected");
+                if (readBits + sequenceLength > bits * size()) {
+                    throw std::runtime_error(
+                        "RLE decoding error: the decoded sequence "
+                        " is bigger than expected"
+                    );
+                }
                 ApplyRLESequenceToDataZero(&wordID, &bitID, sequenceLength);
             }
             phaseOne = !phaseOne;
@@ -413,9 +491,9 @@ public:
     /// @param stream The stream where to write the bitset.
     void Serialize(std::ostream& stream) const { SerializeRLE<5, 2>(stream); }
 
-    /// @brief Parses a run length encoded bitset from a stream. Assumes that the size
-    /// of the bitset is already known in advance and was correctly passed to the constructor
-    /// of this object.
+    /// @brief Parses a run length encoded bitset from a stream. Assumes that
+    ///        the size of the bitset is already known in advance and was
+    ///        correctly passed to the constructor of this object.
     /// @param stream The stream the bitset is decoded from.
     void Deserialize(std::istream& stream) { DeserializeRLE<5, 2>(stream); }
 };
@@ -423,7 +501,7 @@ public:
 template<class T>
 bool operator==(const Bitset<T>& b1, const Bitset<T>& b2) {
     if (b1.WordSize() != b2.WordSize()) return false;
-    for (size_t i = 0; i < b1.WordSize(); ++i) 
+    for (std::size_t i = 0; i < b1.WordSize(); ++i) 
         if (b1.WordAt(i) != b2.WordAt(i)) return false;
     return true;
 }
@@ -431,7 +509,7 @@ bool operator==(const Bitset<T>& b1, const Bitset<T>& b2) {
 template<class T>
 bool operator!=(const Bitset<T>& b1, const Bitset<T>& b2) {
     if (b1.WordSize() != b2.WordSize()) return true;
-    for (size_t i = 0; i < b1.WordSize(); ++i) 
+    for (std::size_t i = 0; i < b1.WordSize(); ++i) 
         if (b1.WordAt(i) != b2.WordAt(i)) return true;
     return false;
 }

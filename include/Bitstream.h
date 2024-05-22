@@ -5,25 +5,32 @@
 
 namespace mlconcepts {
 
-/// @brief Gives tools to write any bit-size integers in a typical binary output stream.
+/// @brief Gives tools to write any bit-size integers in a typical binary
+///        output stream.
 class OutputBitstream {
     /// @brief The stream where to write data
     std::ostream& stream;
+
     /// @brief The bits which have not been written to the stream yet.
-    uint8_t remainder;
-    /// @brief The amount of pending bits which are waiting for more data to come before being written.
-    uint8_t remainderSize;
+    std::uint8_t remainder;
+
+    /// @brief The amount of pending bits which are waiting for more data to
+    ///        come before being written.
+    std::uint8_t remainderSize;
 public:
-    inline OutputBitstream(std::ostream& str) : stream(str), remainder(0), remainderSize(0) { }
+    inline OutputBitstream(std::ostream& str) : stream(str), 
+                                                remainder(0), 
+                                                remainderSize(0) { }
 
     /// @brief Writes a given amount of bits into the underlying stream.
     /// Actually writes only multiples of 8 bits and stores the remainder.
     /// @tparam bitcount The amount of bits.
     /// @param bits The data to write.
-    template <uint8_t bitcount> requires (bitcount <= 8) and (bitcount != 0)
-    void WriteBits(uint8_t bits) {
+    template <std::uint8_t bitcount> 
+    requires (bitcount <= 8) and (bitcount != 0)
+    void WriteBits(std::uint8_t bits) {
         if (bitcount + remainderSize >= 8) {
-            uint8_t data = (uint8_t)(remainder | (bits << remainderSize));
+            auto data = (std::uint8_t)(remainder | (bits << remainderSize));
             stream.write(reinterpret_cast<char*>(&data), 1);
             remainder = bits >> (8 - remainderSize);
             remainderSize = bitcount + remainderSize - 8;
@@ -33,39 +40,51 @@ public:
         }
     }
 
-    /// @brief Writes any remainder data by adding trailing zeroes as to reach 8 bits.
-    /// Does not close the underlying stream.
+    /// @brief Writes any remainder data by adding trailing zeroes as to 
+    ///        reach 8 bits. Does not close the underlying stream.
     inline void Close() {
-        if (remainderSize != 0) stream.write(reinterpret_cast<char*>(&remainder), 1);
+        if (remainderSize != 0) 
+            stream.write(reinterpret_cast<char*>(&remainder), 1);
     }
 };
 
-/// @brief Gives tools to read any bit-size integers in a typical binary output stream.
+/// @brief Gives tools to read any bit-size integers in a typical binary
+///        output stream.
 class InputBitstream {
     /// @brief The stream where to write data
     std::istream& stream;
+
     /// @brief The bits which have not been written to the stream yet.
-    uint8_t remainder;
-    /// @brief The amount of pending bits which are waiting for more data to come before being written.
-    uint8_t remainderSize;
+    std::uint8_t remainder;
+
+    /// @brief The amount of pending bits which are waiting for more data to
+    ///        come before being written.
+    std::uint8_t remainderSize;
+
 public:
-    inline InputBitstream(std::istream& str) : stream(str), remainder(0), remainderSize(0) { }
+    /// @brief Constructs an input bitstream.
+    /// @param str The input stream the data is read from.
+    inline InputBitstream(std::istream& str) : stream(str), 
+                                               remainder(0), 
+                                               remainderSize(0) { }
 
     /// @brief Reads a given amount of bits into the underlying stream.
     /// Actually reads only multiples of 8 bits and stores the remainder.
     /// @tparam bitcount The amount of bits.
     /// @param bits The data to write.
-    template <uint8_t bitcount> requires (bitcount <= 8) and (bitcount != 0)
-    uint8_t ReadBits() {
+    template <std::uint8_t bitcount> 
+    requires (bitcount <= 8) and (bitcount != 0)
+    std::uint8_t ReadBits() {
         if (bitcount <= remainderSize) {
-            uint8_t data = remainder & ((1 << bitcount) - 1);
+            std::uint8_t data = remainder & ((1 << bitcount) - 1);
             remainderSize -= bitcount;
             remainder >>= bitcount;
             return data;
         } else {
-            uint8_t newData;
+            std::uint8_t newData;
             stream.read(reinterpret_cast<char*>(&newData), 1);
-            uint8_t data = (remainder | (newData << (remainderSize))) & ((1 << bitcount) - 1);
+            std::uint8_t data = (remainder | (newData << (remainderSize))) & 
+                                ((1 << bitcount) - 1);
             remainder = newData >> (bitcount - remainderSize);
             remainderSize = 8 - (bitcount - remainderSize);
             return data;
@@ -75,8 +94,8 @@ public:
 
 namespace io {
 
-/// @brief Writes an integer or a 64bit double to a stream in little endian byte order.
-/// @tparam T The type of the integer (or double).
+/// @brief Writes an integer to a stream in little endian byte order.
+/// @tparam T The type of the integer.
 /// @param s The stream where to write the value.
 /// @param x The value to write in the stream.
 template<class T> requires (sizeof(T) <= 8)
@@ -105,8 +124,8 @@ void LittleEndianWrite(std::ostream& s, T x) {
     s.write((char*)buffer, sizeof(T));
 }
 
-/// @brief Reads an integer or a 64bit double from a stream in little endian byte order.
-/// @tparam T The type of the integer (or double).
+/// @brief Reads an integer from a stream in little endian byte order.
+/// @tparam T The type of the integer.
 /// @param s The stream where to read the value from.
 template<class T> requires (sizeof(T) <= 8)
 T LittleEndianRead(std::istream& s) {
@@ -117,24 +136,27 @@ T LittleEndianRead(std::istream& s) {
     } else if (sizeof(T) == 2) {
         return buffer[0] | ((T)buffer[1] << 8);
     } else if (sizeof(T) == 4) {
-        return buffer[0] | ((T)buffer[1] << 8) | ((T)buffer[2] << 16) | ((T)buffer[3] << 24);
+        return    buffer[0]        | ((T)buffer[1] << 8) | 
+              ((T)buffer[2] << 16) | ((T)buffer[3] << 24);
     } else if (sizeof(T) == 8) {
-        return     buffer[0]        | ((T)buffer[1] <<  8) | ((T)buffer[2] << 16) | ((T)buffer[3] << 24) |
-               ((T)buffer[4] << 32) | ((T)buffer[5] << 40) | ((T)buffer[6] << 48) | ((T)buffer[7] << 56);
+        return     buffer[0]        | ((T)buffer[1] <<  8) | 
+               ((T)buffer[2] << 16) | ((T)buffer[3] << 24) |
+               ((T)buffer[4] << 32) | ((T)buffer[5] << 40) | 
+               ((T)buffer[6] << 48) | ((T)buffer[7] << 56);
     }
     return T();
 }
 
 template<>
 double LittleEndianRead(std::istream& s) {
-    union {uint64_t v; double d;} var;
-    var.v = LittleEndianRead<uint64_t>(s);
+    union {std::uint64_t v; double d;} var;
+    var.v = LittleEndianRead<std::uint64_t>(s);
     return var.d;
 }
 
 template<>
 void LittleEndianWrite(std::ostream& s, double x) {
-    union {uint64_t v; double d;} var;
+    union {std::uint64_t v; double d;} var;
     var.d = x;
     LittleEndianWrite(s, var.v);
 }
