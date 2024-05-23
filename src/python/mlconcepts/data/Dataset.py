@@ -301,6 +301,7 @@ class Dataset(object):
         if self.X is not None and i < self.X.shape[1]:
             return "att" + str(i) if self.Xnames[i] == "" else self.Xnames[i]
         else:
+            i = i - (self.X.shape[1] if self.X is not None else 0)
             return "att" + str(i) if self.Xcnames[i] == "" else self.Xcnames[i]
 
     def feature_set_to_str(self, fs):
