@@ -9,7 +9,7 @@
 #include <sstream>
 #include <ranges>
 #include <cmath>
-#include <format>
+#include <iomanip>
 #include <algorithm>
 #include <numeric>
 #include "Bitstream.h"
@@ -184,9 +184,11 @@ public:
     /// @param endline Adds a trailing newline if true.
     void WriteToStream(std::ostream& f = std::cout,
                        bool endline = false) const { 
+        auto prevFlags = f.flags();
         for (auto x : std::ranges::views::reverse(data)) 
-            f << std::format("{:016X}", x); 
+            f << std::hex << std::setw(16) << std::setfill('0') << x;
         if (endline) f << std::endl;
+        f.flags(prevFlags);
     }
 
     /// @brief Converts the entry to a string representation.

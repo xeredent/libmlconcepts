@@ -180,7 +180,7 @@ public:
         std::size_t generalBins = settings.Get<std::size_t>("UniformBins", 32);
         for(std::size_t i = 0; i < dataset.RealFeatureCount(); ++i) {
             std::size_t bins = settings.Get<std::size_t>(
-                std::format("UniformBins_{:d}", i), 
+                ("UniformBins_" + std::to_string(i)),
                 generalBins
             );
             this->assigners.push_back(

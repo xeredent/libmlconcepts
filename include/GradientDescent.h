@@ -2,7 +2,6 @@
 #include <functional>
 #include <vector>
 #include <chrono>
-#include <format>
 #include <Eigen/Core>
 
 namespace mlconcepts {
@@ -152,7 +151,7 @@ public:
         double prevLoss = GetLoss();
         auto prevClock = std::chrono::high_resolution_clock::now();
         if (writeLog) 
-            stream << std::format("Train epoch 0, loss {:g}", prevLoss);
+            stream << "Train epoch 0, loss " << prevLoss;
         for (std::size_t epoch = 0; epoch < maxEpochs; ++epoch) { 
             ComputeIteration();
             double newLoss = GetLoss();
@@ -163,19 +162,17 @@ public:
                 if (epoch == maxEpochs - 1 || 
                     writeLogMinInterval <= timeDistance.count()) {
                     prevClock = nowClock;
-                    stream << std::format(
-                        "Train epoch {:d}, loss {:g}         "
-                        "                   \r", epoch + 1, newLoss
-                    );
+                    stream << "Train epoch " << (epoch + 1) << 
+                              ", loss " << newLoss << "         " <<
+                              "                   \r";
                 }
             }
             if (prevLoss - newLoss < improvementStopThreshold && 
                 prevLoss - newLoss >= 0.0) {
                 if (writeLog) {
-                    stream << std::format(
-                        "Train epoch {:d}, loss {:g}            "
-                        "              \n", maxEpochs, prevLoss
-                    );
+                    stream << "Train epoch " << maxEpochs << 
+                              ", loss " << prevLoss << "            "
+                              "              \n";
                 }
                 return epoch + 1;
             }
