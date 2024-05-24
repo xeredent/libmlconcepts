@@ -282,7 +282,7 @@ public:
         conceptifier.Serialize(stream);
         for (const auto& ctx : contexts) ctx.Serialize(stream);
         inliers.template SerializeRLE<2,5>(stream);
-        for (auto obj = 0uz; obj < (std::size_t)outlierDegrees.cols(); ++obj) {
+        for (int obj = 0; obj < outlierDegrees.cols(); ++obj) {
             for (std::size_t ctxID = 0; ctxID < contexts.size(); ++ctxID) {
                 io::LittleEndianWrite(stream, 
                                       (double)outlierDegrees(ctxID, obj));

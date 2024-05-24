@@ -4,6 +4,7 @@ requires = [
     "setuptools>=45",
     "setuptools_scm[toml]>=6.0",
     "cmake>=3.26",
+    "ninja",
     "cmake-build-extension",
     "pybind11",
 ]

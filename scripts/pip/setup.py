@@ -7,6 +7,7 @@ from pathlib import Path
 from shutil import copy2
 from typing import Generator, List
 
+import ninja
 import cmake
 import cmake_build_extension
 import setuptools
@@ -80,7 +81,12 @@ else:
 
 #Prioritize the cmake bin from cmake's installation
 if os.path.isdir(cmake.CMAKE_BIN_DIR):
-    os.environ["PATH"] = cmake.CMAKE_BIN_DIR + ";" + os.environ["PATH"]
+    os.environ["PATH"] = cmake.CMAKE_BIN_DIR + os.pathsep + os.environ["PATH"]
+    
+import shutil
+if os.path.isdir(ninja.BIN_DIR):
+    sys.path.insert(0, ninja.BIN_DIR)
+    os.environ["PATH"] = ninja.BIN_DIR + os.pathsep + os.environ["PATH"]
 
 setuptools.setup(
     ext_modules=[
