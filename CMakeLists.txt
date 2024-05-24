@@ -47,7 +47,7 @@ else()
     include_directories( ${EIGEN3_INCLUDE_DIRS} )
 endif ()
 
-find_package(Python COMPONENTS Interpreter Development)
+find_package(Python COMPONENTS Interpreter Development.Module)
 find_package(pybind11 CONFIG REQUIRED)
 
 include(CTest)
