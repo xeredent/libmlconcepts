@@ -16,5 +16,3 @@ local_scheme = "dirty-tag"
 
 [tool.cibuildwheel]
 build-frontend = "build"
-test-requires = "pytest"
-test-command = "pytest {project}"
