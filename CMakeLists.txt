@@ -59,13 +59,15 @@ include(CTest)
 include_directories("include")
 
 unset(PYBIND_COMPILES CACHE)
-check_cxx_source_compiles("pybind11/pybind11.h" PYBIND_COMPILES)
+check_cxx_source_compiles("#include <pybind11/pybind11.h>
+int main() { return 0; }" PYBIND_COMPILES)
 if (NOT PYBIND_COMPILES)
     add_definitions(-D_hypot=hypot)
 endif()
 
 # Python module
 pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
+target_link_libraries(mlconceptscore INTERFACE ${PYTHON_LIBRARIES})
 add_custom_target(python_mlconcepts ALL
                   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts
                   COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
