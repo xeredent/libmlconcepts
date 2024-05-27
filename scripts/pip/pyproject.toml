@@ -16,4 +16,4 @@ local_scheme = "dirty-tag"
 
 [tool.cibuildwheel]
 build-frontend = "build"
-skip = "cp38-mac* cp36-win*"
+skip = "cp38-mac* cp36-win* cp37-win* cp38-win*"
