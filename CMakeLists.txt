@@ -47,6 +47,7 @@ else()
     include_directories( ${EIGEN3_INCLUDE_DIRS} )
 endif ()
 
+#Find Python
 if (DEFINED Python_EXECUTABLE)
     set(PYBIND11_FINDPYTHON ON)
 else()
@@ -56,7 +57,6 @@ find_package(pybind11 CONFIG REQUIRED)
 
 include(CTest)
 include_directories("include")
-
 
 # Python module
 pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
