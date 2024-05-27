@@ -58,8 +58,8 @@ if(WIN32)
         execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf 
                         ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.12.0.zip
                         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-        add_subdirectory(pybind11-2.12.0)
     endif()
+    add_subdirectory(pybind11-2.12.0)
 else()
     if (DEFINED Python_EXECUTABLE)
         set(PYBIND11_FINDPYTHON ON)
