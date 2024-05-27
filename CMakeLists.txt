@@ -49,8 +49,8 @@ endif ()
 
 #Find Python/Pybind
 if(WIN32)
-    if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/eigen-3.4.0)
-        if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/eigen3.4.0.zip)
+    if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.12.0)
+        if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.12.0zip)
                 file(DOWNLOAD 
                     https://github.com/pybind/pybind11/archive/refs/tags/v2.12.0.zip
                     ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.12.0.zip)
