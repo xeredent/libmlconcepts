@@ -90,6 +90,7 @@ if os.path.isdir(ninja.BIN_DIR):
 
 cmake_options = []
 cmake_options.append("-DPYTHON_EXECUTABLE={}".format(sys.executable))
+cmake_options.append("-DPython_EXECUTABLE={}".format(sys.executable))
 
 setuptools.setup(
     ext_modules=[
