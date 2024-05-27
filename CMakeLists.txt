@@ -74,6 +74,7 @@ include_directories("include")
 
 # Python module
 pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
+target_link_libraries(mlconceptscore PRIVATE pybind11::module)
 add_custom_target(python_mlconcepts ALL
                   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts
                   COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
