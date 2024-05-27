@@ -58,6 +58,12 @@ find_package(pybind11 CONFIG REQUIRED)
 include(CTest)
 include_directories("include")
 
+unset(PYBIND_COMPILES CACHE)
+check_cxx_source_compiles("pybind11/pybind11.h" PYBIND_COMPILES)
+if (NOT PYBIND_COMPILES)
+    add_definitions(-D_hypot=hypot)
+endif()
+
 # Python module
 pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
 add_custom_target(python_mlconcepts ALL
