@@ -47,13 +47,27 @@ else()
     include_directories( ${EIGEN3_INCLUDE_DIRS} )
 endif ()
 
-#Find Python
-if (DEFINED Python_EXECUTABLE)
-    set(PYBIND11_FINDPYTHON ON)
+#Find Python/Pybind
+if(WIN32)
+    if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/eigen-3.4.0)
+        if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/eigen3.4.0.zip)
+                file(DOWNLOAD 
+                    https://github.com/pybind/pybind11/archive/refs/tags/v2.12.0.zip
+                    ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.12.0.zip)
+        endif()
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar xzf 
+                        ${CMAKE_CURRENT_SOURCE_DIR}/pybind11-2.12.0.zip
+                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+        add_subdirectory(pybind11-2.12.0)
+    endif()
 else()
-    find_package(Python COMPONENTS Interpreter Development.Module)
+    if (DEFINED Python_EXECUTABLE)
+        set(PYBIND11_FINDPYTHON ON)
+    else()
+        find_package(Python COMPONENTS Interpreter Development.Module)
+    endif()
+    find_package(pybind11 CONFIG REQUIRED)
 endif()
-find_package(pybind11 CONFIG REQUIRED)
 
 include(CTest)
 include_directories("include")
