@@ -89,7 +89,6 @@ if os.path.isdir(ninja.BIN_DIR):
     os.environ["PATH"] = ninja.BIN_DIR + os.pathsep + os.environ["PATH"]
 
 cmake_options = []
-cmake_options.append("-DPYTHON_EXECUTABLE={}".format(sys.executable))
 cmake_options.append("-DPython_EXECUTABLE={}".format(sys.executable))
 
 setuptools.setup(
