@@ -1,5 +1,6 @@
 import sys
 import pathlib
+import shutil
 import abc
 import os
 
@@ -83,10 +84,12 @@ else:
 if os.path.isdir(cmake.CMAKE_BIN_DIR):
     os.environ["PATH"] = cmake.CMAKE_BIN_DIR + os.pathsep + os.environ["PATH"]
     
-import shutil
 if os.path.isdir(ninja.BIN_DIR):
     sys.path.insert(0, ninja.BIN_DIR)
     os.environ["PATH"] = ninja.BIN_DIR + os.pathsep + os.environ["PATH"]
+
+cmake_options = []
+cmake_options.append("-DPYTHON_EXECUTABLE={}".format(sys.executable))
 
 setuptools.setup(
     ext_modules=[
@@ -95,7 +98,7 @@ setuptools.setup(
             install_prefix="mlconcepts",
             cmake_depends_on=["pybind11"],
             disable_editable=True,
-            cmake_configure_options=[],
+            cmake_configure_options=cmake_options,
             source_dir = source_dir,
             cmake_build_type = "Release"
         )
