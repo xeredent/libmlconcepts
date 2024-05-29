@@ -9,13 +9,9 @@
 name: Upload Python Package
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
-  workflow_run:
-    workflows: ["Tests"]
-    branches: [main]
-    types: 
-      - completed
 
 permissions:
   contents: read
@@ -111,6 +107,7 @@ jobs:
   deploy:
     needs: [build_wheels, build_sdist, tests]
     runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
     environment: pypi
     permissions:
       id-token: write
