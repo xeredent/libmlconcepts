@@ -17,3 +17,7 @@ local_scheme = "dirty-tag"
 [tool.cibuildwheel]
 build-frontend = "build"
 skip = "cp38-mac* cp36-win* *win32"
+
+[tool.cibuildwheel.windows]
+before-build = "pip install delvewheel"
+repair-wheel-command = "delvewheel repair -w {dest_dir} {wheel}"
