@@ -25,6 +25,15 @@ the `AVX` instruction set. All intel CPUs except Celeron and Pentiums from Q1 20
 Q2 2013 are fine. Starting from Tiger Lake, also Celeron and Pentiums support it.
 If your CPU does not support this instruction set, consider installing from a source distribution.
 
+The library also uses optional dependencies to support different dataset formats and representations.
+Install any of the following libraries to enable support to parse excel, json, sql, csv, and matlab files, and to seamlessly use pandas dataframe in the framework:
+
+```bash
+pip install --user pandas scipy h5py
+```
+
+More information can be found in the [Dependencies](#Dependencies) section.
+
 ### Installing from source distribution
 
 Installing `mlconcepts` from a source distribution only requires a `c++23` compiler, all the
