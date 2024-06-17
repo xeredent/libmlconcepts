@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mlconcepts.uod_model &mdash; mlconcepts 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=c0b50fd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            mlconcepts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">mlconcepts</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mlconcepts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mlconcepts.uod_model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mlconcepts.uod_model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Unsupervised outlier detection model.</span>
+
+<span class="sd">This module implements supervised outlier detection models based on</span>
+<span class="sd">`this paper &lt;https://www.sciencedirect.com/science/article/pii/S0167923624000290&gt;`_.</span>
+
+<span class="sd">Examples:</span>
+<span class="sd">    Fitting the model on a dataset::</span>
+
+<span class="sd">        import mlconcepts</span>
+
+<span class="sd">        model = mlconcepts.UODModel()</span>
+<span class="sd">        model.fit(&quot;dataset.csv&quot;)</span>
+
+<span class="sd">    The method :meth:`mlconcepts.UODModel.fit` accepts all the arguments that</span>
+<span class="sd">    :func:`mlconcepts.data.load` accepts; indeed, it relays to `load` the</span>
+<span class="sd">    responsibility to load a dataset. Please see :mod:`mlconcepts.data` to see</span>
+<span class="sd">    what formats are supported and how to add support for new formats.</span>
+
+<span class="sd">    The following example shows how to generate different train-test splits</span>
+<span class="sd">    using `sklearn`. This example assumes that the dataset </span>
+<span class="sd">    `mammography.mat &lt;https://odds.cs.stonybrook.edu/mammography-dataset/&gt;`_ is</span>
+<span class="sd">    in the working directory.</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        import mlconcepts</span>
+<span class="sd">        import mlconcepts.data</span>
+<span class="sd">        import sklearn.metrics</span>
+<span class="sd">        import sklearn.model_selection</span>
+
+<span class="sd">        data = mlconcepts.data.load(&quot;mammography.mat&quot;)</span>
+
+<span class="sd">        skf = sklearn.model_selection.StratifiedKFold(n_splits = 4)</span>
+<span class="sd">        for train, test in data.split(skf):</span>
+<span class="sd">            model = mlconcepts.UODModel(</span>
+<span class="sd">                n = 32, # quantize numerical features in 32 uniform bins</span>
+<span class="sd">                doubletons = True # generate all feature pairs</span>
+<span class="sd">            )</span>
+<span class="sd">            model.fit(train)</span>
+<span class="sd">            predictions = model.predict(test)</span>
+<span class="sd">            print(&quot;AUC: &quot; + str(sklearn.metrics.roc_auc_score(test.y, predictions)))</span>
+
+
+<span class="sd">Todo:</span>
+<span class="sd">    Add python methods to access explanation data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">mlconcepts.mlconceptscore</span>
+<span class="kn">import</span> <span class="nn">mlconcepts.data</span>
+
+<span class="kn">from</span> <span class="nn">.explanation_data</span> <span class="kn">import</span> <span class="n">ExplanationData</span>
+
+<div class="viewcode-block" id="UODModel">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel">[docs]</a>
+<span class="k">class</span> <span class="nc">UODModel</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents an unsupervised model using FCA for outlier detection.</span>
+
+<span class="sd">    This interface is a facade for `mlconceptscore`. Its usage is similar to</span>
+<span class="sd">    the standard usage of `sklearn` models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="UODModel.__init__">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">quantizer</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="n">explorer</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span> 
+                 <span class="n">singletons</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">doubletons</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">full</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs a supervised outlier detection model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            n (int): The default number of bins for uniform quantization. </span>
+<span class="sd">                Defaults to 32.</span>
+<span class="sd">            quantizer (str): The quantizer for real features. The available</span>
+<span class="sd">                options are:</span>
+
+<span class="sd">                * &#39;uniform&#39; for a quantizer that breaks the range of the</span>
+<span class="sd">                  feature into uniformly sized bins.</span>
+
+<span class="sd">                Defaults to &#39;uniform&#39;.</span>
+<span class="sd">            explorer (str): Specifies the feature set exploration strategy.</span>
+<span class="sd">                The available options are:</span>
+
+<span class="sd">                * &#39;none&#39; for no exploration.</span>
+
+<span class="sd">                Defaults to &#39;none&#39;.</span>
+<span class="sd">            singletons (bool): Whether singleton agendas should be generated.</span>
+<span class="sd">                Defaults to True.</span>
+<span class="sd">            doubletons (bool): Whether doubleton agendas should be generated.</span>
+<span class="sd">                Default to True.</span>
+<span class="sd">            full (bool): Whether the full agenda should be generated. </span>
+<span class="sd">                Defaults to True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">quantizer</span> <span class="o">==</span> <span class="s2">&quot;uniform&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">explorer</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">mlconceptscore</span><span class="o">.</span><span class="n">UODUniform</span><span class="p">(</span>
+                           <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">singletons</span><span class="o">=</span><span class="n">singletons</span><span class="p">,</span> <span class="n">doubletons</span><span class="o">=</span><span class="n">doubletons</span><span class="p">,</span>
+                           <span class="n">full</span><span class="o">=</span><span class="n">full</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The only available value for the explorer is &#39;none&#39;&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The only available value for the quantizer is &#39;uniform&#39;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UODModel.fit">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="p">[],</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+        <span class="n">settings</span><span class="o">=</span><span class="p">{}):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Trains the model on a given dataset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset: The dataset to train the model on. It could be represented in</span>
+<span class="sd">                various formats. The type/format of the dataset is automatically</span>
+<span class="sd">                detected and a data-loader is used accordingly.</span>
+<span class="sd">            categorical: A list of features suggested to be categorical. Data</span>
+<span class="sd">                loaders should automatically detect categorical features. This</span>
+<span class="sd">                parameter is used for those categorical features which are hard</span>
+<span class="sd">                to distinguish from numerical ones, e.g., columns containing only</span>
+<span class="sd">                0 or 1.</span>
+<span class="sd">            labels: The name of the labels column in the dataset.</span>
+<span class="sd">            Xc: A dataframe containing categorical data. Some data-loaders may</span>
+<span class="sd">                require categorical data to be separated from the numerical one.</span>
+<span class="sd">                Specify categorical data here according to the specifications in</span>
+<span class="sd">                the data loader.</span>
+<span class="sd">            y: A dataframe containing labels data. Some data-loaders may require</span>
+<span class="sd">                labels data to be separated from the rest. Specify labels data</span>
+<span class="sd">                here according to the specifications in the data loader.</span>
+<span class="sd">            settings: A dictionary containing custom parameters that can vary</span>
+<span class="sd">                between different data loaders.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="n">categorical</span><span class="p">,</span> 
+                                    <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="n">Xc</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> 
+                    <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">),</span>
+                    <span class="n">data</span><span class="o">.</span><span class="n">Xc</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> 
+                    <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="UODModel.predict">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel.predict">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="p">[],</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">settings</span><span class="o">=</span><span class="p">{}):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predicts labels for the given dataset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset: A dataset represented in some format. The type/format of the</span>
+<span class="sd">                dataset is automatically detected and a data-loader is used</span>
+<span class="sd">                accordingly.</span>
+<span class="sd">            categorical: A list of features suggested to be categorical. Data</span>
+<span class="sd">                loaders should automatically detect categorical features. This</span>
+<span class="sd">                parameter is used for those categorical features which are hard to</span>
+<span class="sd">                distinguish from numerical ones, e.g., columns containing only 0 or</span>
+<span class="sd">                1.</span>
+<span class="sd">            labels: The name of the labels column in the dataset.</span>
+<span class="sd">            Xc: A dataframe containing categorical data. Some data-loaders may</span>
+<span class="sd">                require categorical data to be separated from the numerical one.</span>
+<span class="sd">                Specify categorical data here according to the specifications in</span>
+<span class="sd">                the data loader.</span>
+<span class="sd">            y: A dataframe containing labels data. Some data-loaders may require</span>
+<span class="sd">                labels data to be separated from the rest. Specify labels data</span>
+<span class="sd">                here according to the specifications in the data loader.</span>
+<span class="sd">            settings: A dictionary containing custom parameters that can change</span>
+<span class="sd">                between different data loaders.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.ndarray[numpy.float64[m, 1], flags.writeable, flags.f_contiguous]:</span>
+<span class="sd">            A vector containing the predictions of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="n">categorical</span><span class="p">,</span>
+                                    <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="n">Xc</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">Xc</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="UODModel.predict_explain">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel.predict_explain">[docs]</a>
+    <span class="k">def</span> <span class="nf">predict_explain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="p">[],</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                        <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{}):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Predicts labels for the given dataset and returns explanation data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset: A dataset represented in some format. The type/format of the</span>
+<span class="sd">                dataset is automatically detected and a data-loader is used</span>
+<span class="sd">                accordingly.</span>
+<span class="sd">            categorical: A list of features suggested to be categorical. Data</span>
+<span class="sd">                loaders should automatically detect categorical features. This</span>
+<span class="sd">                parameter is used for those categorical features which are hard to</span>
+<span class="sd">                distinguish from numerical ones, e.g., columns containing only 0 or</span>
+<span class="sd">                1.</span>
+<span class="sd">            labels: The name of the labels column in the dataset.</span>
+<span class="sd">            Xc: A dataframe containing categorical data. Some data-loaders may</span>
+<span class="sd">                require categorical data to be separated from the numerical one.</span>
+<span class="sd">                Specify categorical data here according to the specifications in</span>
+<span class="sd">                the data loader.</span>
+<span class="sd">            y: A dataframe containing labels data. Some data-loaders may require</span>
+<span class="sd">                labels data to be separated from the rest. Specify labels data</span>
+<span class="sd">                here according to the specifications in the data loader.</span>
+<span class="sd">            settings: A dictionary containing custom parameters that can change</span>
+<span class="sd">                between different data loaders.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`mlconcepts.ExplanationData`:</span>
+<span class="sd">            An object containing explanation data and predictions for the whole</span>
+<span class="sd">            dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="n">categorical</span><span class="p">,</span>
+                                    <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="n">Xc</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+        <span class="n">pred</span><span class="p">,</span> <span class="n">outdegs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">predict_explain</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">),</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">Xc</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> 
+                <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ExplanationData</span><span class="p">(</span>
+            <span class="n">predictions</span> <span class="o">=</span> <span class="n">pred</span><span class="p">,</span>
+            <span class="n">outdegs</span> <span class="o">=</span> <span class="n">outdegs</span><span class="p">,</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="n">data</span><span class="p">,</span>
+            <span class="n">feature_sets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">get_feature_sets</span><span class="p">()</span>
+        <span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="UODModel.estimate_size">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel.estimate_size">[docs]</a>
+    <span class="k">def</span> <span class="nf">estimate_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimates the size of the model in bytes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: A (slightly lower) estimate of the size of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">estimate_size</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="UODModel.save">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel.save">[docs]</a>
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compresses the model and writes it into a file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename: Path to the file which will be written.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UODModel.load">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.uod_model.UODModel.load">[docs]</a>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads and decompresses the model from a file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename: Path to the file which will be loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+</div>
+
+
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mattia Panettiere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

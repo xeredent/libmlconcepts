@@ -1,0 +1,53 @@
+mlconcepts.data package
+=======================
+
+Submodules
+----------
+
+mlconcepts.data.dataset module
+------------------------------
+
+.. automodule:: mlconcepts.data.dataset
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mlconcepts.data.numpy\_load module
+----------------------------------
+
+.. automodule:: mlconcepts.data.numpy_load
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mlconcepts.data.pandas\_load module
+-----------------------------------
+
+.. automodule:: mlconcepts.data.pandas_load
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mlconcepts.data.path\_load module
+---------------------------------
+
+.. automodule:: mlconcepts.data.path_load
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mlconcepts.data.test\_data module
+---------------------------------
+
+.. automodule:: mlconcepts.data.test_data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mlconcepts.data
+   :members:
+   :undoc-members:
+   :show-inheritance:

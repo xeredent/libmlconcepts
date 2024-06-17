@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mlconcepts.data.dataset &mdash; mlconcepts 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=c0b50fd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mlconcepts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mlconcepts</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mlconcepts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../data.html">mlconcepts.data</a></li>
+      <li class="breadcrumb-item active">mlconcepts.data.dataset</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mlconcepts.data.dataset</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;:class:`Dataset` objects hold data to be used by the mlconcepts package.</span>
+
+<span class="sd">Data can be imported from common python data </span>
+<span class="sd">representation libraries and formats. This is achieved by using</span>
+<span class="sd">data loaders, namely the type of each dataframe representation is</span>
+<span class="sd">mapped to a function that handles its loading/conversion to the </span>
+<span class="sd">right format for the c++ module.</span>
+
+<span class="sd">Datasets should be loaded using the function :func:`mlconcepts.data.load` which</span>
+<span class="sd">takes care of selecting the correct data loader depending on the passed</span>
+<span class="sd">information.</span>
+
+<span class="sd">Examples:</span>
+<span class="sd">    The following code snippets show how to load datasets formats.</span>
+<span class="sd">    We assume that our data has two numerical features, &quot;feature1&quot; and </span>
+<span class="sd">    &quot;feature2&quot;, and a cateogorical feature &quot;color&quot;. </span>
+
+<span class="sd">    *Pandas*. The type of the feature in pandas is automatically inferred:</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        import pandas</span>
+<span class="sd">        import mlconcepts.data</span>
+
+<span class="sd">        df = pandas.DataFrame({</span>
+<span class="sd">            &quot;feature1&quot; : [3.5, 1.6],</span>
+<span class="sd">            &quot;feature2&quot; : [1.6, 2.2],</span>
+<span class="sd">            &quot;color&quot; : [&quot;blue&quot;, &quot;green&quot;],</span>
+<span class="sd">            &quot;classes&quot;  : [&quot;class1&quot;, &quot;class2&quot;]</span>
+<span class="sd">        })</span>
+<span class="sd">        data = mlconcepts.data.load(df, labels = &quot;classes&quot;)</span>
+
+<span class="sd">    *Numpy*:</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        import mlconcepts.data</span>
+
+<span class="sd">        data = mlconcepts.data.load(</span>
+<span class="sd">            np.array([[3.5, 5.3], [1.6, 2.2]]), </span>
+<span class="sd">            Xc = np.array([[0], [1]]),</span>
+<span class="sd">            y = np.array([0, 1])</span>
+<span class="sd">        )</span>
+
+<span class="sd">    *Files*. The following example assumes that in the working directory the</span>
+<span class="sd">    files &quot;dataset.csv&quot;, &quot;dataset.xlsx&quot;, &quot;dataset.json&quot;, &quot;dataset.sql&quot;, and</span>
+<span class="sd">    &quot;dataset.mat&quot; (Matlab file format) can be found. We assume that the first</span>
+<span class="sd">    four contain a column called &quot;classes&quot; to label the class of the entries.</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        import mlconcepts.data</span>
+
+<span class="sd">        data = mlconcepts.data.load(&quot;dataset.csv&quot;, labels = &quot;classes&quot;)</span>
+<span class="sd">        data = mlconcepts.data.load(&quot;dataset.xlsx&quot;, labels = &quot;classes&quot;)</span>
+<span class="sd">        data = mlconcepts.data.load(&quot;dataset.json&quot;, labels = &quot;classes&quot;)</span>
+<span class="sd">        data = mlconcepts.data.load(&quot;dataset.sql&quot;, labels = &quot;classes&quot;)</span>
+<span class="sd">        data = mlconcepts.data.load(</span>
+<span class="sd">            &quot;dataset.mat&quot;, </span>
+<span class="sd">            settings = {</span>
+<span class="sd">                &quot;Xname&quot; : &quot;X&quot; # X is the default name, this line can be skipped</span>
+<span class="sd">                &quot;yname&quot; : &quot;y&quot; # y is the default name, this line can be skipped</span>
+<span class="sd">            }</span>
+<span class="sd">        )</span>
+
+
+<span class="sd">Todo:</span>
+<span class="sd">    Once the c++ algorithms start supporting streaming dataset, </span>
+<span class="sd">    mlconcepts.data.Dataset will support it, too.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="Dataset">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset">[docs]</a>
+<span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Representation of dataset used by the mlconcepts library.</span>
+<span class="sd">    </span>
+<span class="sd">    Dataset consist of possibly three parts, namely a numerical part,</span>
+<span class="sd">    a categorical part, and labels for each entry. This class ensures that</span>
+<span class="sd">    the format required by the core library is used by ``mlconcepts``</span>
+<span class="sd">    objects. You should not initialize Dataset objects on your own, unless</span>
+<span class="sd">    you are implementing a data loader (see :mod:`mlconcepts.data`).</span>
+
+<span class="sd">    Datasets should be loaded using the function :func:`mlconcepts.data.load`.</span>
+
+<span class="sd">    Future versions of this library will support streaming datasets.</span>
+<span class="sd">       </span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        X (numpy.ndarray): Numerical part of the dataset. Possibly ``None``.</span>
+<span class="sd">        Xc (numpy.ndarray): Categorical part of the dataset. Possibly ``None``.</span>
+<span class="sd">        y (numpy.ndarray): Labels of the dataset. Possibly ``None``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Dataset.__init__">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes a Dataset object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            X (:obj:`numpy.ndarray`, optional): Numerical part of the dataset.</span>
+<span class="sd">                Can be null if a categorical part is present.</span>
+<span class="sd">                The objects are encoded row-wise, and the features column-wise.</span>
+<span class="sd">                The number of rows of ``X`` must match those of ``Xc``, </span>
+<span class="sd">                if present. Must be of ``dtype=float64`` and ``f_contiguous``.</span>
+<span class="sd">            Xc (:obj:`numpy.ndarray`, optional): Categorical part of the </span>
+<span class="sd">                dataset. Can be null if a numerical part is present.</span>
+<span class="sd">                The objects are encoded row-wise, and the features column-wise.</span>
+<span class="sd">                The number of rows of ``Xc`` must match those of ``X``,</span>
+<span class="sd">                if present. Must be of ``dtype=int32`` and ``f_contiguous``.</span>
+<span class="sd">            y (:obj:`numpy.ndarray`, optional): Labels of the dataset.</span>
+<span class="sd">                Must be of ``dtype=int32`` and ``f_contiguous``.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If both ``X`` and ``Xc`` are empty, or if one of the</span>
+<span class="sd">                arguments has the wrong format, as specified in their argument</span>
+<span class="sd">                documentation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span> <span class="o">=</span> <span class="n">Xc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Xc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;At least one of the numerical and categorical&quot;</span>
+                             <span class="s2">&quot; parts of a dataset must be non-empty.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The numerical part of a dataset must be a &quot;</span>
+                                 <span class="s2">&quot;numpy.ndarray.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="s2">&quot;float64&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The numerical part of a dataset must be of &quot;</span>
+                                 <span class="s2">&quot;dtype float64.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">X</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The numerical part of a dataset must be such&quot;</span>
+                                 <span class="s2">&quot; that flags.f_contiguous is True.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">Xc</span><span class="p">)</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The categorical part of a dataset must be a &quot;</span>
+                                 <span class="s2">&quot;numpy.ndarray.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">Xc</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="s2">&quot;int32&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The categorical part of a dataset must be &quot;</span>
+                                 <span class="s2">&quot;of dtype int32.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">Xc</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The categorical part of a dataset must be &quot;</span>
+                                 <span class="s2">&quot;such that flags.f_contiguous is True.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The labels part of a dataset must be a &quot;</span>
+                                 <span class="s2">&quot;numpy.ndarray.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="s2">&quot;int32&quot;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The labels part of a dataset must be of &quot;</span>
+                                 <span class="s2">&quot;dtype int32.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">y</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The labels part of a dataset must be such &quot;</span>
+                                 <span class="s2">&quot;that flags.f_contiguous is True.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of rows of the numerical and &quot;</span>
+                             <span class="s2">&quot;categorical part of a dataset must match.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of labels in a dataset must match the&quot;</span>
+                             <span class="s2">&quot; size of the dataset&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid shape for numerical features &quot;</span> <span class="o">+</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; vs (n, m)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid shape for categorical features &quot;</span> <span class="o">+</span>
+                             <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; vs (n, m)&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span> <span class="o">=</span> <span class="p">([</span><span class="s2">&quot;&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> 
+                       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span> <span class="o">=</span> <span class="p">([</span><span class="s2">&quot;&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xnamedict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xcnamedict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yname</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Dataset.set_real_names">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.set_real_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_real_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the names of the real features.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            names (list[str] or dict[str, int]): A dictionary mapping a feature</span>
+<span class="sd">                name to its column index in self.X, or a collection indexed by</span>
+<span class="sd">                integers as long as the number of columns of self.X.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If names is of the wrong type.</span>
+<span class="sd">            RuntimeError: If one of the indices is larger than the number of</span>
+<span class="sd">                columns of self.X, or, if names is a list, if it is smaller</span>
+<span class="sd">                than the number of columns of X. It is not guaranteed that the</span>
+<span class="sd">                internal state of the object has not changed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xnamedict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                          <span class="s2">&quot;the range of names must contain only &quot;</span>
+                          <span class="s2">&quot;integers, found &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Xnamedict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                          <span class="s2">&quot;index </span><span class="si">%d</span><span class="s2"> is larger than the number of &quot;</span>
+                          <span class="s2">&quot;features of X (</span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xnamedict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                          <span class="s2">&quot;the list of names must contain &quot;</span>
+                          <span class="s2">&quot;only strings, found &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Xnamedict</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span></div>
+
+
+<div class="viewcode-block" id="Dataset.set_categorical_names">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.set_categorical_names">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_categorical_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the names of the categorical features.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            names (list[str] or dict[str, int]): A dictionary mapping a feature</span>
+<span class="sd">                name to its column index in self.Xc, or a collection indexed</span>
+<span class="sd">                by integers as long as the number of columns of self.Xc.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If one of the indices is larger than the number of</span>
+<span class="sd">                columns of self.Xc, or, if names is a list, if it is smaller</span>
+<span class="sd">                than the number of columns of Xc. It is not guaranteed that</span>
+<span class="sd">                the internal state of the object has not changed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xcnamedict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                          <span class="s2">&quot;the range of names must contain only &quot;</span>
+                          <span class="s2">&quot;integers, found &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]))</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Xcnamedict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span> <span class="o">=</span> <span class="n">k</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                          <span class="s2">&quot;index </span><span class="si">%d</span><span class="s2"> is larger than the number of &quot;</span>
+                          <span class="s2">&quot;features of X (</span><span class="si">%d</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xcnamedict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                          <span class="s2">&quot;the list of names must contain &quot;</span>
+                          <span class="s2">&quot;only strings, found &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">Xcnamedict</span><span class="p">[</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">i</span></div>
+
+
+<div class="viewcode-block" id="Dataset.set_labels_name">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.set_labels_name">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_labels_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the name of the label.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (:obj:`str`, optional): Name of the label. </span>
+<span class="sd">                If None, an empty string is inserted instead.</span>
+<span class="sd">        </span>
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: If name is not a string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The label name must be a string.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yname</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="Dataset.size">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.size">[docs]</a>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieves the size of the dataset.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The size of the dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_feature_count">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.get_feature_count">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_feature_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the number of features.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of features the data has.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">real_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">cat_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">real_count</span> <span class="o">+</span> <span class="n">cat_count</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_feature_name">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.get_feature_name">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_feature_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts a feature id to its name.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            i (int): The index of the feature.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the feature.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="s2">&quot;att&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;att&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Dataset.feature_set_to_str">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.feature_set_to_str">[docs]</a>
+    <span class="k">def</span> <span class="nf">feature_set_to_str</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts a feature set to string.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fs(list[int]): A feature set represented as a list of ids.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A string representation of the input feature set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_feature_count</span><span class="p">():</span>
+            <span class="k">return</span> <span class="s2">&quot;full&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;{ &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">get_feature_name</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fs</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot; }&quot;</span></div>
+
+
+<div class="viewcode-block" id="Dataset.split">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.Dataset.split">[docs]</a>
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">splitter</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates train-test splits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            splitter: Object implementing  a method ``split(X, y)`` or </span>
+<span class="sd">                ``split(X)``, to which the generation of the index-sets</span>
+<span class="sd">                for the train-test splits is relayed.</span>
+
+<span class="sd">        Yields:</span>
+<span class="sd">            A pair of :obj:`mlconcepts.data.Dataset` objects representing a</span>
+<span class="sd">            train/test split. </span>
+<span class="sd">            </span>
+<span class="sd">            More specifically, a generator is returned by the splitter</span>
+<span class="sd">            ``split`` method. This generator yields indices sets for the train</span>
+<span class="sd">            and test set at each iteration. These indices sets are used to</span>
+<span class="sd">            sample data for the construction of the yielded Dataset objects. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#Creates the generator from the splitter. If y is null, it calls </span>
+        <span class="c1">#split(X), otherwise split(X, y). Also checks whether one of X and Xc</span>
+        <span class="c1">#is null, and picks one of the two to generate the index sets.</span>
+        <span class="c1">#Both the datasets will be splitted in the output.</span>
+        <span class="n">generator</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">splitter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                         <span class="n">splitter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">generator</span> <span class="o">=</span> <span class="p">(</span><span class="n">splitter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                         <span class="n">splitter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">train_indices</span><span class="p">,</span> <span class="n">test_indices</span> <span class="ow">in</span> <span class="n">generator</span><span class="p">:</span>
+            <span class="c1">#Split the matrices</span>
+            <span class="n">x_train</span>  <span class="o">=</span> <span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">train_indices</span><span class="p">]))</span>
+            <span class="n">xc_train</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="n">train_indices</span><span class="p">]))</span>
+            <span class="n">y_train</span>  <span class="o">=</span> <span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">train_indices</span><span class="p">]))</span>
+            <span class="n">x_test</span>  <span class="o">=</span> <span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                       <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">test_indices</span><span class="p">]))</span>
+            <span class="n">xc_test</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Xc</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                       <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="n">test_indices</span><span class="p">]))</span>
+            <span class="n">y_test</span>  <span class="o">=</span> <span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span>
+                       <span class="n">np</span><span class="o">.</span><span class="n">asfortranarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">test_indices</span><span class="p">]))</span>
+            <span class="c1">#And create the datasets</span>
+            <span class="n">train</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">Xc</span> <span class="o">=</span> <span class="n">xc_train</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">)</span>
+            <span class="n">test</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">Xc</span> <span class="o">=</span> <span class="n">xc_test</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y_test</span><span class="p">)</span>
+            <span class="c1">#Transfer the names to the splits</span>
+            <span class="n">train</span><span class="o">.</span><span class="n">set_real_names</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span><span class="p">)</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">set_real_names</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xnames</span><span class="p">)</span>
+            <span class="n">train</span><span class="o">.</span><span class="n">set_categorical_names</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">)</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">set_categorical_names</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">)</span>
+            <span class="n">train</span><span class="o">.</span><span class="n">set_labels_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yname</span><span class="p">)</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">set_labels_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">yname</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span></div>
+</div>
+
+
+<div class="viewcode-block" id="basic_load">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.dataset.basic_load">[docs]</a>
+<span class="k">def</span> <span class="nf">basic_load</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="p">[],</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+               <span class="n">settings</span><span class="o">=</span><span class="p">{}):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dummy dataset loader.</span>
+<span class="sd">    </span>
+<span class="sd">    This function should not be called directly, but rather indirectly via</span>
+<span class="sd">    :func:`mlconcepts.data.load`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dataset (:obj:`mlconcepts.data.Dataset`): A dataset.</span>
+<span class="sd">        categorical: Ignored.</span>
+<span class="sd">        labels: Ignored.</span>
+<span class="sd">        Xc: Ignored.</span>
+<span class="sd">        y: Ignored.</span>
+<span class="sd">        settings: Ignored.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        :obj:`mlconcepts.data.Dataset`: The dataset.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">dataset</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mattia Panettiere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

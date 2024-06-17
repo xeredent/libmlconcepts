@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mlconcepts.data package &mdash; mlconcepts 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=c0b50fd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mlconcepts.mlconceptscore package" href="mlconcepts.mlconceptscore.html" />
+    <link rel="prev" title="mlconcepts package" href="mlconcepts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mlconcepts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mlconcepts</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mlconcepts.html">mlconcepts package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mlconcepts.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mlconcepts.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.mlconceptscore.html">mlconcepts.mlconceptscore package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.html#module-mlconcepts.explanation_data">mlconcepts.explanation_data module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.html#module-mlconcepts.sod_model">mlconcepts.sod_model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.html#mlconcepts-test-models-module">mlconcepts.test_models module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.html#module-mlconcepts.uod_model">mlconcepts.uod_model module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.html#module-mlconcepts">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mlconcepts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mlconcepts</a></li>
+          <li class="breadcrumb-item"><a href="mlconcepts.html">mlconcepts package</a></li>
+      <li class="breadcrumb-item active">mlconcepts.data package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mlconcepts.data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mlconcepts-data-package">
+<h1>mlconcepts.data package<a class="headerlink" href="#mlconcepts-data-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-mlconcepts.data.dataset">
+<span id="mlconcepts-data-dataset-module"></span><h2>mlconcepts.data.dataset module<a class="headerlink" href="#module-mlconcepts.data.dataset" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="#mlconcepts.data.dataset.Dataset" title="mlconcepts.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> objects hold data to be used by the mlconcepts package.</p>
+<p>Data can be imported from common python data
+representation libraries and formats. This is achieved by using
+data loaders, namely the type of each dataframe representation is
+mapped to a function that handles its loading/conversion to the
+right format for the c++ module.</p>
+<p>Datasets should be loaded using the function <a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a> which
+takes care of selecting the correct data loader depending on the passed
+information.</p>
+<p class="rubric">Examples</p>
+<p>The following code snippets show how to load datasets formats.
+We assume that our data has two numerical features, &quot;feature1&quot; and
+&quot;feature2&quot;, and a cateogorical feature &quot;color&quot;.</p>
+<p><em>Pandas</em>. The type of the feature in pandas is automatically inferred:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">mlconcepts.data</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;feature1&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">],</span>
+    <span class="s2">&quot;feature2&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mf">1.6</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">],</span>
+    <span class="s2">&quot;color&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;green&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;classes&quot;</span>  <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;class1&quot;</span><span class="p">,</span> <span class="s2">&quot;class2&quot;</span><span class="p">]</span>
+<span class="p">})</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;classes&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Numpy</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">mlconcepts.data</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">5.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.6</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">]]),</span>
+    <span class="n">Xc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]),</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Files</em>. The following example assumes that in the working directory the
+files &quot;dataset.csv&quot;, &quot;dataset.xlsx&quot;, &quot;dataset.json&quot;, &quot;dataset.sql&quot;, and
+&quot;dataset.mat&quot; (Matlab file format) can be found. We assume that the first
+four contain a column called &quot;classes&quot; to label the class of the entries.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlconcepts.data</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dataset.csv&quot;</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;classes&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dataset.xlsx&quot;</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;classes&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dataset.json&quot;</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;classes&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;dataset.sql&quot;</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;classes&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+    <span class="s2">&quot;dataset.mat&quot;</span><span class="p">,</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;Xname&quot;</span> <span class="p">:</span> <span class="s2">&quot;X&quot;</span> <span class="c1"># X is the default name, this line can be skipped</span>
+        <span class="s2">&quot;yname&quot;</span> <span class="p">:</span> <span class="s2">&quot;y&quot;</span> <span class="c1"># y is the default name, this line can be skipped</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.data.dataset.</span></span><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Representation of dataset used by the mlconcepts library.</p>
+<p>Dataset consist of possibly three parts, namely a numerical part,
+a categorical part, and labels for each entry. This class ensures that
+the format required by the core library is used by <code class="docutils literal notranslate"><span class="pre">mlconcepts</span></code>
+objects. You should not initialize Dataset objects on your own, unless
+you are implementing a data loader (see <a class="reference internal" href="#module-mlconcepts.data" title="mlconcepts.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlconcepts.data</span></code></a>).</p>
+<p>Datasets should be loaded using the function <a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a>.</p>
+<p>Future versions of this library will support streaming datasets.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.X">
+<span class="sig-name descname"><span class="pre">X</span></span><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.X" title="Link to this definition"></a></dt>
+<dd><p>Numerical part of the dataset. Possibly <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.Xc">
+<span class="sig-name descname"><span class="pre">Xc</span></span><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.Xc" title="Link to this definition"></a></dt>
+<dd><p>Categorical part of the dataset. Possibly <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.y" title="Link to this definition"></a></dt>
+<dd><p>Labels of the dataset. Possibly <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initializes a Dataset object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, optional) -- Numerical part of the dataset.
+Can be null if a categorical part is present.
+The objects are encoded row-wise, and the features column-wise.
+The number of rows of <code class="docutils literal notranslate"><span class="pre">X</span></code> must match those of <code class="docutils literal notranslate"><span class="pre">Xc</span></code>,
+if present. Must be of <code class="docutils literal notranslate"><span class="pre">dtype=float64</span></code> and <code class="docutils literal notranslate"><span class="pre">f_contiguous</span></code>.</p></li>
+<li><p><strong>Xc</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, optional) -- Categorical part of the
+dataset. Can be null if a numerical part is present.
+The objects are encoded row-wise, and the features column-wise.
+The number of rows of <code class="docutils literal notranslate"><span class="pre">Xc</span></code> must match those of <code class="docutils literal notranslate"><span class="pre">X</span></code>,
+if present. Must be of <code class="docutils literal notranslate"><span class="pre">dtype=int32</span></code> and <code class="docutils literal notranslate"><span class="pre">f_contiguous</span></code>.</p></li>
+<li><p><strong>y</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>, optional) -- Labels of the dataset.
+Must be of <code class="docutils literal notranslate"><span class="pre">dtype=int32</span></code> and <code class="docutils literal notranslate"><span class="pre">f_contiguous</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> -- If both <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Xc</span></code> are empty, or if one of the
+    arguments has the wrong format, as specified in their argument
+    documentation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.feature_set_to_str">
+<span class="sig-name descname"><span class="pre">feature_set_to_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.feature_set_to_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.feature_set_to_str" title="Link to this definition"></a></dt>
+<dd><p>Converts a feature set to string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fs</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) -- A feature set represented as a list of ids.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A string representation of the input feature set.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.get_feature_count">
+<span class="sig-name descname"><span class="pre">get_feature_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.get_feature_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.get_feature_count" title="Link to this definition"></a></dt>
+<dd><p>Returns the number of features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of features the data has.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.get_feature_name">
+<span class="sig-name descname"><span class="pre">get_feature_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.get_feature_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.get_feature_name" title="Link to this definition"></a></dt>
+<dd><p>Converts a feature id to its name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>i</strong> (<em>int</em>) -- The index of the feature.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The name of the feature.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.set_categorical_names">
+<span class="sig-name descname"><span class="pre">set_categorical_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.set_categorical_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.set_categorical_names" title="Link to this definition"></a></dt>
+<dd><p>Sets the names of the categorical features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>names</strong> (<em>list</em><em>[</em><em>str</em><em>] or </em><em>dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) -- A dictionary mapping a feature
+name to its column index in self.Xc, or a collection indexed
+by integers as long as the number of columns of self.Xc.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>RuntimeError</strong> -- If one of the indices is larger than the number of
+    columns of self.Xc, or, if names is a list, if it is smaller
+    than the number of columns of Xc. It is not guaranteed that
+    the internal state of the object has not changed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.set_labels_name">
+<span class="sig-name descname"><span class="pre">set_labels_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.set_labels_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.set_labels_name" title="Link to this definition"></a></dt>
+<dd><p>Sets the name of the label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) -- Name of the label.
+If None, an empty string is inserted instead.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>TypeError</strong> -- If name is not a string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.set_real_names">
+<span class="sig-name descname"><span class="pre">set_real_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.set_real_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.set_real_names" title="Link to this definition"></a></dt>
+<dd><p>Sets the names of the real features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>names</strong> (<em>list</em><em>[</em><em>str</em><em>] or </em><em>dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) -- A dictionary mapping a feature
+name to its column index in self.X, or a collection indexed by
+integers as long as the number of columns of self.X.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> -- If names is of the wrong type.</p></li>
+<li><p><strong>RuntimeError</strong> -- If one of the indices is larger than the number of
+    columns of self.X, or, if names is a list, if it is smaller
+    than the number of columns of X. It is not guaranteed that the
+    internal state of the object has not changed.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.size">
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.size" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the size of the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The size of the dataset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.Dataset.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">splitter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#Dataset.split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.Dataset.split" title="Link to this definition"></a></dt>
+<dd><p>Generates train-test splits.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>splitter</strong> -- Object implementing  a method <code class="docutils literal notranslate"><span class="pre">split(X,</span> <span class="pre">y)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">split(X)</span></code>, to which the generation of the index-sets
+for the train-test splits is relayed.</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pair of <code class="xref py py-obj docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code> objects representing a
+train/test split.</p>
+<p>More specifically, a generator is returned by the splitter
+<code class="docutils literal notranslate"><span class="pre">split</span></code> method. This generator yields indices sets for the train
+and test set at each iteration. These indices sets are used to
+sample data for the construction of the yielded Dataset objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mlconcepts.data.dataset.basic_load">
+<span class="sig-prename descclassname"><span class="pre">mlconcepts.data.dataset.</span></span><span class="sig-name descname"><span class="pre">basic_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/dataset.html#basic_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.dataset.basic_load" title="Link to this definition"></a></dt>
+<dd><p>Dummy dataset loader.</p>
+<p>This function should not be called directly, but rather indirectly via
+<a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code>) -- A dataset.</p></li>
+<li><p><strong>categorical</strong> -- Ignored.</p></li>
+<li><p><strong>labels</strong> -- Ignored.</p></li>
+<li><p><strong>Xc</strong> -- Ignored.</p></li>
+<li><p><strong>y</strong> -- Ignored.</p></li>
+<li><p><strong>settings</strong> -- Ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-mlconcepts.data.numpy_load">
+<span id="mlconcepts-data-numpy-load-module"></span><h2>mlconcepts.data.numpy_load module<a class="headerlink" href="#module-mlconcepts.data.numpy_load" title="Link to this heading"></a></h2>
+<p>Implements a data loader for numpy matrices.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mlconcepts.data.numpy_load.numpy_load">
+<span class="sig-prename descclassname"><span class="pre">mlconcepts.data.numpy_load.</span></span><span class="sig-name descname"><span class="pre">numpy_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/numpy_load.html#numpy_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.numpy_load.numpy_load" title="Link to this definition"></a></dt>
+<dd><p>Loads a numpy array to use within the mlconcepts library.</p>
+<p>This function should not be called directly, but rather indirectly via
+<a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>numpy.ndarray</em>) -- A numpy array whose elements can be converted
+to float64. Represents the numerical part of the dataset.</p></li>
+<li><p><strong>categorical</strong> (<em>list</em>) -- Ignored.</p></li>
+<li><p><strong>labels</strong> -- Ignored.</p></li>
+<li><p><strong>Xc</strong> (<em>numpy.ndarray</em>) -- Optional numpy array whose elements can be
+converted to int32. Its number of rows must match that of
+<code class="docutils literal notranslate"><span class="pre">dataset</span></code> if <code class="docutils literal notranslate"><span class="pre">dataset</span></code> is not empty.</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray</em>) -- Optional numpy array containing the labels column.
+Its dtype must be convertible to int32.</p></li>
+<li><p><strong>settings</strong> -- Ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dataset in the right format for
+mlconcepts algorithms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-mlconcepts.data.pandas_load">
+<span id="mlconcepts-data-pandas-load-module"></span><h2>mlconcepts.data.pandas_load module<a class="headerlink" href="#module-mlconcepts.data.pandas_load" title="Link to this heading"></a></h2>
+<p>Implements a data loader for pandas dataframes.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mlconcepts.data.pandas_load.pandas_load">
+<span class="sig-prename descclassname"><span class="pre">mlconcepts.data.pandas_load.</span></span><span class="sig-name descname"><span class="pre">pandas_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/pandas_load.html#pandas_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.pandas_load.pandas_load" title="Link to this definition"></a></dt>
+<dd><p>Loads a pandas dataset to use within the mlconcepts library.</p>
+<p>This function should not be called directly, but rather indirectly via
+<a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>pandas.core.frame.DataFrame</em>) -- A pandas DataFrame.</p></li>
+<li><p><strong>categorical</strong> (<em>list-like</em><em>[</em><em>str</em><em>]</em>) -- A list of features suggested to be
+categorical. Numerical features in the list will be treated as
+categorical. It is not necessary to pass also non-numerical
+features in this parameter.</p></li>
+<li><p><strong>labels</strong> (<em>str</em>) -- The name of the column containing the labels.</p></li>
+<li><p><strong>Xc</strong> -- Ignored.</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray</em>) -- Optional numpy array containing the labels column.
+Overrides any column dataset[labels]. Must be one-dimensional and
+its elements must be convertible to int32.</p></li>
+<li><p><strong>settings</strong> -- Ignored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dataset in the right format for
+mlconcepts algorithms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-mlconcepts.data.path_load">
+<span id="mlconcepts-data-path-load-module"></span><h2>mlconcepts.data.path_load module<a class="headerlink" href="#module-mlconcepts.data.path_load" title="Link to this heading"></a></h2>
+<p>Implements a data loader for arbitrary files.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mlconcepts.data.path_load.path_load">
+<span class="sig-prename descclassname"><span class="pre">mlconcepts.data.path_load.</span></span><span class="sig-name descname"><span class="pre">path_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/path_load.html#path_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.path_load.path_load" title="Link to this definition"></a></dt>
+<dd><p>Loads a dataset to use within the mlconcepts library from a file.</p>
+<p>This function should not be called directly, but rather indirectly via
+<a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- A path to the file.</p></li>
+<li><p><strong>categorical</strong> (<em>list</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) -- A list of features suggested to be
+categorical.</p></li>
+<li><p><strong>labels</strong> (<em>str</em><em>, </em><em>optional</em>) -- The name of the labels column of the dataset.
+Used by some data-loaders.</p></li>
+<li><p><strong>Xc</strong> (<em>str</em><em>, </em><em>optional</em>) -- Optional path to a file containing the categorical
+part of the dataset.</p></li>
+<li><p><strong>y</strong> (<em>str</em><em>, </em><em>optional</em>) -- Optional path to a file containing the labels part
+of the dataset.</p></li>
+<li><p><strong>settings</strong> (<em>dict</em>) -- <p>Depends on what file format is read.</p>
+<p>For .xlsx, .csv, .json, and .sql files, it supports all the
+optional parameters of the corresponding pandas reading functions.
+These parameters should be inserted in a dictionary called &quot;parse&quot;.</p>
+<p>For .mat files, the parameters &quot;Xname&quot;, &quot;Xcname&quot;, &quot;yname&quot;, which
+default to &quot;X&quot;, &quot;Xc&quot;, and &quot;y&quot;, respectively, indicate the names of
+the matlab matrices from which the corresponding parts of the
+dataset are extracted.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dataset in the right format for
+mlconcepts algorithms.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>OSError</strong> -- If the file does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-mlconcepts.data.test_data">
+<span id="mlconcepts-data-test-data-module"></span><h2>mlconcepts.data.test_data module<a class="headerlink" href="#module-mlconcepts.data.test_data" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.NumpyTest">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.data.test_data.</span></span><span class="sig-name descname"><span class="pre">NumpyTest</span></span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#NumpyTest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.NumpyTest" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.NumpyTest.test_load_wrong_types">
+<span class="sig-name descname"><span class="pre">test_load_wrong_types</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#NumpyTest.test_load_wrong_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.NumpyTest.test_load_wrong_types" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.SplitGen">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.data.test_data.</span></span><span class="sig-name descname"><span class="pre">SplitGen</span></span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#SplitGen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.SplitGen" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.SplitGen.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#SplitGen.split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.SplitGen.split" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.TestDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.data.test_data.</span></span><span class="sig-name descname"><span class="pre">TestDataset</span></span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#TestDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.TestDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.TestDataset.test_datasplit">
+<span class="sig-name descname"><span class="pre">test_datasplit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#TestDataset.test_datasplit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.TestDataset.test_datasplit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.TestPandas">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.data.test_data.</span></span><span class="sig-name descname"><span class="pre">TestPandas</span></span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#TestPandas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.TestPandas" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.TestPandas.df">
+<span class="sig-name descname"><span class="pre">df</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">diameter</span>&#160;&#160; <span class="pre">color</span> <span class="pre">delicious</span> <span class="pre">0</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">3.5</span>&#160;&#160; <span class="pre">green</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">yes</span> <span class="pre">1</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">4.5</span>&#160;&#160;&#160;&#160; <span class="pre">red</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">yes</span> <span class="pre">2</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">5.3</span>&#160;&#160; <span class="pre">green</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">yes</span> <span class="pre">3</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">6.5</span>&#160;&#160; <span class="pre">green</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">yes</span> <span class="pre">4</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">2.1</span>&#160; <span class="pre">yellow</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">no</span></em><a class="headerlink" href="#mlconcepts.data.test_data.TestPandas.df" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.TestPandas.test_pandas_categorical_integer">
+<span class="sig-name descname"><span class="pre">test_pandas_categorical_integer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#TestPandas.test_pandas_categorical_integer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.TestPandas.test_pandas_categorical_integer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.TestPandas.test_pandas_generic_load">
+<span class="sig-name descname"><span class="pre">test_pandas_generic_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#TestPandas.test_pandas_generic_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.TestPandas.test_pandas_generic_load" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.data.test_data.TestPandas.test_pandas_override_labels">
+<span class="sig-name descname"><span class="pre">test_pandas_override_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data/test_data.html#TestPandas.test_pandas_override_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.test_data.TestPandas.test_pandas_override_labels" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mlconcepts.data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mlconcepts.data" title="Link to this heading"></a></h2>
+<p>Data module of the mlconcepts library.</p>
+<p>This package takes care of importing data from common python data
+representation libraries and formats. This is achieved by using
+data loaders, namely the type of each dataframe representation is
+mapped to a function that handles its loading/conversion to the
+right format for the c++ module.</p>
+<p>Datasets should be loaded using the function <a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a> which
+takes care of selecting the correct data loader depending on the passed
+information.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="mlconcepts.data.data_loaders">
+<span class="sig-prename descclassname"><span class="pre">mlconcepts.data.</span></span><span class="sig-name descname"><span class="pre">data_loaders</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{&lt;class</span> <span class="pre">'mlconcepts.data.dataset.Dataset'&gt;:</span> <span class="pre">&lt;function</span> <span class="pre">basic_load&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'numpy.ndarray'&gt;:</span> <span class="pre">&lt;function</span> <span class="pre">numpy_load&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'pandas.core.frame.DataFrame'&gt;:</span> <span class="pre">&lt;function</span> <span class="pre">pandas_load&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'pathlib.Path'&gt;:</span> <span class="pre">&lt;function</span> <span class="pre">path_load&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;:</span> <span class="pre">&lt;function</span> <span class="pre">path_load&gt;}</span></em><a class="headerlink" href="#mlconcepts.data.data_loaders" title="Link to this definition"></a></dt>
+<dd><p>Maps supported dataset types to functions data load them,
+reffered to as data loaders. Every data loader must have the same signature
+as the function <a class="reference internal" href="#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a>.</p>
+<p>To externally add a data loader, just update this dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[type, function]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mlconcepts.data.load">
+<span class="sig-prename descclassname"><span class="pre">mlconcepts.data.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/data.html#load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.data.load" title="Link to this definition"></a></dt>
+<dd><p>Loads a dataset to use within the mlconcepts library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- A dataset represented in some format. The type/format of the
+dataset is automatically detected and a data-loader is used
+accordingly.</p></li>
+<li><p><strong>categorical</strong> (<em>list</em>) -- A list of features suggested to be categorical.
+Data loaders should automatically obvious detect categorical
+features, this should be used for those categorical features which
+are hard to distinguish from numerical ones, e.g., columns
+containing only 0 or 1.</p></li>
+<li><p><strong>labels</strong> -- Suggests the name of the labels column in a dataset.</p></li>
+<li><p><strong>Xc</strong> -- A dataframe containing categorical data. Some data-loaders may
+require categorical data to be separated from the numerical one.
+In these cases, categorical should be specified here according to
+the specification in the dataloader.</p></li>
+<li><p><strong>y</strong> -- A dataframe containing labels data. Some data-loaders may require
+labels data to be separated from the rest. In these cases,
+categorical should be specified here according to the
+specification in the dataloader.</p></li>
+<li><p><strong>settings</strong> (<em>dict</em><em>, </em><em>optional</em>) -- A dictionary containing custom parameters
+which can change between different data loaders.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dataset in the format required by the
+mlconcepts library.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mlconcepts.data.Dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mlconcepts.html" class="btn btn-neutral float-left" title="mlconcepts package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mlconcepts.mlconceptscore.html" class="btn btn-neutral float-right" title="mlconcepts.mlconceptscore package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mattia Panettiere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

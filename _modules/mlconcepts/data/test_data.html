@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mlconcepts.data.test_data &mdash; mlconcepts 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=c0b50fd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mlconcepts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">mlconcepts</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mlconcepts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../data.html">mlconcepts.data</a></li>
+      <li class="breadcrumb-item active">mlconcepts.data.test_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mlconcepts.data.test_data</h1><div class="highlight"><pre>
+<span></span><span class="c1"># noqa: D100</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+<span class="kn">from</span> <span class="nn">.pandas_load</span> <span class="kn">import</span> <span class="n">pandas_load</span>
+<span class="kn">from</span> <span class="nn">.numpy_load</span> <span class="kn">import</span> <span class="n">numpy_load</span>
+
+<div class="viewcode-block" id="TestPandas">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.TestPandas">[docs]</a>
+<span class="k">class</span> <span class="nc">TestPandas</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="c1"># noqa: D101</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;diameter&quot;</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="mf">3.5</span><span class="p">,</span>
+            <span class="mf">4.5</span><span class="p">,</span>
+            <span class="mf">5.3</span><span class="p">,</span>
+            <span class="mf">6.5</span><span class="p">,</span>
+            <span class="mf">2.1</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;color&quot;</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;green&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;yellow&quot;</span>
+        <span class="p">],</span>
+        <span class="s2">&quot;delicious&quot;</span> <span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;no&quot;</span>
+        <span class="p">]</span>
+    <span class="p">})</span>
+
+<div class="viewcode-block" id="TestPandas.test_pandas_generic_load">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.TestPandas.test_pandas_generic_load">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_pandas_generic_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># noqa: D102</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">pandas_load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;delicious&quot;</span><span class="p">)</span> <span class="c1"># noqa: F841</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;[0 0 0 0 1]&quot;</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Xnames</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;[&#39;diameter&#39;]&quot;</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;[&#39;color&#39;]&quot;</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">yname</span> <span class="o">==</span> <span class="s2">&quot;delicious&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestPandas.test_pandas_override_labels">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.TestPandas.test_pandas_override_labels">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_pandas_override_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># noqa: D102</span>
+        <span class="n">new_labels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+            <span class="n">order</span> <span class="o">=</span> <span class="s2">&quot;F&quot;</span><span class="p">,</span> 
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span>
+        <span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">pandas_load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;delicious&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">new_labels</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;[1 0 1 1 0]&quot;</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Xnames</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;[&#39;diameter&#39;]&quot;</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;[&#39;color&#39;]&quot;</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">yname</span> <span class="o">==</span> <span class="s2">&quot;delicious&quot;</span></div>
+
+
+<div class="viewcode-block" id="TestPandas.test_pandas_categorical_integer">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.TestPandas.test_pandas_categorical_integer">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_pandas_categorical_integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># noqa: D102</span>
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span> <span class="s2">&quot;feat&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="p">})</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">pandas_load</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">categorical</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;feat&quot;</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span>
+        <span class="k">assert</span> <span class="n">d</span><span class="o">.</span><span class="n">Xc</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">Xcnames</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;[&#39;feat&#39;]&quot;</span></div>
+</div>
+
+
+<div class="viewcode-block" id="NumpyTest">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.NumpyTest">[docs]</a>
+<span class="k">class</span> <span class="nc">NumpyTest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="c1"># noqa: D101</span>
+
+<div class="viewcode-block" id="NumpyTest.test_load_wrong_types">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.NumpyTest.test_load_wrong_types">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_load_wrong_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># noqa: D102</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.25</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">9.5</span><span class="p">,</span> <span class="mf">1.33</span><span class="p">,</span> <span class="mf">1.22</span><span class="p">]</span>
+            <span class="p">],</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float32</span>
+        <span class="p">)</span>
+        <span class="n">Xc</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="p">[</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">],</span>
+            <span class="n">order</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+            <span class="n">dtype</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int8</span>
+        <span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">numpy_load</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Xc</span> <span class="o">=</span> <span class="n">Xc</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span>
+        <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span>
+        <span class="k">assert</span> <span class="n">Xc</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span>
+        <span class="k">assert</span> <span class="n">Xc</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span>
+        <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">Xc</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="SplitGen">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.SplitGen">[docs]</a>
+<span class="k">class</span> <span class="nc">SplitGen</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="SplitGen.split">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.SplitGen.split">[docs]</a>
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="c1"># noqa: D103</span>
+        <span class="k">yield</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">yield</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span></div>
+</div>
+
+
+<div class="viewcode-block" id="TestDataset">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.TestDataset">[docs]</a>
+<span class="k">class</span> <span class="nc">TestDataset</span><span class="p">:</span> <span class="c1"># noqa: D101</span>
+
+<div class="viewcode-block" id="TestDataset.test_datasplit">
+<a class="viewcode-back" href="../../../mlconcepts.data.html#mlconcepts.data.test_data.TestDataset.test_datasplit">[docs]</a>
+    <span class="k">def</span> <span class="nf">test_datasplit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="c1"># noqa: D102</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mf">2.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.1</span><span class="p">]</span> <span class="p">])</span>
+        <span class="n">Xc</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">])</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">])</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">numpy_load</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Xc</span> <span class="o">=</span> <span class="n">Xc</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">gen</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">SplitGen</span><span class="p">())</span>
+        <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.6</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">3.1</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.1</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.1</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">3.1</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.6</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.1</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="n">train</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.6</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mf">3.1</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">Xc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">assert</span> <span class="n">test</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span></div>
+</div>
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mattia Panettiere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

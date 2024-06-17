@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mlconcepts.explanation_data &mdash; mlconcepts 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=c0b50fd5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            mlconcepts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">mlconcepts</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">mlconcepts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mlconcepts.explanation_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mlconcepts.explanation_data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module exposes classes that represent explanation data.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+
+<div class="viewcode-block" id="ExplanationEntry">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationEntry">[docs]</a>
+<span class="k">class</span> <span class="nc">ExplanationEntry</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents the explanation for an object in a dataset.</span>
+
+<span class="sd">    This is essentially a wrapper around a dictionary with some additional</span>
+<span class="sd">    utility functions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ExplanationEntry.__init__">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationEntry.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expl_data</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">prediction</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs an explanation entry.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            expl_data (list[(str,float)]): A list of pairs mapping a string</span>
+<span class="sd">                representing a feature set to its relevance.</span>
+<span class="sd">            dataset (:class:`mlconcepts.data.Dataset`): A dataset object which</span>
+<span class="sd">                holds the data for which the prediction has been made.</span>
+<span class="sd">            prediction (float): The prediction for the object this entry is</span>
+<span class="sd">                related to.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expl_data</span> <span class="o">=</span> <span class="n">expl_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">expl_data</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">it</span><span class="p">:</span> <span class="n">it</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prediction</span> <span class="o">=</span> <span class="n">prediction</span></div>
+
+
+<div class="viewcode-block" id="ExplanationEntry.__iter__">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationEntry.__iter__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterates through the entry.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A generator producing pairs of type (str, float) containing the</span>
+<span class="sd">            string representation of a feature set, and its relevance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expl_data</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span></div>
+
+
+<div class="viewcode-block" id="ExplanationEntry.__str__">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationEntry.__str__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts the explanation entry to a string.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A string representation of this explanation entry.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="p">[</span> <span class="bp">self</span><span class="o">.</span><span class="n">expl_data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expl_data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expl_data</span><span class="p">)))</span> <span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">best</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_feature_count</span><span class="p">():</span>
+            <span class="n">best</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Prediction: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prediction</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;. Explainers: &quot;</span> <span class="o">+</span> 
+               <span class="s2">&quot;{ &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">best</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; }&quot;</span><span class="p">)</span></div>
+</div>
+
+
+<div class="viewcode-block" id="ExplanationData">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationData">[docs]</a>
+<span class="k">class</span> <span class="nc">ExplanationData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents explanation data together with predictions.</span>
+
+<span class="sd">    ExplanationData objects also have facilities that convert and access</span>
+<span class="sd">    explanation data based on feature names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ExplanationData.__init__">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationData.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span> 
+                 <span class="n">outdegs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span> <span class="n">feature_sets</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">dataset</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructs an ExplanationData object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            predictions (numpy.array): An array containing the predictions</span>
+<span class="sd">                made by a machine learning model.</span>
+<span class="sd">            outdegs (numpy.array): A matrix containing for each agenda</span>
+<span class="sd">                (row-wise) and for each object (column-wise) a score</span>
+<span class="sd">                representing how much the contribution of the agenda (feature</span>
+<span class="sd">                set) matters in the final prediction.</span>
+<span class="sd">            feature_sets (list[list[int]]): A list of feature sets. Each</span>
+<span class="sd">                feature set is a list of integers, each representing a feature</span>
+<span class="sd">                in the set.</span>
+<span class="sd">            dataset (:class:`mlconcepts.data.Dataset`): A dataset object which</span>
+<span class="sd">                holds the data for which the predictions have been made.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outdegs</span> <span class="o">=</span> <span class="n">outdegs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_sets</span> <span class="o">=</span> <span class="n">feature_sets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span></div>
+
+
+<div class="viewcode-block" id="ExplanationData.get_predictions">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationData.get_predictions">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_predictions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the predictions vector.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            numpy.array: A vector containing a prediction value for each </span>
+<span class="sd">                object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span></div>
+
+
+<div class="viewcode-block" id="ExplanationData.get_explanation">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationData.get_explanation">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_explanation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the explanation data for some object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`mlconcepts.ExplanationEntry`: An object representing data</span>
+<span class="sd">            regarding an interpretable predictions for the object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ExplanationEntry</span><span class="p">(</span>
+            <span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
+            <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="nb">id</span><span class="p">],</span>
+            <span class="n">expl_data</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">feature_set_to_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_sets</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">outdegs</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="nb">id</span><span class="p">]</span>
+                <span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_sets</span><span class="p">))</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="ExplanationData.__getitem__">
+<a class="viewcode-back" href="../../mlconcepts.html#mlconcepts.explanation_data.ExplanationData.__getitem__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the explanation data for some object.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :class:`mlconcepts.ExplanationEntry`: An object representing data</span>
+<span class="sd">            regarding an interpretable predictions for the object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_explanation</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+</div>
+
+    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mattia Panettiere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

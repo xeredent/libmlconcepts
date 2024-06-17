@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="python" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mlconcepts package &mdash; mlconcepts 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=c0b50fd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mlconcepts.data package" href="mlconcepts.data.html" />
+    <link rel="prev" title="mlconcepts" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            mlconcepts
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">mlconcepts</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">mlconcepts package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html">mlconcepts.data package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.mlconceptscore.html">mlconcepts.mlconceptscore package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mlconcepts.explanation_data">mlconcepts.explanation_data module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mlconcepts.explanation_data.ExplanationData"><code class="docutils literal notranslate"><span class="pre">ExplanationData</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mlconcepts.explanation_data.ExplanationEntry"><code class="docutils literal notranslate"><span class="pre">ExplanationEntry</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mlconcepts.sod_model">mlconcepts.sod_model module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mlconcepts.sod_model.SODModel"><code class="docutils literal notranslate"><span class="pre">SODModel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#mlconcepts-test-models-module">mlconcepts.test_models module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mlconcepts.uod_model">mlconcepts.uod_model module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mlconcepts.uod_model.UODModel"><code class="docutils literal notranslate"><span class="pre">UODModel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mlconcepts">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">mlconcepts</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">mlconcepts</a></li>
+      <li class="breadcrumb-item active">mlconcepts package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/mlconcepts.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mlconcepts-package">
+<h1>mlconcepts package<a class="headerlink" href="#mlconcepts-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mlconcepts.data.html">mlconcepts.data package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data.dataset">mlconcepts.data.dataset module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.X"><code class="docutils literal notranslate"><span class="pre">Dataset.X</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.Xc"><code class="docutils literal notranslate"><span class="pre">Dataset.Xc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.y"><code class="docutils literal notranslate"><span class="pre">Dataset.y</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.__init__"><code class="docutils literal notranslate"><span class="pre">Dataset.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.feature_set_to_str"><code class="docutils literal notranslate"><span class="pre">Dataset.feature_set_to_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.get_feature_count"><code class="docutils literal notranslate"><span class="pre">Dataset.get_feature_count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.get_feature_name"><code class="docutils literal notranslate"><span class="pre">Dataset.get_feature_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.set_categorical_names"><code class="docutils literal notranslate"><span class="pre">Dataset.set_categorical_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.set_labels_name"><code class="docutils literal notranslate"><span class="pre">Dataset.set_labels_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.set_real_names"><code class="docutils literal notranslate"><span class="pre">Dataset.set_real_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.size"><code class="docutils literal notranslate"><span class="pre">Dataset.size()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.Dataset.split"><code class="docutils literal notranslate"><span class="pre">Dataset.split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.dataset.basic_load"><code class="docutils literal notranslate"><span class="pre">basic_load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data.numpy_load">mlconcepts.data.numpy_load module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.numpy_load.numpy_load"><code class="docutils literal notranslate"><span class="pre">numpy_load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data.pandas_load">mlconcepts.data.pandas_load module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.pandas_load.pandas_load"><code class="docutils literal notranslate"><span class="pre">pandas_load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data.path_load">mlconcepts.data.path_load module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.path_load.path_load"><code class="docutils literal notranslate"><span class="pre">path_load()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data.test_data">mlconcepts.data.test_data module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.NumpyTest"><code class="docutils literal notranslate"><span class="pre">NumpyTest</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.NumpyTest.test_load_wrong_types"><code class="docutils literal notranslate"><span class="pre">NumpyTest.test_load_wrong_types()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.SplitGen"><code class="docutils literal notranslate"><span class="pre">SplitGen</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.SplitGen.split"><code class="docutils literal notranslate"><span class="pre">SplitGen.split()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.TestDataset"><code class="docutils literal notranslate"><span class="pre">TestDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.TestDataset.test_datasplit"><code class="docutils literal notranslate"><span class="pre">TestDataset.test_datasplit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.TestPandas"><code class="docutils literal notranslate"><span class="pre">TestPandas</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.TestPandas.df"><code class="docutils literal notranslate"><span class="pre">TestPandas.df</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.TestPandas.test_pandas_categorical_integer"><code class="docutils literal notranslate"><span class="pre">TestPandas.test_pandas_categorical_integer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.TestPandas.test_pandas_generic_load"><code class="docutils literal notranslate"><span class="pre">TestPandas.test_pandas_generic_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.test_data.TestPandas.test_pandas_override_labels"><code class="docutils literal notranslate"><span class="pre">TestPandas.test_pandas_override_labels()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.data_loaders"><code class="docutils literal notranslate"><span class="pre">data_loaders</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.load"><code class="docutils literal notranslate"><span class="pre">load()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mlconcepts.mlconceptscore.html">mlconcepts.mlconceptscore package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mlconcepts.mlconceptscore.html#module-mlconcepts.mlconceptscore">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-mlconcepts.explanation_data">
+<span id="mlconcepts-explanation-data-module"></span><h2>mlconcepts.explanation_data module<a class="headerlink" href="#module-mlconcepts.explanation_data" title="Link to this heading"></a></h2>
+<p>This module exposes classes that represent explanation data.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.explanation_data.</span></span><span class="sig-name descname"><span class="pre">ExplanationData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdegs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_sets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationData" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents explanation data together with predictions.</p>
+<p>ExplanationData objects also have facilities that convert and access
+explanation data based on feature names.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationData.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationData.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationData.__getitem__" title="Link to this definition"></a></dt>
+<dd><p>Returns the explanation data for some object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An object representing data
+regarding an interpretable predictions for the object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.ExplanationEntry</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationData.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdegs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([],</span> <span class="pre">dtype=float64)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_sets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationData.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationData.__init__" title="Link to this definition"></a></dt>
+<dd><p>Constructs an ExplanationData object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictions</strong> (<em>numpy.array</em>) -- An array containing the predictions
+made by a machine learning model.</p></li>
+<li><p><strong>outdegs</strong> (<em>numpy.array</em>) -- A matrix containing for each agenda
+(row-wise) and for each object (column-wise) a score
+representing how much the contribution of the agenda (feature
+set) matters in the final prediction.</p></li>
+<li><p><strong>feature_sets</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>int</em><em>]</em><em>]</em>) -- A list of feature sets. Each
+feature set is a list of integers, each representing a feature
+in the set.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code>) -- A dataset object which
+holds the data for which the predictions have been made.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationData.get_explanation">
+<span class="sig-name descname"><span class="pre">get_explanation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationData.get_explanation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationData.get_explanation" title="Link to this definition"></a></dt>
+<dd><p>Returns the explanation data for some object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An object representing data
+regarding an interpretable predictions for the object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.ExplanationEntry</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationData.get_predictions">
+<span class="sig-name descname"><span class="pre">get_predictions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationData.get_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationData.get_predictions" title="Link to this definition"></a></dt>
+<dd><p>Returns the predictions vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>A vector containing a prediction value for each</dt><dd><p>object.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.explanation_data.</span></span><span class="sig-name descname"><span class="pre">ExplanationEntry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expl_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationEntry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationEntry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents the explanation for an object in a dataset.</p>
+<p>This is essentially a wrapper around a dictionary with some additional
+utility functions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationEntry.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expl_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prediction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationEntry.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationEntry.__init__" title="Link to this definition"></a></dt>
+<dd><p>Constructs an explanation entry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>expl_data</strong> (<em>list</em><em>[</em><em>(</em><em>str</em><em>,</em><em>float</em><em>)</em><em>]</em>) -- A list of pairs mapping a string
+representing a feature set to its relevance.</p></li>
+<li><p><strong>dataset</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.data.Dataset</span></code>) -- A dataset object which
+holds the data for which the prediction has been made.</p></li>
+<li><p><strong>prediction</strong> (<em>float</em>) -- The prediction for the object this entry is
+related to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationEntry.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationEntry.__iter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationEntry.__iter__" title="Link to this definition"></a></dt>
+<dd><p>Iterates through the entry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A generator producing pairs of type (str, float) containing the
+string representation of a feature set, and its relevance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.explanation_data.ExplanationEntry.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/explanation_data.html#ExplanationEntry.__str__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.explanation_data.ExplanationEntry.__str__" title="Link to this definition"></a></dt>
+<dd><p>Converts the explanation entry to a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A string representation of this explanation entry.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mlconcepts.sod_model">
+<span id="mlconcepts-sod-model-module"></span><h2>mlconcepts.sod_model module<a class="headerlink" href="#module-mlconcepts.sod_model" title="Link to this heading"></a></h2>
+<p>Supervised outlier detection model.</p>
+<p>This module implements supervised outlier detection models based on
+<a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0167923624000290">this paper</a>.</p>
+<p class="rubric">Examples</p>
+<p>Fitting the model on a dataset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlconcepts</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">SODModel</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;dataset.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The method <code class="xref py py-meth docutils literal notranslate"><span class="pre">mlconcepts.SODModel.fit()</span></code> accepts all the arguments that
+<a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a> accepts; indeed, it relays to <cite>load</cite> the
+responsibility to load a dataset. Please see <a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data" title="mlconcepts.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlconcepts.data</span></code></a> to see
+what formats are supported and how to add support for new formats.</p>
+<p>The following example shows how to generate different train-test splits
+using <cite>sklearn</cite>. This example assumes that the dataset
+<a class="reference external" href="https://odds.cs.stonybrook.edu/mammography-dataset/">mammography.mat</a> is
+in the working directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlconcepts</span>
+<span class="kn">import</span> <span class="nn">mlconcepts.data</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+<span class="kn">import</span> <span class="nn">sklearn.model_selection</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;mammography.mat&quot;</span><span class="p">)</span>
+
+<span class="n">skf</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">skf</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">SODModel</span><span class="p">(</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span>
+        <span class="n">epochs</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">show_training</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AUC: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)))</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.sod_model.</span></span><span class="sig-name descname"><span class="pre">SODModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explorer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doubletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_training</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a supervised model using FCA for outlier detection.</p>
+<p>This interface is a facade for <cite>mlconceptscore</cite>. Its usage is similar to
+the standard usage of <cite>sklearn</cite> models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explorer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doubletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_training</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel.__init__" title="Link to this definition"></a></dt>
+<dd><p>Constructs a supervised outlier detection model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) -- The default number of bins for uniform quantization.</p></li>
+<li><p><strong>quantizer</strong> (<em>str</em>) -- <p>The quantizer for real features. Options are:</p>
+<ul>
+<li><p>'uniform': breaks the range of the feature into uniformly
+sized bins.</p></li>
+</ul>
+</p></li>
+<li><p><strong>explorer</strong> (<em>str</em>) -- <p>Specifies the feature set exploration strategy.
+Options are:</p>
+<ul>
+<li><p>'none': no exploration.</p></li>
+</ul>
+</p></li>
+<li><p><strong>singletons</strong> (<em>bool</em>) -- Whether singleton agendas should be generated.</p></li>
+<li><p><strong>doubletons</strong> (<em>bool</em>) -- Whether doubleton agendas should be generated.</p></li>
+<li><p><strong>full</strong> (<em>bool</em>) -- Whether the full agenda should be generated.</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) -- Learning rate for gradient descent.</p></li>
+<li><p><strong>momentum</strong> (<em>float</em>) -- Momentum for gradient descent.</p></li>
+<li><p><strong>stop_threshold</strong> (<em>float</em>) -- Threshold for loss improvement under which
+training is interrupted.</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) -- Number of epochs the model is trained for.</p></li>
+<li><p><strong>show_training</strong> (<em>bool</em>) -- Whether to output information on training
+iterations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel.estimate_size">
+<span class="sig-name descname"><span class="pre">estimate_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel.estimate_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel.estimate_size" title="Link to this definition"></a></dt>
+<dd><p>Estimates the size of the model in bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An estimate of the size of the model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel.fit" title="Link to this definition"></a></dt>
+<dd><p>Trains the model on a dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- A dataset in some format. The format is detected
+automatically using <a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a>.</p></li>
+<li><p><strong>categorical</strong> -- A list of features suggested to be categorical.</p></li>
+<li><p><strong>labels</strong> -- The name of the labels column in the dataset.</p></li>
+<li><p><strong>Xc</strong> -- A dataframe containing categorical data.</p></li>
+<li><p><strong>y</strong> -- A dataframe containing labels data.</p></li>
+<li><p><strong>settings</strong> -- A dictionary containing custom parameters.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel.load" title="Link to this definition"></a></dt>
+<dd><p>Loads the model from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> -- Path to the file to be loaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel.predict" title="Link to this definition"></a></dt>
+<dd><p>Predicts labels for a dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- A dataset in some format.</p></li>
+<li><p><strong>categorical</strong> -- A list of features suggested to be categorical.</p></li>
+<li><p><strong>labels</strong> -- The name of the labels column in the dataset.</p></li>
+<li><p><strong>Xc</strong> -- A dataframe containing categorical data.</p></li>
+<li><p><strong>y</strong> -- A dataframe containing labels data.</p></li>
+<li><p><strong>settings</strong> -- A dictionary containing custom parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A vector containing the predictions of the model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray[numpy.float64[m, 1], flags.writeable, flags.f_contiguous]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel.predict_explain">
+<span class="sig-name descname"><span class="pre">predict_explain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel.predict_explain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel.predict_explain" title="Link to this definition"></a></dt>
+<dd><p>Predicts labels for a dataset and returns explanation data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- A dataset in some format.</p></li>
+<li><p><strong>categorical</strong> -- A list of features suggested to be categorical.</p></li>
+<li><p><strong>labels</strong> -- The name of the labels column in the dataset.</p></li>
+<li><p><strong>Xc</strong> -- A dataframe containing categorical data.</p></li>
+<li><p><strong>y</strong> -- A dataframe containing labels data.</p></li>
+<li><p><strong>settings</strong> -- A dictionary containing custom parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An object containing explanation data and predictions for the whole
+dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.ExplanationData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.sod_model.SODModel.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/sod_model.html#SODModel.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.sod_model.SODModel.save" title="Link to this definition"></a></dt>
+<dd><p>Compresses the model and writes it into a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> -- Path to the file to be written.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="mlconcepts-test-models-module">
+<h2>mlconcepts.test_models module<a class="headerlink" href="#mlconcepts-test-models-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-mlconcepts.uod_model">
+<span id="mlconcepts-uod-model-module"></span><h2>mlconcepts.uod_model module<a class="headerlink" href="#module-mlconcepts.uod_model" title="Link to this heading"></a></h2>
+<p>Unsupervised outlier detection model.</p>
+<p>This module implements supervised outlier detection models based on
+<a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0167923624000290">this paper</a>.</p>
+<p class="rubric">Examples</p>
+<p>Fitting the model on a dataset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlconcepts</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">UODModel</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;dataset.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The method <code class="xref py py-meth docutils literal notranslate"><span class="pre">mlconcepts.UODModel.fit()</span></code> accepts all the arguments that
+<a class="reference internal" href="mlconcepts.data.html#mlconcepts.data.load" title="mlconcepts.data.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">mlconcepts.data.load()</span></code></a> accepts; indeed, it relays to <cite>load</cite> the
+responsibility to load a dataset. Please see <a class="reference internal" href="mlconcepts.data.html#module-mlconcepts.data" title="mlconcepts.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mlconcepts.data</span></code></a> to see
+what formats are supported and how to add support for new formats.</p>
+<p>The following example shows how to generate different train-test splits
+using <cite>sklearn</cite>. This example assumes that the dataset
+<a class="reference external" href="https://odds.cs.stonybrook.edu/mammography-dataset/">mammography.mat</a> is
+in the working directory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mlconcepts</span>
+<span class="kn">import</span> <span class="nn">mlconcepts.data</span>
+<span class="kn">import</span> <span class="nn">sklearn.metrics</span>
+<span class="kn">import</span> <span class="nn">sklearn.model_selection</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;mammography.mat&quot;</span><span class="p">)</span>
+
+<span class="n">skf</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">skf</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">mlconcepts</span><span class="o">.</span><span class="n">UODModel</span><span class="p">(</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="c1"># quantize numerical features in 32 uniform bins</span>
+        <span class="n">doubletons</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># generate all feature pairs</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;AUC: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">sklearn</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">test</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)))</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mlconcepts.uod_model.</span></span><span class="sig-name descname"><span class="pre">UODModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explorer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doubletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an unsupervised model using FCA for outlier detection.</p>
+<p>This interface is a facade for <cite>mlconceptscore</cite>. Its usage is similar to
+the standard usage of <cite>sklearn</cite> models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quantizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explorer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'none'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">singletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doubletons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel.__init__" title="Link to this definition"></a></dt>
+<dd><p>Constructs a supervised outlier detection model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>int</em>) -- The default number of bins for uniform quantization.
+Defaults to 32.</p></li>
+<li><p><strong>quantizer</strong> (<em>str</em>) -- <p>The quantizer for real features. The available
+options are:</p>
+<ul>
+<li><p>'uniform' for a quantizer that breaks the range of the
+feature into uniformly sized bins.</p></li>
+</ul>
+<p>Defaults to 'uniform'.</p>
+</p></li>
+<li><p><strong>explorer</strong> (<em>str</em>) -- <p>Specifies the feature set exploration strategy.
+The available options are:</p>
+<ul>
+<li><p>'none' for no exploration.</p></li>
+</ul>
+<p>Defaults to 'none'.</p>
+</p></li>
+<li><p><strong>singletons</strong> (<em>bool</em>) -- Whether singleton agendas should be generated.
+Defaults to True.</p></li>
+<li><p><strong>doubletons</strong> (<em>bool</em>) -- Whether doubleton agendas should be generated.
+Default to True.</p></li>
+<li><p><strong>full</strong> (<em>bool</em>) -- Whether the full agenda should be generated.
+Defaults to True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel.estimate_size">
+<span class="sig-name descname"><span class="pre">estimate_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel.estimate_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel.estimate_size" title="Link to this definition"></a></dt>
+<dd><p>Estimates the size of the model in bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A (slightly lower) estimate of the size of the model.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel.fit" title="Link to this definition"></a></dt>
+<dd><p>Trains the model on a given dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- The dataset to train the model on. It could be represented in
+various formats. The type/format of the dataset is automatically
+detected and a data-loader is used accordingly.</p></li>
+<li><p><strong>categorical</strong> -- A list of features suggested to be categorical. Data
+loaders should automatically detect categorical features. This
+parameter is used for those categorical features which are hard
+to distinguish from numerical ones, e.g., columns containing only
+0 or 1.</p></li>
+<li><p><strong>labels</strong> -- The name of the labels column in the dataset.</p></li>
+<li><p><strong>Xc</strong> -- A dataframe containing categorical data. Some data-loaders may
+require categorical data to be separated from the numerical one.
+Specify categorical data here according to the specifications in
+the data loader.</p></li>
+<li><p><strong>y</strong> -- A dataframe containing labels data. Some data-loaders may require
+labels data to be separated from the rest. Specify labels data
+here according to the specifications in the data loader.</p></li>
+<li><p><strong>settings</strong> -- A dictionary containing custom parameters that can vary
+between different data loaders.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel.load" title="Link to this definition"></a></dt>
+<dd><p>Loads and decompresses the model from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> -- Path to the file which will be loaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel.predict" title="Link to this definition"></a></dt>
+<dd><p>Predicts labels for the given dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- A dataset represented in some format. The type/format of the
+dataset is automatically detected and a data-loader is used
+accordingly.</p></li>
+<li><p><strong>categorical</strong> -- A list of features suggested to be categorical. Data
+loaders should automatically detect categorical features. This
+parameter is used for those categorical features which are hard to
+distinguish from numerical ones, e.g., columns containing only 0 or
+1.</p></li>
+<li><p><strong>labels</strong> -- The name of the labels column in the dataset.</p></li>
+<li><p><strong>Xc</strong> -- A dataframe containing categorical data. Some data-loaders may
+require categorical data to be separated from the numerical one.
+Specify categorical data here according to the specifications in
+the data loader.</p></li>
+<li><p><strong>y</strong> -- A dataframe containing labels data. Some data-loaders may require
+labels data to be separated from the rest. Specify labels data
+here according to the specifications in the data loader.</p></li>
+<li><p><strong>settings</strong> -- A dictionary containing custom parameters that can change
+between different data loaders.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A vector containing the predictions of the model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray[numpy.float64[m, 1], flags.writeable, flags.f_contiguous]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel.predict_explain">
+<span class="sig-name descname"><span class="pre">predict_explain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">settings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel.predict_explain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel.predict_explain" title="Link to this definition"></a></dt>
+<dd><p>Predicts labels for the given dataset and returns explanation data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> -- A dataset represented in some format. The type/format of the
+dataset is automatically detected and a data-loader is used
+accordingly.</p></li>
+<li><p><strong>categorical</strong> -- A list of features suggested to be categorical. Data
+loaders should automatically detect categorical features. This
+parameter is used for those categorical features which are hard to
+distinguish from numerical ones, e.g., columns containing only 0 or
+1.</p></li>
+<li><p><strong>labels</strong> -- The name of the labels column in the dataset.</p></li>
+<li><p><strong>Xc</strong> -- A dataframe containing categorical data. Some data-loaders may
+require categorical data to be separated from the numerical one.
+Specify categorical data here according to the specifications in
+the data loader.</p></li>
+<li><p><strong>y</strong> -- A dataframe containing labels data. Some data-loaders may require
+labels data to be separated from the rest. Specify labels data
+here according to the specifications in the data loader.</p></li>
+<li><p><strong>settings</strong> -- A dictionary containing custom parameters that can change
+between different data loaders.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An object containing explanation data and predictions for the whole
+dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mlconcepts.ExplanationData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mlconcepts.uod_model.UODModel.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mlconcepts/uod_model.html#UODModel.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mlconcepts.uod_model.UODModel.save" title="Link to this definition"></a></dt>
+<dd><p>Compresses the model and writes it into a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> -- Path to the file which will be written.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-mlconcepts">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mlconcepts" title="Link to this heading"></a></h2>
+<p>Implements several machine learning algorithms based on FCA.</p>
+<p>Currently, this version of the library only implements the outlier detection
+algorithms introduced
+<a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0167923624000290">here</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="mlconcepts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mlconcepts.data.html" class="btn btn-neutral float-right" title="mlconcepts.data package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Mattia Panettiere.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
