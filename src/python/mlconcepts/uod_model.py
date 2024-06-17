@@ -44,11 +44,12 @@ Todo:
     Add python methods to access explanation data.
 """
 
-import mlconcepts.mlconceptscore
-import mlconcepts.data
 import numpy as np
 
-from .ExplanationData import ExplanationData
+import mlconcepts.mlconceptscore
+import mlconcepts.data
+
+from .explanation_data import ExplanationData
 
 class UODModel:
     """Represents an unsupervised model using FCA for outlier detection.

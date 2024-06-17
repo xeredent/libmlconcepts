@@ -2,7 +2,7 @@
 
 from pathlib import Path
 import numpy as np
-from .Dataset import Dataset
+from .dataset import Dataset
 
 def path_load(dataset, categorical = [], labels = None, Xc = None, y = None,
               settings = {}):

@@ -2,7 +2,7 @@
 
 import pandas as pd
 import numpy as np
-from .Dataset import Dataset
+from .dataset import Dataset
 
 def pandas_load(dataset, categorical=[], labels=None, Xc=None, y=None, settings={}):
     """Loads a pandas dataset to use within the mlconcepts library.

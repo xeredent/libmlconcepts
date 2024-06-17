@@ -16,9 +16,9 @@ Todo:
 """
 import pathlib
 import numpy
-from .Dataset import Dataset, basic_load
-from .PathLoader import path_load
-from .NumpyLoader import numpy_load
+from .dataset import Dataset, basic_load
+from .path_load import path_load
+from .numpy_load import numpy_load
 
 data_loaders = {}
 """
@@ -75,7 +75,7 @@ data_loaders[pathlib.Path] = path_load
 data_loaders[numpy.ndarray] = numpy_load
 try:
     import pandas
-    from .PandasLoader import pandas_load
+    from .pandas_load import pandas_load
     data_loaders[pandas.DataFrame] = pandas_load
 except ImportError:
     pass

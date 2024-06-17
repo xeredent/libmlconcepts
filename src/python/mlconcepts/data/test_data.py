@@ -2,8 +2,8 @@
 import pandas
 import numpy
 
-from .PandasLoader import pandas_load
-from .NumpyLoader import numpy_load
+from .pandas_load import pandas_load
+from .numpy_load import numpy_load
 
 class TestPandas(object): # noqa: D101
     df = pandas.DataFrame({

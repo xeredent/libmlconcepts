@@ -45,11 +45,12 @@ Todo:
     Add python methods to access explanation data.
 """
 
-import mlconcepts.mlconceptscore
-import mlconcepts.data
 import numpy as np
 
-from .ExplanationData import ExplanationData
+import mlconcepts.mlconceptscore
+import mlconcepts.data
+
+from .explanation_data import ExplanationData
 
 class SODModel:
     """Represents a supervised model using FCA for outlier detection.

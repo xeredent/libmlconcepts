@@ -1,7 +1,7 @@
 """Implements a data loader for numpy matrices."""
 
 import numpy as np
-from .Dataset import Dataset
+from .dataset import Dataset
 
 def numpy_load(dataset, categorical=[], labels=None, Xc=None, y=None,
                settings={}):
