@@ -1,21 +1,23 @@
 **Libmlconcepts** is a library which collects a series of interpretable machine learning algorithms based on [formal concept analysis (FCA)](https://en.wikipedia.org/wiki/Formal_concept_analysis), a theory that develops a principled way to generate hierarchical classifications out of a dataset.
 
-Currently, this library implements interpretable (unsupervised and supervised) outlier detection algorithms, and some experimental classification algorithms.The outlier detection algorithms are based on ideas found in [[3]](https://www.sciencedirect.com/science/article/pii/S0167923624000290), and the algorithms for classification lie their roots in the meta-algorithm in [[2]](https://arxiv.org/abs/2301.01837).
+Currently, this library implements interpretable (unsupervised and supervised) outlier detection algorithms, and some experimental classification algorithms. The outlier detection algorithms are based on ideas found in [[3]](https://www.sciencedirect.com/science/article/pii/S0167923624000290), and the algorithms for classification lie their roots in the meta-algorithm in [[2]](https://arxiv.org/abs/2301.01837).
 
 ### Installation
 
 In most architectures, the python package `mlconcepts` can be installed by just running
 
 ```bash
-pip install --user mlconcepts
+pip install mlconcepts
 ```
 
 The library also uses optional dependencies to support several dataset formats and representations.
 Install any of the following libraries to enable support to parse excel, json, sql, csv, and matlab files, and to seamlessly use pandas dataframes in the framework (more info in the [Dependencies](#Dependencies) section):
 
 ```bash
-pip install --user pandas scipy h5py
+pip install pandas scipy h5py
 ```
+
+#### Advanced Installation
 
 In case your platform/architecture is not supported, or if you want to squeeze every drop of performance from your machine, see below how to install from a source distribution.
 
@@ -31,7 +33,7 @@ The python package <em>mlconcepts</em> is based on <em>libmlconcepts</em>, a c++
 Installing <em>mlconcepts</em> from a source distribution only requires a c++20 compiler, all the other dependencies are automatically fetched. To install from source distribution run
 
 ```bash
-pip install --user --no-binary mlconcepts mlconcepts
+pip install --no-binary mlconcepts mlconcepts
 ```
 
 If the c++ compiler is not found during the installation process, specify it by setting the environment variable `CXX` to the path to the c++20 compiler. In most systems this is done as follows:
@@ -44,7 +46,7 @@ In Windows, the environment variable has to be set before running pip
 
 ```bash
 set CXX=/path/to/c++20/compiler
-pip install --user --no-binary mlconcepts mlconcepts
+pip install --no-binary mlconcepts mlconcepts
 ```
 </details>
 
@@ -86,7 +88,7 @@ The build directory will contain the folder mlconcepts, which you can move to wh
 
 ## Basic Usage (python)
 
-This section shows some basic examples using the library. Check the generated [documentation](https://xeredent.github.io/libmlconcepts/) for more details on the functions and classes exposed by the library, and check [this jupyter notebook](docs/examples.ipynb) for more examples. 
+This section shows some basic examples using the library. Check the generated [documentation](https://xeredent.github.io/libmlconcepts/) for more details on the functions and classes exposed by the library, and check [this jupyter notebook](docs/howto/general_usage.ipynb) for more examples. 
 
 #### Datasets
 
