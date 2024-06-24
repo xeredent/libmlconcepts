@@ -16,7 +16,7 @@ jobs:
           pip install sphinx sphinx_rtd_theme myst_parser numpy pandas h5py
       - name: Sphinx autogen
         run: |
-          sphinx-apidoc -o docs/mlconcepts/source/ src/python/mlconcepts/
+          sphinx-apidoc -o docs/mlconcepts/source/ src/python/mlconcepts/ "**/test_*"
       - name: Sphinx build
         working-directory: docs/mlconcepts
         run: |
