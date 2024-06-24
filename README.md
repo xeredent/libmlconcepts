@@ -313,7 +313,7 @@ for train, test in data.split(skf):
 
 #### Understanding the explanations
 
-In this section, you can find an informal explanation of how the algorithms of this library work, and a small example on how to interpret the explanation data that the library spits out.
+In this section, you can find an informal explanation of how the algorithms of this library work, and a small example on how to interpret the explanation data that the library spits out. The code that generates it can be found [here](docs/howto/mushrooms.ipynb).
 
 ##### How do these algorithms work concretely?
 
@@ -350,7 +350,7 @@ The following code computes some predictions and generates feature importance in
 ```python
 import mlconcepts
 
-model = UODModel(n = 4)
+model = mlconcepts.SODModel(n = 4)
 model.fit("trainset.csv", labels="poisonous")
 expl = model.predict_explain("set.csv", labels="poisonous")
 ```
