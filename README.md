@@ -1,3 +1,5 @@
+<a href="https://xeredent.github.io/libmlconcepts/"> <img src="https://img.shields.io/badge/Docs-python%20mlconcepts-blue"/> </a>
+
 **Libmlconcepts** is a library which collects a series of interpretable machine learning algorithms based on [formal concept analysis (FCA)](https://en.wikipedia.org/wiki/Formal_concept_analysis), a theory that develops a principled way to generate hierarchical classifications out of a dataset.
 
 Currently, this library implements interpretable (unsupervised and supervised) outlier detection algorithms, and some experimental classification algorithms. The outlier detection algorithms are based on ideas found in [[3]](https://www.sciencedirect.com/science/article/pii/S0167923624000290), and the algorithms for classification lie their roots in the meta-algorithm in [[2]](https://arxiv.org/abs/2301.01837).
