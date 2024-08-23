@@ -117,7 +117,7 @@ class Dataset(object):
             raise ValueError("At least one of the numerical and categorical"
                              " parts of a dataset must be non-empty.")
         if X is not None:
-            if type(X) != np.ndarray:
+            if not isinstance(X, np.ndarray):
                 raise ValueError("The numerical part of a dataset must be a "
                                  "numpy.ndarray.")
             if X.dtype != "float64":
@@ -127,7 +127,7 @@ class Dataset(object):
                 raise ValueError("The numerical part of a dataset must be such"
                                  " that flags.f_contiguous is True.")
         if Xc is not None:
-            if type(Xc) != np.ndarray:
+            if not isinstance(Xc, np.ndarray):
                 raise ValueError("The categorical part of a dataset must be a "
                                  "numpy.ndarray.")
             if Xc.dtype != "int32":
@@ -137,7 +137,7 @@ class Dataset(object):
                 raise ValueError("The categorical part of a dataset must be "
                                  "such that flags.f_contiguous is True.")
         if y is not None:
-            if type(y) != np.ndarray:
+            if not isinstance(y, np.ndarray):
                 raise ValueError("The labels part of a dataset must be a "
                                  "numpy.ndarray.")
             if y.dtype != "int32":
@@ -319,6 +319,45 @@ class Dataset(object):
             return "{}"
         return "{ " + ", ".join([self.get_feature_name(i) for i in fs]) + " }"
 
+    def __getitem__(self, i):
+        """Accesses a column, or subdataset of this dataset.
+
+        Args:
+            i: Can be of several types:
+                - `int`: returns the column at index i. Considers categorical
+                    columns to come after the numerical ones.
+                - `str`: returns the column whose name matches i.
+                - `slice`: returns the dataset obtained by slicing X, Xc, and
+                    y using the slice i.
+
+        Returns:
+            A column, or a dataset depending on the type of the subscript, as
+            described in the Args section.
+
+        Raises:
+            ValueError: if the input is a string and the name is not found.
+            TypeError: if the input is of unsupported type.
+        """
+        if isinstance(i, int):
+            return (self.X[:,i] if self.X is not None and i < self.X.shape[1]
+                    else self.Xc[:,i - len(self.Xnames)])
+        if isinstance(i, str) and i == self.yname:
+            return self.y
+        if isinstance(i, str) and i in self.Xnames:
+            return self.Xnames.index(i)
+        if isinstance(i, str) and i in self.Xcnames:
+            return self.Xcnames.index(i)
+        if isinstance(i, str):
+            raise ValueError("column name not found")
+        if isinstance(i, slice):
+            return Dataset(
+                X = None if self.X is None else self.X[i],
+                Xc = None if self.Xc is None else self.Xc[i],
+                y = None if self.y is None else self.y[i]
+            )
+        raise TypeError("invalid type as subscript of mlconcepts Dataset")
+        
+
     def split(self, splitter):
         """Generates train-test splits.
 
@@ -392,3 +431,67 @@ def basic_load(dataset, categorical=[], labels=None, Xc=None, y=None,
         :obj:`mlconcepts.data.Dataset`: The dataset.
     """
     return dataset
+
+class GraphDataset(object):
+    """Representation of a dataset containing a graph structure.
+
+    Contains data on the nodes and their features, plus (currently only 
+    unlabelled) edges between the nodes. It should be loaded using the
+    function :func:`mlconcepts.data.graph_load`, rather than by manually
+    instantiating it.
+    """
+
+    def __init__(self, nodes=None, sources=None, targets=None, y=None,
+                 outlier_value=None):
+        """Initializes a GraphDataset object.
+
+        Args:
+            nodes (:obj:`mlconcepts.data.Dataset`): A dataset containing
+            the features of the nodes in the graph. Can be None.
+            sources (:obj:`numpy.ndarray`): A numpy array containing the source
+            of each edge. The dtype of this array should be convertible to
+            int32. Cannot be None.
+            targets (:obj:`numpy.ndarray`): A numpy array containing the
+            target of each edge. The dtype of this array should be convertible
+            to int32. Cannot be None.
+            y (:obj:`numpy.ndarray`): A numpy array containing the label of
+            each node. Its size should match that of the nodes dataset, if
+            defined. Cannot be None.
+            outlier_value (int): Indicates which class for a node means that it
+            is an outlier. If it is None, the dataset is used for generic
+            classification, rather than outlier detection.
+
+        Raises:
+            ValueError: If one of `sources`, `targets`, or `y` is None. If the
+            size of `sources` and `targets` does not match. If the size of
+            `nodes` (if not None) does not match that of `y`.
+        """
+        self.nodes = nodes
+        self.sources = sources.astype(np.int32)
+        self.targets = targets.astype(np.int32)
+        self.y = y.astype(np.int32)
+        self.outlier_value = outlier_value
+        self.id_map = {}
+        if sources is None or targets is None or y is None:
+            raise ValueError("sources, targets and y must be non-null")
+        if sources.size != targets.size:
+            raise ValueError("sources and targets must have the same size")
+        if nodes is not None and nodes.size() != y.size:
+            raise ValueError("inconsistent number of nodes in `nodes` and `y`:"
+                             f" {nodes.size()} and {y.size}." )
+    
+    def nodes_size(self):
+        """Returns the number of nodes in the graph.
+
+        Returns:
+            The number of nodes in the graph.
+        """
+        return self.y.size
+
+    def edges_size(self):
+        """Returns the number of edges in the graph.
+
+        Returns:
+            The number of edges in the graph.
+        """
+        return self.sources.size
