@@ -1,7 +1,7 @@
 import numpy
 
-from .SODModel import SODModel
-from .UODModel import UODModel
+from .sod_model import SODModel
+from .uod_model import UODModel
 
 class TestModels:
     X = numpy.array(
