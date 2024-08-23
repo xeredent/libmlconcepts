@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.26.0)
 project(mlconcepts VERSION 0.1.0 LANGUAGES CXX)
 
+option(MLCONCEPTS_USE_CUDA "Enables GPU acceleration on Nvidia gpus using CUDA." OFF)
+
 if (NOT EXISTS ${CMAKE_BINARY_DIR}/CMakeCache.txt)
   if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
@@ -72,9 +74,31 @@ endif()
 include(CTest)
 include_directories("include")
 
+# Optional CUDA support
+if (MLCONCEPTS_USE_CUDA)
+    include(CheckLanguage)
+    check_language(CUDA)
+    if(NOT CMAKE_CUDA_COMPILER)
+        message(FATAL_ERROR "CUDA compiler not found. Try compiling without enabling the MLCONCEPTS_USE_CUDA option.")
+    endif()
+    enable_language(CUDA)
+    add_compile_definitions(CUDA_ENABLED)
+    set($CMAKE_CUDA_ARCHITECTURES 60)
+    find_package(Thrust REQUIRED CONFIG)
+    thrust_create_target(Thrust)
+endif()
+
 # Python module
+# Compile mlconceptscore, possibly compiling also CUDA code, if CUDA is enabled.
+if (MLCONCEPTS_USE_CUDA)
+pybind11_add_module(mlconceptscore src/bisimulation.cu src/python_mlconcepts.cpp)
+target_link_libraries(mlconceptscore PRIVATE Thrust pybind11::module)
+else()
 pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
-target_link_libraries(mlconceptscore PRIVATE pybind11::module)
+target_link_libraries(mlconceptscore PRIVATE Thrust pybind11::module)
+endif()
+#target_link_libraries(mlconceptscore PRIVATE pybind11::module)
+# Build the python module.
 add_custom_target(python_mlconcepts ALL
                   COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/mlconcepts
                   COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different 
@@ -94,7 +118,13 @@ add_custom_target(python_linting
 
 # Test executables
 add_executable(tests_partial_context tests/tests_partial_context.cpp)
+if (MLCONCEPTS_USE_CUDA)
+add_executable(tests_bisimulations src/bisimulation.cu tests/tests_bisimulations.cpp)
+add_executable(tests src/bisimulation.cu tests/tests.cpp)
+else()
+add_executable(tests_bisimulations tests/tests_bisimulations.cpp)
 add_executable(tests tests/tests.cpp)
+endif()
 
 # CTest tests
 add_test(NAME bitset64_serialization COMMAND tests_partial_context bitset64_serialization)
@@ -102,6 +132,9 @@ add_test(NAME bitset64_serialization_longsequences COMMAND tests_partial_context
 add_test(NAME context64_serialization COMMAND tests_partial_context context64_serialization)
 add_test(NAME small_context COMMAND tests_partial_context small_context)
 add_test(NAME bitstreams1 COMMAND tests_partial_context bitstreams1)
+add_test(NAME pt_edges COMMAND tests_bisimulations pt_edges)
+add_test(NAME bisimulations COMMAND tests_bisimulations bisimulations)
+add_test(NAME bisimulations_cpu COMMAND tests_bisimulations bisimulations_cpu)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
