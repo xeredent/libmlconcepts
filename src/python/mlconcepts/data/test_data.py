@@ -147,6 +147,3 @@ class TestDataset: # noqa: D101
         assert test.Xc[1][0] == 1
         assert test.y[0] == 1
         assert test.y[1] == 0
-
-
-
