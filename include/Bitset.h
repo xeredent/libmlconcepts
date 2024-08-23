@@ -10,6 +10,7 @@
 #include <ranges>
 #include <cmath>
 #include <iomanip>
+#include <limits>
 #include <algorithm>
 #include <numeric>
 #include "Bitstream.h"
@@ -111,6 +112,12 @@ public:
         data[i / bits] |= ((T)1 << (i & mask));  
     }
 
+    /// @brief Removes all the elements from the set.
+    void Clear() {
+        for (auto& x : data)
+            x = 0;
+    }
+
     /// @brief Gets whether an element is in the entry.
     /// @param i The id of the element.
     /// @return Whether the element is in the entry.
@@ -128,7 +135,7 @@ public:
     /// @brief Checks whether the entry is a subset of another entry.
     /// @param b The entry to test against.
     /// @return Whether the entry is a subset of b.
-    bool SubsetOf(Bitset& b) const {
+    bool SubsetOf(const Bitset& b) const {
         for (std::size_t i = 0; i < size(); ++i) {
             if (data[i] != (data[i] & b.data[i]))
                 return false;
@@ -152,6 +159,58 @@ public:
     void Intersect(Bitset& e) const {
         Intersect(e.data.data());
     }
+
+    /// @brief Joins with another entry and stores the result in the argument.
+    /// @param p The entry to intersect with as a T-array of size at least
+    ///          Size().
+    void Union(T* p) const {
+        for (std::size_t i = 0; i < size(); ++i) {
+            p[i] |= data[i];
+        }
+    }
+
+    /// @brief Joins in place with another entry.
+    ///        Stores the result in the argument.
+    /// @param p The entry to join with.
+    void Union(Bitset& e) const {
+        Union(e.data.data());
+    }
+
+    /// @brief Checks whether the set is empty.
+    /// @return Whether this collection is empty.
+    bool Empty() const {
+        for (auto x : data) {
+            if (x != 0) return false;
+        }
+        return true;
+    }
+
+    /// @brief Checks whether this and another set are disjoint.
+    /// @param set The set to check against.
+    /// @return Wheter this set and the input parameter are disjoint.
+    bool Disjoint(const Bitset<T>& set) const {
+        for (std::size_t i = 0; i < size(); ++i) {
+            if ((data[i] & set.data[i]) != 0) 
+                return false;
+        }
+        return true;
+    }
+
+    /// @brief Splits the set into its subset of elements which intersects some
+    ///     other set, and the set of elements which does not.
+    ///     Changes this object to the set of elements intersecting the
+    ///     splitter, and returns the elements which do not.
+    /// @param splitter The splitting set.
+    /// @return The set of elements of this set which do not intersect the
+    ///     splitter.
+    Bitset<T> Split(const Bitset<T>& splitter) {
+        Bitset<T> comp(data.size() * bits);
+        for (std::size_t i = 0; i < size(); ++i) {
+            comp.data[i] = data[i] & ~splitter.data[i];
+            data[i] &= splitter.data[i];
+        }
+        return comp;
+    }
     
     /// @brief Returns the number of elements in the entry.
     /// @return The number of elements in the entry.
@@ -168,6 +227,12 @@ public:
             [](T a, T b) { return a + std::popcount(b); }
         );
         #endif
+    }
+
+    /// @brief Returns the maximum size of the set.
+    /// @return The maximum size of the set.
+    std::size_t MaxSize() const {
+        return data.size() * bits;
     }
     
     /// @brief Writes the entry to a file as text.
@@ -264,6 +329,15 @@ public:
         std::vector<std::size_t> ret;
         for (auto x : *this) ret.push_back(x);
         return ret;
+    }
+
+    /// @brief Returns the universe set of a given size.
+    /// @param size The size of the universe.
+    /// @return The set containing all the elements of a finite universe.
+    static Bitset<T> Universe(int size) {
+        Bitset<T> set(size, std::numeric_limits<T>::max());
+        set.data[set.data.size() - 1] = ((T)1 << (size % bits)) - 1;
+        return set;
     }
 
 protected:
