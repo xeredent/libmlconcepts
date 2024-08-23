@@ -148,14 +148,14 @@ T LittleEndianRead(std::istream& s) {
 }
 
 template<>
-double LittleEndianRead(std::istream& s) {
+inline double LittleEndianRead(std::istream& s) {
     union {std::uint64_t v; double d;} var;
     var.v = LittleEndianRead<std::uint64_t>(s);
     return var.d;
 }
 
 template<>
-void LittleEndianWrite(std::ostream& s, double x) {
+inline void LittleEndianWrite(std::ostream& s, double x) {
     union {std::uint64_t v; double d;} var;
     var.d = x;
     LittleEndianWrite(s, var.v);
