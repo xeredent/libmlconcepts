@@ -95,7 +95,7 @@ pybind11_add_module(mlconceptscore src/bisimulation.cu src/python_mlconcepts.cpp
 target_link_libraries(mlconceptscore PRIVATE Thrust pybind11::module)
 else()
 pybind11_add_module(mlconceptscore src/python_mlconcepts.cpp)
-target_link_libraries(mlconceptscore PRIVATE Thrust pybind11::module)
+target_link_libraries(mlconceptscore PRIVATE pybind11::module)
 endif()
 #target_link_libraries(mlconceptscore PRIVATE pybind11::module)
 # Build the python module.
